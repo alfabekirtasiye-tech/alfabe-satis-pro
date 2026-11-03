@@ -1,0 +1,80 @@
+ALFABE SATIŞ PRO - SETUP (KURULUM) HAZIRLIK REHBERİ
+====================================================
+
+1) SETUP DOSYASI NASIL ÜRETİLİR  (Windows 10/11 bilgisayarda, bir kez hazırlık)
+   a) Python 3.12 (64 bit) kurun: python.org. Kurulumda "tcl/tk and IDLE" işaretli olsun, "Add python to PATH" işaretli olsun.
+   b) Inno Setup 6 kurun: https://jrsoftware.org/isdl.php
+   c) Bu klasördeki  1_EXE_OLUSTUR.bat  dosyasına çift tıklayın.
+      -> dist\ALFABE_SATIS_PRO\ALFABE_SATIS_PRO.exe oluşur. ÖNCE bunu çalıştırıp deneyin (aşağıdaki test listesi).
+   d) 2_KURULUM_OLUSTUR.bat  dosyasına çift tıklayın.
+      -> KURULUM_CIKTI\ALFABE_SATIS_PRO_Kurulum_<surum>.exe  (müşteriye verilecek setup dosyası)
+   Yeni sürümde: ana .py dosyasındaki VERSION='A.B.C.D ...' satırını güncelleyin; sürüm numarası setup'a ve exe'ye otomatik işlenir.
+   Ana dosya adı değişirse yalnızca 1_EXE_OLUSTUR.bat içindeki ALFABE_GIRIS satırını değiştirin.
+
+2) KURULUMDA NELER DÜŞÜNÜLDÜ
+   - Program dosyaları:   C:\Program Files (x86)\ALFABE SATIS PRO   (yalnız okunur; programın oraya yazdığı hiçbir şey yok)
+   - Veriler (firma, dönem, yedek, hata günlüğü):  C:\Users\<kullanıcı>\AppData\Local\ALFABE_SATIS_PRO
+     -> Güncelleme ve kaldırma sırasında verilere dokunulmaz. Kaldırmada "veriler de silinsin mi?" sorulur (varsayılan HAYIR).
+   - Güncelleme: aynı AppId sayesinde yeni setup eskisinin üzerine kurulur. İlk açılışta veritabanı yükseltmeleri programca otomatik yapılır.
+     (Tavsiye: güncellemeden önce programdan "Yedek Al" yapın.)
+   - Program açıkken kurulum/kaldırma uyarı verir; aynı bilgisayarda programın ikinci kopyası açılamaz (veritabanını iki süreç bozmasın diye).
+   - Yedekten yüklemeden sonra "yeniden başlat" kurulu sürümde de doğru çalışır.
+   - Pencere/masaüstü/Başlat menüsü simgesi: AK logosu (alfabe.ico).
+   - Başka bir yere veri klasörü istenirse (örn. D:\ALFABE_VERI): Windows ortam değişkeni  ALFABE_DATA_DIR  tanımlayın.
+   - Antivirüs: tek klasörlü (onedir) paket ve UPX kapalı üretilir; yanlış alarm olasılığı düşüktür. Müşteriye dağıtımdan önce
+     setup dosyasını imzalamak (kod imzalama sertifikası) en iyi çözümdür. Alarm olursa dosyayı Microsoft Defender'a "yanlış alarm" olarak bildirin.
+
+3) MÜŞTERİ BİLGİSAYARINDA GEREKENLER
+   - Windows 10/11. Python kurmaya GEREK YOK (pakete dahil).
+   - PDF raporları için Microsoft Edge (Windows'ta hazır gelir). Yazıcı listesi için PowerShell (Windows'ta hazır gelir).
+   - Başka bilgisayara geçiş: eski bilgisayarda "Yedek Al", yeni bilgisayarda kurulumdan sonra "Yedekten Yükle".
+
+4) SETUP'TAN ÖNCE TEST LİSTESİ  (dist\...\ALFABE_SATIS_PRO.exe ile, mümkünse programlı Python OLMAYAN temiz bir bilgisayarda)
+   [ ] Program açılıyor, giriş ekranı ve AK simgesi görünüyor
+   [ ] Yeni firma + Yeni Dönem Oluştur çalışıyor; firmayı açınca ana ekran geliyor
+   [ ] Hızlı Satış / Cari Satış: barkod okut, ürün ekle, birleştir, kaydet, fiş önizleme/yazdır
+   [ ] Rapor PDF'e kaydet (Edge motoru) ve yazıcı listesi
+   [ ] Yedek Al -> Yedekten Yükle -> program kendini yeniden başlatıyor (ikinci kopya uyarısı çıkmamalı)
+   [ ] Dönem Dosyaları Bakımı: Kontrol Et çalışıyor
+   [ ] Programı iki kez açmayı deneyin: ikincisi "zaten açık" demeli
+   [ ] Setup'ı kurun -> kısayollar -> kaldırın (veriler silinmemeli) -> tekrar kurun (veriler duruyor)
+   [ ] Eski sürümün üzerine yeni sürümü kurun (güncelleme)
+   [ ] Ekran ölçeği %125/%150 ve farklı çözünürlükte görünüm
+
+5) BİLİNEN NOTLAR
+   - Bu hazırlık Windows dışında çalıştırılıp denenemedi; ilk paketlemede hata alırsanız komut penceresindeki metni gönderin.
+   - Ekran ölçeği (%125/%150) büyük olduğunda tkinter arayüzü bulanık görünebilir; istenirse yüksek DPI desteği ayrıca eklenir
+     (yerleşim değişebileceği için kurulum hazırlığında bilerek eklenmedi).
+   - ALFABE_STOK_EK_OZELLIKLER.py pakete dahildir. Program tarafından kullanılmayan eski geliştirici kontrol araçları (*_DENETIMI / *_MUTABAKAT_*.py)
+     v1.2.291.447'de ARSIV klasörüne taşındı; setup'a girmez, silinmesi programı etkilemez.
+   - Ana program dosyası artık ALFABE_SATIS_PRO.py (sürüm numarası dosya adında değil, programın içindedir).
+
+
+AI ASISTAN (v1.2.291.253)
+   - Sol menude "AI Asistan" bolumu eklendi. Yonetici disindaki roller icin Kullanici & Guvenlik > Yetkiler'den
+     "AI Asistan" satirinda Goruntule yetkisi verilir. Asistan, kullanicinin yetkisi olmayan bolumlerin verisini okumaz.
+   - ALFABE_ASISTAN.py pakete dahildir (spec dosyasinda hiddenimports). Asistan veritabanina yazmaz; yalnizca onayli
+     "Siparis Havuzuna Ekle" islemi bir siparis taslagi olusturur.
+   - Varsayilan kip yereldir (internet gerekmez). Istenirse Yonetici, asistan ekranindaki "YAPAY ZEKA AYARLARI"
+     dugmesinden kendi Anthropic API anahtarini girerek yapay zeka kipini acabilir.
+
+WHATSAPP ASISTAN (v1.2.291.254)
+   - Sol menude "WhatsApp Asistan" bolumu eklendi. Yonetici disindaki roller icin Yetkiler'den "WhatsApp Asistan"
+     satirinda Goruntule + Duzenle yetkisi verilir (yanit onaylama / teklif olusturma icin Duzenle gerekir).
+   - ALFABE_WHATSAPP.py pakete dahildir (spec dosyasinda hiddenimports).
+   - Varsayilan kip "manuel": gelen mesaj yapistirilir, yanit guncel fiyat listesinden hazirlanir, personel onaylayinca
+     WhatsApp hazir yanitla acilir. Kurulum gerektirmez.
+   - Istege bagli "api" kipi (WhatsApp Business Cloud API): onayli yanitlar programdan gonderilir; gelen mesajlar icin
+     127.0.0.1 uzerinde yerel webhook dinleyicisi calisir ve disariya HTTPS tuneli (Cloudflare Tunnel/ngrok) gerekir.
+     Ayrintilar asistan ekranindaki AYARLAR penceresinde yazilidir.
+
+E-FATURA / E-ARSIV MODULU (v1.2.291.273)
+   - ALFABE_EFATURA.py pakete dahildir (spec dosyasinda hiddenimports). Sol menude "E-Fatura / E-Arşiv".
+   - GIB Portal yolu: program faturayi GIB'e kendisi gondermez; UBL-TR XML ve portal giris listesi (CSV) uretir.
+   - Canliya cikmadan once: Firma bilgileri (unvan, vergi no, vergi dairesi, adres, il) doldurulmali; seri oneki Ayarlar'dan
+     GIB'deki seri ile ayni yapilmali; ornek faturalarin XML'i GIB test ortami/dogrulayicisinda denenmelidir.
+
+STOK: ORTALAMA MALIYET KONTROLU + EXCEL ICE/DISA AKTARMA (v1.2.291.275)
+   - ALFABE_STOK_MALIYET_KONTROL.py ve ALFABE_STOK_EXCEL.py pakete dahildir (spec dosyasinda hiddenimports).
+   - Excel okuma/yazma icin Excel veya ek kutuphane GEREKMEZ (.xlsx ve .csv dogrudan okunur/yazilir).
+   - Excel ice aktarma veritabani yedegini <veri klasoru>\excel_aktarim_oncesi altina alir.

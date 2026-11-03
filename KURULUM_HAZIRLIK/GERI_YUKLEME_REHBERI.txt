@@ -1,0 +1,40 @@
+ALFABE SATIŞ PRO - YEDEKTEN GERİ YÜKLEME REHBERİ
+================================================
+Nereden açılır:  Giriş ekranı > "Yedekten Yükle"   veya   Sistem Merkezi > "YEDEKTEN GERİ YÜKLE"
+
+1) Listeden yedeği seçin. Liste: yedek klasörü + (varsa) 2. yedek konumu + geri yükleme/bakım öncesi güvenlik kopyaları.
+   Başka yerdeki yedek için "Dosya Seç..." kullanın.
+2) "Doğrula / Önizle": ZIP sağlamlığı, SHA256, veritabanı bütünlüğü kontrol edilir. Yedekteki stok/cari/satış sayıları ve son satış
+   tarihi ŞU ANKİ veriyle yan yana gösterilir. (Bu adım hiçbir şeyi değiştirmez.)
+3) "Hangi dosyalar yedekten geri yüklensin?" (eski programdaki gibi) - "Geri yüklemeyi onaylıyorum" kutusunu işaretleyip "YEDEKTEN GERİ YÜKLE":
+   a) Tüm Dosyalar: iki onay ister (ikincisinde  GERİ YÜKLE  yazılır). Sırayla: doğrula -> kimlik denetimi -> güvenlik kopyası ->
+      yeni veriyi yan dosyada hazırla -> yerine koy -> doğrula. Başarısız olursa ESKİ VERİ OTOMATİK GERİ KONUR. Program yeniden başlar.
+   b) Seçilen Dosyalar: eski programdaki "Yüklenecek dosyaları seçiniz" listesi gibi 27 dosya grubu işaretlenir: Stok Kartları, Cari Kartları,
+      Stok Hareketleri, Cari Hareketleri, Satış, Alış/Mal Kabul, Teklif/Sipariş, Taksit, Çek/Senet, Stok Grupları, Stok Birimleri,
+      Banka/Kasa Hesapları, Banka İşlemleri/POS, Kasa-Bütçe Kayıtları, Gün Sonu, Gelir Grup / Gider Grup Tanımları, Gider Kayıtları,
+      Kredi Kartı Tanımları ve Hareketleri, Hizmetler, Kampanyalar, Hatırlatmalar, Ayarlar Dosyası, Tasarımlar, Numara/Seri Sayaçları, Kullanıcılar.
+      Seçilen grupların içeriği yedektekiyle AYNI olur (sonradan girilen kayıtlar o gruplarda kaybolur). Tek işlemdedir; hata olursa
+      hiçbir şey değişmez. İlişkili dosyaları birlikte seçin (örn. Satış + Stok Hareketleri + Cari Hareketleri + Kasa-Bütçe). Firma/dönem kimliği korunur.
+      "Kullanıcılar" varsayılan işaretsizdir (parolalar da yedektekiyle değişir). Sistem günlükleri (denetim, olaylar, yedek geçmişi) listede yoktur; değişmez.
+   c) Sadece Stok Kartları / Sadece Cari Kartları / Sadece Stok ve Cari Kartları: kartlar yedekten geri getirilir/güncellenir
+      (örn. yanlış toplu fiyat değişikliğini veya yanlışlıkla silinen kartları geri almak için). Yedekte olmayan MEVCUT kartlar korunur.
+      Aynı barkod/kod başka bir kartta duruyorsa o kart atlanır ve sayısı raporda yazılır.
+      Stok miktarları:  Olduğu gibi kalsın (mevcut miktarlar değişmez)  |  Tüm miktarlar sıfırlansın (her karta düzeltme hareketi yazılır)  |
+                        Mevcut miktarlar açılış miktarı olsun (stok hareket geçmişi silinir, her karta tek açılış hareketi yazılır)
+      Cari bakiyeleri: Olduğu gibi kalsın  |  Tüm bakiyeler sıfırlansın (düzeltme hareketi yazılır)  |
+                        Mevcut bakiyeler açılış bakiyesi olsun (cari hareket geçmişi silinir, her cariye tek açılış hareketi yazılır)
+      "Açılış" seçenekleri hareket geçmişini sildiği için ayrıca onay ister.
+   Her seçmeli işlemde önce güvenlik kopyası alınır ve işlem tek bir işlem (transaction) olarak yapılır.
+4) "Yedeği DB Olarak Dışa Aktar": yedeği canlı veriye dokunmadan bir .db dosyası olarak çıkarır (inceleme için).
+
+Güvenlik kuralları
+  - Yanlış firma/dönem yedeği engellenir. Bilerek yeni bilgisayara taşıyorsanız sarı kutuyu işaretleyin (kimlik hedefe çevrilir).
+  - Ağda çok bilgisayar kullanılıyorsa, geri yüklemeden önce DİĞER bilgisayarlarda program KAPALI olmalıdır (program kontrol eder).
+  - Mevcut verinin kopyası:  yedekler\GERI_YUKLEME_ONCESI_<tarih>.db  (sağlam alınamazsa bozuk dosya "..._BOZUK_..." veya ".bozuk_..." adıyla saklanır).
+  - Eski KTS programının .bck yedekleri için giriş ekranındaki merkezde "Eski KTS (.bck) Yedeği Yükle..." düğmesi kullanılır.
+
+Felaket senaryoları
+  - Veritabanı bozuldu / silindi: Giriş ekranında firma ve dönemi seçin > Yedekten Yükle > son sağlam yedek > Tamamını Geri Yükle.
+    (Dosya yoksa güvenlik kopyası alınamaz; bu normaldir, geri yükleme yine yapılır.)
+  - Yeni bilgisayar: programı kurun, aynı adlarla firma ve dönem oluşturun (veya yedeğin firma adını kullanın), sonra Yedekten Yükle.
+    Ad farklıysa sarı kutuyu işaretleyin.

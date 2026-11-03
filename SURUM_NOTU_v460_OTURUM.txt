@@ -1,0 +1,631 @@
+ALFABE SATIŞ PRO  v1.2.291.460  —  "DİĞER BİLGİSAYAR AÇIK" YANLIŞ UYARISI DÜZELTİLDİ
+- Yedekten Yükle ekranında kendi bilgisayarınızın (ör. DESKTOP-...) "açık" görünmesi giderildi.
+- Bu süreçin kendi kaydı ve aynı bilgisayarda kapanmış/çökmüş eski oturum kayıtları artık sayılmaz (otomatik silinir).
+- Program kapanırken oturum kaydı silinir.
+- Gerçekten başka bir bilgisayarda (veya aynı bilgisayarda çalışan başka bir pencerede) program açıksa uyarı yine çıkar.
+
+YEDEKTEN GERİ YÜKLEME — ESKİ KTS (.bck) YEDEĞİ İÇİN DE SEÇENEKLER
+- KTS yedeği artık "Yedekten Geri Yükleme Merkezi" listesine eklenir; "Doğrula / Önizle" ile içeriği (stok/cari/satış sayıları) görülür.
+- ALFABE yedeğindeki seçenekler KTS yedeğinde de aynen çalışır: Tüm Dosyalar / Seçilen Dosyalar / Sadece Stok Kartları / Sadece Cari Kartları / Stok ve Cari.
+- Önceden KTS yedeği her zaman her şeyi (stok, cari, satış, hareketler) siliyor ve yeniden yüklüyordu.
+- KTS verisi önce geçici bir veritabanına çevrilir; canlı veriye dokunulmaz. Kart eşleştirmesi kod/barkod (stok) ve vergi no/unvan (cari) ile yapılır: mevcut kart güncellenir, olmayan eklenir; satış ve hareket bağları bozulmaz.
+- Test: tests/test_yedek_secmeli.py
+
+- Yedekten gelen YENİ stok kartlarının miktarı için "Geri Yükleme Açılış" stok hareketi yazılır (miktar ile hareket toplamı tutarlı kalır).
+- Testler: test_yedek_tum_secenekler.py (her dosya grubu, stok/cari x miktar/bakiye), test_yedek_pencere.py (pencereyi tüm modlarla sürer).
+- Seçmeli geri yükleme bitince 'Kayıt sayıları (önce → sonra)' tablosu gösterilir: stok, cari, satış, hareket, kasa. Neyin değiştiği/değişmediği açıkça görülür.
+- YENİ: Sadece Stok/Cari modlarında 'Seçilmeyen verileri TEMİZLE' kutusu: hedefte yalnız seçilen kartlar kalır (satış, cari, kasa, hareket vb. silinir). Varsayılan KAPALI; güvenlik kopyası alınır.
+- Kitap Hızlı Giriş > KATALOGDA ARA: Tür=SAYFA kaynak yoksa, kayıtlı site adresi (ör. SRU olarak eklenmiş web sitesi) yine açılır; arama kalıbı ({isbn}) yoksa ISBN panoya kopyalanır.
+- Kitap Hızlı Giriş: kırmızı İPTAL düğmesi — formu temizler ve 'Son girilen kitaplar' listesini boşaltır (kayıtlı kitap kartları silinmez). Test: test_kitap_iptal.py
+- Kitap kaynağı Tür=URUN (ürün sayfası okuyucu): kitap adı, yazar, yayınevi, yıl ve FİYAT sayfadan okunur. Bora Dağıtım kaydı otomatik https://boradagitim.com/Istem/Urun/Detay.aspx?Barcode={isbn} adresine çevrilir. KATALOGDA ARA ürün sayfasını doğrudan açar. Okunamazsa sayfa %TEMP%\alfabe_kitap_urun_sayfasi.html olarak kaydedilir. Test: test_urun_sayfa_okuyucu.py
+- DÜZELTME: ürün sayfası okuyucu, sayfada aranan barkod yoksa (vitrin/öne çıkan kitap) hiçbir bilgi doldurmaz; önceki hatalı Bora önbellek kayıtları otomatik temizlenir.
+- Kitap Hızlı Giriş: FORMU TEMİZLE düğmesi kaldırıldı (İPTAL aynı işi yapar).
+- Kitap Hızlı Giriş: barkod değişince önceki barkoddan OTOMATİK gelen kitap adı/yazar/yayınevi/yıl/fiyat temizlenip yenisi getirilir (eskiden dolu alan korunduğu için aynı ad kalıyordu); elle yazılanlara dokunulmaz.
+- Kitap Hızlı Giriş (460.7): yeni barkod okutulunca elle yazılmamış kitap adı/yıl her zaman silinir; internet araması sürüyorsa bilgi satırı uyarır; olay günlüğü %TEMP%\alfabe_kitap_giris_log.txt.
+- Bora okuyucu (460.8): 'Hata bildir / Yazar bilgisi yanlış' gibi sayfa düğme metinleri kitap bilgisi sayılmaz; hatalı önbellek kayıtları temizlenir.
+- 460.9: Kayıtlı (önbellek) kitap bilgisinde fiyat yoksa ve ürün sayfası kaynağı (URUN) tanımlıysa fiyat için yeniden aranır; önbellek artık fiyatı da saklar.
+- 460.10: Kitap Hızlı Giriş'e KAYNAK FİRMA alanı (bilgi/fiyat hangi firmadan alındı; ör. BORA DAĞITIM). Otomatik dolar, elle değiştirilebilir, kitap kartıyla birlikte saklanır ve Son girilen kitaplar listesinde görünür.
+- Programın geneli: sayı kutusuna (fiyat, adet, tutar...) tıklayınca/girince içerik SEÇİLİ olur; yeni değer doğrudan yazılır. Yazı kutularına dokunmaz. Test: test_sayi_kutusu_secim.py
+- Personel hareket penceresi (Avans / Maaş Ödemesi / Kesinti / Prim / Yevmiye): TARİH alanı (varsayılan bugün, takvimli, geçmiş tarih girilebilir); hareket ve kasa çıkışı seçilen tarihle yazılır. Test: test_personel_tarih.py
+- PROGRAM_AMACI_VE_KURALLAR.txt (programın amacı + 'çalışan kısımlar bozulmasın' kuralları) ve tests/hepsini_calistir.py (tüm testleri tek komutla çalıştırır: 16 test geçti) eklendi.
+
+SÜRÜM 1.2.291.461 — LİSTE FİYATLA (okul sezonu için hızlı fiyat hesabı)
+- Hızlı Satış sağ panelinde yeni turuncu düğme: 📋 LİSTE FİYATLA. Müşterinin getirdiği listeyi (WhatsApp/Word/fotoğraftan yazılmış metin) yapıştırın, HESAPLA'ya basın.
+- Program satırları ayırır (• işaretleri, madde numaraları, '3 Adet', 'Bir adet', '1 paket'), başlığı atlar, parantez içi açıklamaları yok sayar; '12'li' gibi ifadeleri adet saymaz.
+- Her satır için stoktan en uygun ürünü bulur ve fiyatı yazar; altta TOPLAM görünür. Kırmızı satır = ürün bulunamadı (toplama girmez), sarı satır = emin değil, kontrol edin.
+- Satıra çift tıklayıp doğru ürünü seçebilirsiniz; seçiminiz HATIRLANIR, sonraki listelerde aynı satır otomatik doğru gelir.
+- ADET DEĞİŞTİR, SATIRI ÇIKAR, PANOYA KOPYALA (mesaj olarak göndermek için), SEPETE EKLE (satışa geç), OKUL LİSTESİ OLARAK KAYDET (aynı liste tekrar gelirse tek tıkla).
+- Stok ve satış verisine dokunmaz. Testler: test_liste_fiyat.py, test_liste_fiyat_ekran.py
+- 461.1: Liste Fiyatla penceresi tam ekran açılır; 'kalemtıraş' gibi sözcüklerin 'KALEM KUTUSU'na yanlış eşleşmesi giderildi, bitişik/ayrı yazım (KALEM TIRAŞ) eşleşir.
+- 461.2: Ürün seç penceresi büyütüldü; ↑ ↓ ile ürüne gidilir, ENTER seçer ve listeye atar.
+- 461.3 Liste Fiyatla: ÜÇ FİYAT SEÇENEĞİ — UYGUN / ORTA / PAHALI(MARKALI) düğmeleri; her birinin toplamı düğmenin üstünde görünür, tıklayınca tüm satırlar o kademeye geçer. Aynı ürün türünden stoktaki en ucuz / ortadaki / en pahalı seçilir. Elle seçtiğiniz satırlar kademeden etkilenmez. EN İYİ EŞLEŞEN = ilk hesaplanan hâl.
+- FİYAT TÜRÜ kutusu: Perakende / Toptan / Özel (ürün kartında o fiyat 0 ise perakende kullanılır).
+- YAZDIR (seçili kademe) ve 3 SEÇENEĞİ YAZDIR (üç fiyat yan yana); programın yazdırma ön izlemesi açılır.
+- PDF KAYDET / EXCEL KAYDET ve PDF (3 SEÇENEK) / EXCEL (3 SEÇENEK): müşteriye WhatsApp / e-posta ile göndermek için dosya olarak kaydeder. (PDF için Microsoft Edge gerekir; yoksa YAZDIR > PDF olarak yazdır kullanılabilir.)
+- 461.4: Liste Fiyatla'da düğmelere basınca ana Hızlı Satış ekranına atlama düzeltildi (işlem bitince pencere yeniden öne alınır).
+- 461.5 Liste Fiyatla: '(Kırmızı, Mavi ve Siyah renkte)' gibi renk sıralaması her renk için AYRI satıra bölünür (3 adet yazı tahtası kalemi + 3 renk = her renkten 1 adet); 'Fasulye, sayma çubuğu' gibi virgülle yazılmış kısa ürün listeleri ayrı ürün satırı olur. Açıklamalı satırlar (ör. 'Çıtçıtlı dosya, körüklü:(...)') bölünmez.
+- 461.6 Liste Fiyatla: ADET ve BİRİM fiyat sütununa tek tıklayınca yerinde değiştirilir (Enter = kaydet, Esc = vazgeç). Elle girilen birim fiyat (durumda * işareti) toplama, yazdır/PDF/Excel'e ve sepete aynen geçer; fiyat kademesi değişince bozulmaz. Ürün değiştirmek için hâlâ çift tıklanır.
+- 461.7 Liste Fiyatla: 📷 FOTOĞRAFTAN OKU — müşterinin getirdiği liste fotoğrafını seçin; Windows'un kendi okuma motoru (Fiş Oku ile aynı, internet/ek kurulum yok) yazıyı okur, satır sonunda bölünmüş maddeler birleştirilir ve otomatik fiyatlanır. Okuma hatası olabilir: metin kutusunu düzeltip tekrar HESAPLA. Windows'ta Türkçe dil paketi yüklü olmalı.
+- Müşteri / Telefon kutuları + 💾 MÜŞTERİYE KAYDET + 📂 KAYITLI LİSTELER: fiyatlanan liste müşteri adına kaydedilir (adetler, elle fiyatlar, seçilen ürünler, kademe, fiyat türü). Sonra açınca fiyatlar GÜNCEL stoktan gelir; 'Teslim edildi' işaretlenir, aranır, silinir. Müşteri adı yazdırma/PDF/Excel başlığına ve dosya adına girer. Yalnız kendi tablosuna (liste_musteri) yazar.
+- 461.8 Liste Fiyatla:
+  * 💾 MÜŞTERİYE KAYDET: "✔ KAYDEDİLDİ" uyarısı çıkar.
+  * 📂 KAYITLI LİSTELER: müşteriye TEK TIKLAYINCA liste açılır. ÇIKTI AL (seçilen müşterinin listesini yazdırır), TESLİM EDİLDİ/BEKLİYOR, SİL (müşteri ve liste kalıcı silinir), TESLİM EDİLENLERİ TEMİZLE (hepsini bir seferde siler; yer kaplamaz).
+  * 🗑 KAYDI SİL: ana pencerede açık müşteri kaydını siler.
+  * ÇIKTI türü: Fiyatlı liste / HAZIRLIK listesi (fiyatsız, ☐ kutulu, raf bilgili). KÂĞIT/YAZICI: A4 / 80 mm Fiş yazıcı / 80 mm Barkod-Etiket yazıcı. 80 mm çıktı dar (74 mm) tasarımdır; yazdırma ön izlemesinde Cihazlar'da tanımlı Fiş / Etiket yazıcısı seçili gelir.
+- 461.9: 'KAYITLI LİSTELER' penceresi açılır açılmaz ana Liste Fiyatla penceresinin altında kalıp kayboluyordu; düzeltildi (açık alt pencere varsa ana pencere öne alınmaz, kayıt açılamazsa nedeni mesajla gösterilir).
+- 461.10 Liste Fiyatla HIZ: ürün arama ters dizinle yapılır (30.000 ürünlü denemede liste hesabı 5,7 sn -> ~1 sn; sonuçlar eskisiyle birebir aynı). Ürün seç penceresinde yazarken takılma giderildi (kısa bekleme). SAYAÇLI İLERLEME: Hesaplama, Fotoğraf okuma ve Müşteriye kaydetme sırasında geçen süreyi gösteren pencere (adım adım: hazırlanıyor/kaydediliyor/doğrulanıyor/tamam). ÜRÜN SEÇ listesinde STOK GRUBU sütunu; Ürün/Grup/Fiyat/Stok başlığına tıklayınca A→Z, tekrar tıklayınca Z→A (ok işaretiyle).
+- 461.11 Ürün seç: SINIR YOK — aramayla eşleşen tüm ürünler görünür (önceden en fazla 60); arama kutusu boşken TÜM STOK listelenir. Liste ilk açılışta STOK GRUBUNA göre A→Z (grup içinde ürün adı A→Z) sıralı gelir; en uygun ürün otomatik seçili ve görünür alandadır (ENTER onu seçer). 'adete/adedi' adet sayılır; ünsüz yumuşaması farkı (bandı = bantı, kağıdı = kağıtı) eşleşir. Başlık sayısı pencere başlığında gösterilir.
+- 461.12 PROGRAMIN GENELİ: yazı/arama kutusuna fareyle ilk tıklamada içerik seçili olur; yeni yazı eskisinin üstüne yazılır (2. tık imleç yerleştirir; parola/salt-okunur dokunulmaz). Liste Fiyatla > Ürün seç: en uygun ürün seçili olmakla kalmaz, uzun listede kaydırılarak görünür alana getirilir. Test: test_arama_kutusu_secim.py
+- 461.13 Liste Fiyatla — gerçek müşteri listesinden çıkan düzeltmeler:
+  * "2 adet siyah tahta kalemi ve 1 adet siyah CD kalemi", "10 tane köpük tabak ve 10 tane ... bardak ve ..." gibi 've/ile + adet' ile birleşik satırlar AYRI ürün satırı olur. "10 tane şeffaf plastik kaşık ve çatal" -> iki ürün (şeffaf plastik kaşık / şeffaf plastik çatal), ikisi de 10 adet. Renk çiftleri ("kırmızı ve mavi kalem") bölünmez.
+  * Fotoğraf okumada "1" yerine okunan "I / l / |" ("I paket", "I adet", "I top") 1 sayılır.
+  * Fiyat kademeleri (UYGUN/ORTA/PAHALI): aramaya en uyan ürünlerle AYNI STOK GRUBUNDAKİ, sözcüklerinin büyük kısmını taşıyan TÜM ürünlerden seçilir (ör. ADEL KOLİ BANTI'nın bütün boy/fiyatları; artık hep ADEL çıkmaz). Stokta olan ürün varsa yalnız onlar; fiyatı 0 olanlar alınmaz.
+  * Fiyatı 0 olan ürün otomatik seçilmez (satır kırmızı 'yok'); elle seçilirse satır 'FİYAT 0' diye kırmızı uyarı verir.
+  * Parantezdeki marka listesi ("(pritt, adel, faber castell)") eşleştirmede tercih edilir; "büyük/boy/renkli" gibi niteleyiciler az, ayırt edici sözcükler (yapıştırıcı...) çok ağırlık taşır.
+  * Kademe seçince Durum sütunu artık kademe adını yazmıyor; sarı 'kontrol' uyarısı korunuyor.
+  * Alt düğme çubuğu iki satıra bölündü (SEPETE EKLE artık her ekranda görünür, yeşil ve büyük).
+- 461.14 Liste Fiyatla — 10 iyileştirme:
+  * İSKONTO: yüzde / tutar indirimi / aşağı yuvarlama (tam ₺, 5 ₺, 10 ₺); toplam, ödenecek ekranda ve yazdırma/PDF/Excel/panoya kopyada gösterilir.
+  * KAPORA, TESLİM TARİHİ, NOT: çıktılara yazılır (kalan tutar hesaplanır), müşteri kaydıyla saklanır; KAYITLI LİSTELER'de Teslim tarihi ve Kapora sütunları.
+  * ✔ "HAZIR" MESAJI: "listeniz hazır, tutar X TL" metnini panoya kopyalar (WhatsApp).
+  * STOK sütunu; istenen adet stoktan fazlaysa satır turuncu olur.
+  * ◀ UCUZ / PAHALI ▶: seçili satırı aynı türün bir ucuz/pahalı ürününe kaydırır.
+  * ↶ GERİ AL: satır silme, ürün/adet/fiyat değiştirme, hesaplama ve birleştirmeyi geri alır.
+  * AYNILARI BİRLEŞTİR: aynı ürünü gösteren satırlar tek satırda toplanır (uyarı bilgi satırında).
+  * EKSİK ÜRÜNLER: bulunamayan satırların listesi (yazdır / panoya kopyala).
+  * 👁 ÖN İZLEME: ekranda canlı metin önizleme (A4 / 80 mm, fiyatlı / hazırlık).
+  * HAZIRLIK listesi raf sırasına göre dizilir.
+  * 📊 SEZON RAPORU: kayıtlı listelerden en çok istenen ve bulunamayan ürünler.
+- 461.15 Düzeltme: tablo (Treeview) pencereleri kapanırken zaman zaman oluşan 'missing 1 required positional argument: e' iç hatası giderildi (tıklama/kapanış işleyicileri boş olay gelirse sessizce geçer).
+- 461.16 Eşleştirme: ürün adında listede karşılığı olmayan fazla sözcükler (ör. 'BALON POMPASI') artık daha çok puan düşürür; 'balon kalın olanlardan' -> BALON seçilir (önceden stoğu olan BALON POMPASI geliyordu). Test eklendi.
+- 461.17 FİRMA LOGOSU / FİRMA BİLGİLERİ: tüm yazdırma ön izleme ve baskıların (A4 raporlar, Liste Fiyatla, diğer belge çıktıları) üstüne Ayarlar > Firma Bilgileri/Firma Logosu'ndaki logo, unvan, adres, telefon, vergi no bandı eklenir. Zaten logolu/firma başlıklı belgelere (rapor motoru, e-fatura, ekstre), 80/58 mm fişe ve etiketlere dokunulmaz; iki kez eklenmez. Liste Fiyatla PDF çıktısı da aynı bandı alır. Test: test_firma_baslik.py
+- 461.18 Liste Fiyatla — RAPOR MOTORU + GERÇEK ÖN İZLEME + EBAT:
+  * Fiyat teklifi, 3 seçenekli teklif ve hazırlık listesi programın Rapor Motoru'ndan çıkar (yazdır, PDF, ön izleme aynı çıktı). Rapor Düzenleyici'de 'Liste Fiyatla / Fiyat Teklifi', '3 Seçenekli Teklif', 'Hazırlık Listesi (Sipariş)' (ve 80 mm için '- Fiş' ekli) adıyla kayıtlı tasarımı olur; logo, başlık, sütunlar, yazı boyutu oradan düzenlenir ('🎨 RAPOR TASARIMI' düğmesi). Kayıtlı tasarım yoksa kâğıda uygun varsayılan kullanılır. Firma logosu/bilgisi rapor motorundan gelir.
+  * 👁 ÖN İZLEME paneli artık gerçek sayfanın resmini (seçili ebatta) gösterir; ayar/iskonto/ürün değişince kendini yeniler. Resim üretilemezse düz metin ön izlemeye döner.
+  * EBAT: A4, 80 mm Fiş, 80 mm Barkod/Etiket ve ÖZEL EBAT (en x boy mm). 80 mm çıktıda ürün adları satıra sığmazsa alt satıra iner; sayfa boyu kalem sayısına göre ayarlanır.
+- 461.19 * Liste Fiyatla ÖN İZLEME artık ayrı pencerede, EKRANIN TAM ORTASINDA açılır (içinde YAZDIR / KAPAT; Esc kapatır); ebat, iskonto, ürün değişince yenilenir. Yandaki dar panel kaldırıldı.
+  * PROGRAM GENELİ yazdırma ön izleme hızı: Edge'e gereksiz arka plan/ağ işlerini kapatan bayraklar eklendi; sayfa ölçümü ile ilk sayfa görüntüsü AYNI ANDA üretilir (ilk sayfa daha erken görünür); kalan sayfalar en çok 3 Edge işlemiyle paralel üretilir, sonuçlar sırayla gösterilir; boş son sayfa kontrolü yalnız son sayfaya ve daha seyrek örneklemeyle yapılır. Test: test_onizleme_hiz.py
+  * Liste Fiyatla kademe havuzu: stoğu eksi/sıfır olan ama aramaya en uyan ürün (ör. BALON -1656) artık elenmez; UYGUN kademe doğru ürünü (BALON) seçer.
+  * Düğme/olay işleyicilerinde pencere kapanırken oluşan 'missing e' hatası Liste Fiyatla'da da giderildi.
+- 461.20 ÖN İZLEME ÇOK HIZLI: Yazdırma ön izleme (programın tamamı: rapor, teklif, fiş, ekstre...), Liste Fiyatla ön izleme ve Liste Fiyatla PDF artık her seferinde yeni Edge başlatmaz; yeni modül ALFABE_EDGE_SERVIS.py arka planda hazır bekleyen görünmez bir Edge'i DevTools protokolüyle kullanır (program açıldıktan ~3 sn sonra ısıtılır; 15 dk kullanılmazsa kapanır, program kapanırken kapatılır). Test ortamında: tek sayfa 2,3 sn -> 0,5 sn; 7 sayfa 4,0 -> 1,3 sn; 38 sayfa 14 -> 6 sn; ilk sayfa ~0,5 sn'de görünür. Servis çalışmazsa eski yönteme otomatik döner. Liste Fiyatla'da YAZDIR'a basınca kendi ön izleme penceresi kapanır (iki pencere üst üste durmaz). Test: test_onizleme_hiz.py
+- 461.21 Liste Fiyatla — TABLODAN YAPIŞTIRILAN LİSTE: PDF/fotoğraf tablosu kopyalanınca metin SÜTUN SÜTUN gelir (önce sıra numaraları 1,2,4..., sonra ürün adları, en sonda adetler). Artık HESAPLA bu üç bloğu tanır, satır satır birleştirir (adetler sondaki sütundan: '6', '3 Adet', '3'er Adet', '2'şer Adet', '1'er Paket'), sıra numaralarını ve 'Kırtasiye/Kişisel Malzemeler' başlıklarını atar, bölünmüş hücreyi (alt satır küçük harfle başlıyorsa) birleştirir; düzeltilmiş listeyi kutuda gösterir ve bilgi satırında 'Sütun sütun yapışan liste satırlara çevrildi' yazar. Sütun sayıları tutmazsa numaralar yine atılır, uyarı verilir. Satır satır tablo ('12 Ürün adı 3 Adet': başta artan sıra no, sonda adet) da tanınır. Normal listeler (3 Adet kalem...) etkilenmez.
+  * 've' ile birleşik tablo satırları ayrı ürün olur: 'Karton Bardak ve Tabak 100'lü' -> Karton Bardak 100'lü + Tabak 100'lü; 'Tam Tabaka ve Orta Boy Mukavva'; 'Kurşun Kalem ve Geniş Hazneli Kalemtıraş'. Testler: test_liste_tablo.py, test_liste_tablo_ekran.py
+
+461.22 - Liste Fiyatla: yalnızca sıra numaraları yapıştırılırsa (ürün adı sütunu kopyalanmamışsa) numaralar artık ürün sayılmıyor
+  (eskiden "13" yazan satır TİCON MELODİKA 13 K gibi rastgele ürünle eşleşiyordu). Bu durumda kutuya dokunulmaz ve
+  "ürün adı sütununu da seçip kopyalayın" uyarısı verilir. Ayrıca listenin ortasındaki yalnızca-numara satırları atlanır.
+
+461.23 - Liste Fiyatla: "➕ ÜRÜN EKLE" düğmesi. Arama (ad/barkod/raf) + adet penceresi; ENTER/çift tık ürünü listenin sonuna
+  "(elle eklendi)" satırı olarak ekler, pencere açık kalır (art arda ekleme). Eklenen satır elle seçilmiş sayılır (kademe
+  düğmeleri değiştirmez), toplam/iskonto/kapora/yazdır/PDF/Excel/hazırlık/HAZIR mesajına dahildir, GERİ AL ile geri alınır.
+
+461.24 - Liste Fiyatla: "Sulu Boya 12 Renk (Büyük) ve Kalın suluboya fırçası" gibi, ilk yarısında rakam bulunan "... ve ..." satırları
+  artık iki ayrı ürüne (suluboya / fırça) bölünür; her biri stoktan ayrı eşleşir. İkinci yarıda rakam varsa bölünmez.
+
+461.25 - Liste Fiyatla: kıvrık tırnak (100’lü) düz tırnağa çevrilir; "Karton Bardak ve Tabak 100’lü" artık iki ürüne bölünür.
+
+461.26 - Liste Fiyatla: üstte "📝 LİSTEYİ DÜZENLE (TAM EKRAN)" düğmesi. Tam ekran düzenleme penceresi: geniş tablo, üstte tüm
+  düzenleme düğmeleri (ürün ekle, seç/değiştir, ucuz/pahalı, adet, SATIRI BÖL, çıkar, geri al, birleştir, eksik ürünler),
+  filtre (tümü / eşleşmeyen / kontrol edilecek / stoğu yetmeyen / elle eklenen), adet ve birim hücresinde yazarak düzenleme,
+  ENTER = ürün seç, DELETE = satırı çıkar, ESC = kapat. Ana ekranla aynı listeyi paylaşır; kapatınca ana ekranda aynı durumdadır.
+  SATIRI BÖL: seçili satırı ';' ile ayırdığınız parçalara böler, her parça stoktan ayrı eşleşir.
+
+461.27 - Liste Fiyatla: ana ekrandaki düzenleme düğmesi satırı (ÜRÜN EKLE ... EKSİK ÜRÜNLER) kaldırıldı; bu işlemler yalnızca LİSTEYİ DÜZENLE (TAM EKRAN) penceresindedir.
+
+461.28 - Liste Fiyatla: PANOYA KOPYALA, HAZIR MESAJI, OKUL LİSTESİ KAYDET, SEPETE EKLE, ÖN İZLEME, RAPOR TASARIMI, YAZDIR, PDF/EXCEL ve Çıktı/Kâğıt/Özel mm seçimi ana ekrandan kaldırıldı; hepsi LİSTEYİ DÜZENLE (TAM EKRAN) penceresinin altındadır. Açılan pencereler tam ekranın üstünde açılır.
+
+461.29 - Liste Fiyatla: Müşteri/Telefon kutuları, MÜŞTERİYE KAYDET, KAYITLI LİSTELER, KAYDI SİL ve SEZON RAPORU ana ekrandan kaldırıldı; LİSTEYİ DÜZENLE (TAM EKRAN) penceresinin üst bölümündedir.
+
+461.30 - Liste Fiyatla: tam ekran düzenleme penceresinden UCUZ, PAHALI, ADET DEĞİŞTİR, SATIRI BÖL, SATIRI ÇIKAR, GERİ AL, AYNILARI BİRLEŞTİR, EKSİK ÜRÜNLER düğmeleri kaldırıldı (ÜRÜN EKLE ve ÜRÜN SEÇ kaldı). Düzenleme: hücreye tıkla, çift tık, DELETE.
+
+461.31 - Liste Fiyatla: tam ekran pencereden 3 SEÇENEĞİ YAZDIR, PDF KAYDET, EXCEL KAYDET, PDF (3 SEÇENEK), EXCEL (3 SEÇENEK) düğmeleri kaldırıldı (YAZDIR, ÖN İZLEME, RAPOR TASARIMI kaldı).
+
+461.32 - Liste Fiyatla: MÜŞTERİYE KAYDET başarıyla bitince ekran temizlenir (liste kutusu, satırlar, Müşteri, Telefon, iskonto/kapora/teslim/not, geri al geçmişi); kayıtlı liste KAYITLI LİSTELER ile yeniden açılır.
+
+461.33 - Liste Fiyatla: eşleştirme gerçek stok dosyasıyla (10.937 ürün adı) sınanıp iyileştirildi.
+  * "â/î/û" harfleri (Kâğıdı, Hikâye) tanınmıyordu: Krapon Kâğıdı, El İşi Kâğıdı, Kraft Kâğıdı yanlış/yok çıkıyordu. Düzeltildi.
+  * Bitişik/ayrı yazım: "El İşi" = ELİŞİ, "Sulu Boya" = SULUBOYA (iki yönde).
+  * Liste dili -> stok dili: Simsiz = DÜZ, Yuvarlak Uçlu = KÜT UÇLU / ANAOKULU, (2 Bölümlü) = ÇİFT, Tam Tabaka = 70*100, Orta Boy = 50*70 (mukavva/karton).
+  * "12'li / 12 Lİ / 100 LU / 100'LÜ" yazımları eşitlendi (stoktaki "10 LU" ile listedeki "10'lu" artık aynı).
+  * Çok satılan ürün (son 400 gün satış kaydı) eşit kapsamdaki az satılana tercih edilir; ürün adı listeyle birebir aynıysa öncelik alır.
+  * Listedeki en ayırt edici sözcük ("çıtçıtlı", "lastikli") üründe yoksa eşleşme zayıflar; stokta hiç geçmeyen sözcükler (marka/yabancı) ağırlığı düşük sayılır.
+  * Yalnızca sayı/paket benzerliğiyle eşleşme (ör. "Tabak 100'lü" -> "IŞIK 100 LÜ") engellendi; stokta olmayan ürün yanlış ürüne yapışmaz, "yok" kalır.
+  * Listedeki tüm sözcükler üründe varsa durum "kesin" olur (eskiden marka farkı yüzünden hepsi "kontrol" çıkıyordu).
+  * Yeni test: tests/test_liste_gercek_stok.py (gerçek stok adları + gerçek anaokulu listesi).
+461.34 - Programın genelinde: tablonun boş alanına tıklayınca mavi seçili satır kalkar (cari listesi gibi seçimi korumak gereken tablolar hariç).
+461.34 - Liste Fiyatla: fırça, makas, kalemlik, A4/beyaz A4 kâğıdı -> fotokopi kâğıdı, "büyük boy kuru boya" -> jumbo kuru boya eşleşmesi iyileştirildi; parantez içi tek kelimelik ipuçları ve yapışık "beyazA4" ayrıştırma.
+461.35 - Liste Fiyatla: "NOT: ..." ile başlayan genel açıklama satırları ürün sayılmaz. ÜRÜN SEÇ penceresinde hiç aday çıkmayan satırda boş ekran yerine tüm stok listelenir.
+461.35 - Yapay zekâ ile el yazısı okuma denendi, istek üzerine kaldırıldı; FOTOĞRAFTAN OKU eskisi gibi Windows okumasını kullanır (uyarıda 'Fişte' yerine 'Fotoğrafta').
+461.36 - Liste Fiyatla: fiyatı 0 olan tek aday (ör. fiyatı girilmemiş makas/fırça) artık 'yok' denmez; ürün sarı (kontrol) satırda gelir, fiyatı elle yazılır.
+461.37 - Liste Fiyatla: tek paragrafa yapışık (satır sonu olmayan) listeler ürünlere ayrılır: ')' sonrası, iki boşluk, nokta sonrası ve 'N adet' başlangıcından. '5'er adet büyük boy kırmızı, mavi, ... fon kartonu' her renk için ayrı satır olur; '2 adet siyah, 2 adet beyaz, 2 adet ten rengi fon kartonu' satırlarına ürün adı taşınır. Renk/nitelik sözcükleri (kalın, yumuşak, uçlu, renk adları) ürün türünü ezmez; 'jumbo kurşun kalem' kurşun kaleme düşer.
+461.38 - Liste Fiyatla: 'büyük boy fon kartonu' 50*70, 'orta boy' 35*50, 'küçük boy' 25*35 ebatlı ürünlere bağlanır.
+461.39 - Liste düzenleme ekranından PANOYA KOPYALA, HAZIR MESAJI ve OKUL LİSTESİ OLARAK KAYDET düğmeleri kaldırıldı.
+461.40 - Liste düzenleme ekranına "SEÇİLİ SATIRI SİL" düğmesi eklendi (silinenin yerindeki satır seçili kalır; seçim yoksa uyarır; GERİ AL ile döner).
+461.40 - Liste Fiyatla: gerçek yapıştırmalardaki tek boşluklu paragraf (parantez bitişik, "12'li sulu boya", "18'li pastel boya" gibi N'li-önce üslubu) ürünlere ayrılır; uzun başlık satırı ve "rica ederiz / karışmaması için ..." gibi not cümleleri ürün sayılmaz.
+461.41 - Programın geneli, 80/58 mm fiş ve etiket çıktısı: kâğıt boyu sabit tahmin yerine içeriğin gerçek yüksekliğinden ölçülür (açılışta ve yazdırmadan hemen önce); uzun listede alt kısım/TOPLAM kesilmez, kısa listede boş uzamaz. Sütunlar kâğıt genişliğine sığar (Tutar sütunu kesilmez), uzun ürün adı alt satıra sarılır. Liste Fiyatla ön izleme/boy tahmini uzun adları sayar. Rapor motorundaki 58/80 mm kâğıt seçimi de aynı düzeltmeyi kullanır.
+461.42 - 80/58 mm ön izlemede sayfa sol kenara yapışıyordu: ekranda 3 mm iç boşluk eklendi (yazdırmada kenar boşluğu zaten @page'den gelir).
+461.43 - Programın geneli: tablo başlığı/sağ tık menüsü yenilendi (AlfMenu): kart görünümlü, simge sütunlu, üzerine gelince vurgulu, 'Sütun: ...' başlıklı; kırmızı 'Bu alanı kaldır', mavi 'TASARIMI DÜZENLE'; alt menüler (üzerine gelince / → tuşu), klavye (↑ ↓ Enter Esc ←), dışarı tıklayınca ve odak gidince kapanır. Tüm işlevler (alan kaldır/seç/ekle, hizalama, yazı boyutu, en iyi yerleşim, akıllı hizala, yerleşim kaydet/varsayılan, baskı ön izleme, tasarım düzenle/kaydet) otomatik testle doğrulandı.
+
+461.44 - STOK LİSTESİ: "Yeni Alan Ekle" ile 15 yeni alan (Model, Alt Grup, Birim, Depo, KDV %, Önceki Fiyat, Birim Kâr TL, Maks., Stok Değeri (Maliyet/Satış), Durum, Son Satış, 30 Gün Satış, Oluşturma, Güncelleme).
+         Yeni Alan Ekle menüsü bölümlere ayrıldı (Ürün bilgisi / Fiyat ve kâr / Stok durumu / Satış hareketi / Kayıt); bölüm tanımı olan her tabloda çalışır.
+         Test: tests/test_stok_ek_alanlar.py
+
+461.45 - "YENİ ALAN EKLE" 4 ekrana daha genişletildi (bölümlü menü):
+  * ALIŞ BELGELERİ: Vade, KDV, İskonto, Ödenen, Kalan (bağlı tedarikçi faturası varsa faturadan; yoksa KDV satır vergisinden, diğerleri "-").
+  * CARİ LİSTESİ: Son Satış, Ciro (Toplam Satış), Son Tahsilat/Ödeme, Bakiye Yaşı (gün), Risk Kullanımı %.
+    Bakiye yaşı: borçluysa son tahsilattan (hiç yoksa ilk borçtan), alacaklıysa son borçtan bu yana geçen gün.
+  * SATIŞ DETAYI SATIRLARI: Kâr %, Birim Kâr, Kullanıcı, Stok Kodu, Marka, Grup, KDV %.
+  * FİNANS ve BANKA/KASA: Net Tutar, Yön, Ay, Gün, Kaynak Belge No (satış/alış belge numarası). Bankada Kaynak/Kaynak ID/İşlem Anahtarı alanları artık dolu geliyor.
+  Testler: tests/test_ek_alanlar_alis.py, _cari.py, _satis_satir.py, _kasa_finans.py
+
+461.46 - "YENİ ALAN EKLE" 7 ekrana daha (yeni genel yardımcı _alf_tv: gizli ek sütun + bölüm tanımı):
+  * STOK HAREKETLERİ (stok kartı sekmesi + hareket penceresi): Önceki Stok, Sonraki Stok, Hareket Değeri, Belge No, Kullanıcı, Gün.
+  * HIZLI SATIŞ ÜRÜN ARAMA (canlı liste + Ürün Seç): Model, Birim, Raf, Bölüm, KDV %, Toptan, Özel Fiyat, Min. Stok, Maliyet, Kâr %.
+  * HİZMET SATIŞLARI: Kullanıcı, Net (KDV Hariç), Saat, Gün, Ay (hizmetlerde maliyet tutulmadığından kâr yok).
+  * SİPARİŞ & TEKLİF: Telefon, Teslim/Geçerlilik, Kalan Gün, Ödenen (Avans), Kalan Ödeme, Not.
+  * CARİ AÇIK BELGELER: Tahsilat %, Son Tahsilat, Taksit Sayısı, Sonraki Vade, Belge Yaşı, Kullanıcı, Telefon; Taksit Planı: Taksit No, Gecikme, Ödeme %.
+  * FİYAT MERKEZİ: Model, Alt Grup, Depo, Raf, Min/Maks Stok, Stok Değeri, Fiyat Değişimi %, 30 Gün Satış.
+  * PERSONEL SATIŞ KÂRI: Ortalama Fiş, Kâr %, İskonto Toplamı, İade Fişi/Tutarı, Son Satış.
+  Testler: tests/test_ek_alanlar_*.py (11 dosya)
+
+461.47 - LİSTE FİYATLA: Ana ekrandaki İskonto/Kapora/Teslim tarihi/Not çubuğu kaldırıldı; aynı alanlar artık yalnız "LİSTEYİ DÜZENLE" penceresinde (değişince toplamlar yeniden hesaplanır).
+         Düzenleme penceresindeki Müşteri/Telefon çubuğu ve MÜŞTERİYE KAYDET / KAYITLI LİSTELER / KAYDI SİL / SEZON RAPORU düğmeleri kaldırıldı (kodu korunur, gizli).
+
+461.48 - TEK BÖLÜM KURALI: Bir bölüm (Stok, Hızlı Satış, Cari vb.) açıkken başka bölüm açılmaz, uyarı penceresi çıkmaz; önce açık bölüm kapatılır (Ana Sayfa / pencereyi kapat), sonra diğeri açılır.
+         Ayrı Stok Merkezi / stok kartı penceresi açıkken de hiçbir bölüm açılmaz. Finans Merkezi <-> Banka Merkezi geçişi serbest.
+         Kapatmak için ayar: tek_bolum = 0. Test: tests/test_stok_acikken_kilit.py
+
+461.49 - LİSTEYİ DÜZENLE: Kapora / Teslim tarihi / Not alanları kaldırıldı (İskonto alanı kaldı).
+
+461.50 - RAPOR DÜZENLEYİCİ: koyu (siyah) tema yerine açık tema (beyaz paneller, açık mavi başlıklar, lacivert vurgu). Tüm işlevler testle doğrulandı (sütun göster/gizle/sırala, ayarlar, sayfa, tarayıcı önizleme, gelişmiş pencere, varsayılana dön, kaydet, kapat). Test: tests/test_rapor_duzenleyici_acik.py
+
+461.51 - YAZDIRMA ÖN İZLEME HIZLANDI: Yüzlerce sayfalık raporlarda (stok listesi vb.) ön izleme tüm sayfaları görüntüye çevirmek yerine yalnız ilk 6 sayfayla birkaç saniyede açılır ("ilk 6 / N sayfa").
+         YAZDIR düğmesine basılınca belgenin TÜM sayfaları hazırlanır (ilerleme gösterilir) ve yazıcıya gönderilir. 12 sayfa ve altındaki raporlar eskisi gibi tam ön izlenir.
+         Test: tests/test_onizleme_buyuk_rapor.py (2000 satırlık stok raporu: ön izleme ~9 sn, 84 sayfanın tamamı yazdırmaya hazır)
+
+461.52 - RAPOR TASARIM STÜDYOSU (Rapor Düzenleyici > "Tasarım (bölümlü sayfa)" sekmesi; eski programdaki bölümlü tasarımcı + FastReport/ActiveReports işlevleri):
+  * BÖLÜMLÜ SAYFA: Rapor Başlığı, Özet Kutuları, Sayfa Üstbilgi (sütun başlıkları), Detay, Grup Başlığı / Grup Altbilgi (gruplama açıkken), Rapor Özeti (genel toplam), Sayfa Altbilgi.
+    Motorun gerçek yerleşimi gösterilir (mm cetvel, ızgara, yapışma 0,5-10 mm, yakınlaştırma / sığdır). Çok kayıtlı raporlarda sayfada örnek satırlar gösterilir; gerçek sayfa sekmesi "Veri ve Önizleme"dedir.
+  * SÜTUNLAR: başlığı sürükle = sırala, sütun kenarını sürükle = genişlet (otomatik "Elle" kipine geçer), çift tık = yeniden adlandır, Delete = gizle, "Bu sütuna göre grupla", "Σ Altına toplam yaz".
+  * NESNELER: Etiket, Kutu, Çizgi, Elips, Resim/Logo çiz-bırak; sürükle taşı, 8 tutamaçla boyutlandır, kement ile çoklu seçim, ok tuşları (1 mm / Shift 5 mm / Ctrl 0,1 mm), kes/kopyala/yapıştır/çoğalt/sil,
+    sola-ortaya-sağa / üste-ortaya-alta hizala, eşit yatay-dikey dağıt, öne getir / arkaya gönder, kalın-italik-altı çizili, yazı boyutu, sağ tık menüsü, çift tık ile metin düzenleme.
+  * HAZIR PARÇALAR: Sayfa No, Tarih, Kayıt sayısı, Σ Toplam (ƒx = {TOPLAM:Sütun}), firma adı, genel toplam kutusu, imza alanı, TASLAK filigranı.
+  * ÖZELLİKLER PANELİ: seçilene göre (etiket / sütun / başlık / özet kutuları / detay+gruplama / genel toplam / alt bilgi / sayfa) renk, yazı, konum-boyut (mm), açı, saydamlık, hangi sayfalarda, katman, kâğıt, kenar boşlukları, filigran, imza.
+  * GERİ AL / YİNELE (Ctrl+Z / Ctrl+Y, 40 adım) bütün düzenleyici için (sütun listesi, genel ayarlar, nesneler); ŞABLONU DOSYAYA KAYDET / DOSYADAN YÜKLE (.json).
+  * Motor: gruplama satırları ve üst/yan boşluklar önizleme komutlarına eklendi (_re_preview_commands artık üst kenar boşluğunu doğru kullanır).
+  Test: tests/test_rapor_studyo.py (taşı, boyutlandır, sütun genişlet/sırala, geri al, hizala, panel, kaydet, çıktı HTML, şablon, sağ tık). Sağ tık menüsünde bulunan ayırıcı hatası test sırasında düzeltildi.
+
+461.53 - ÇÖKME KORUMASI (28.10 15:32 "program bir anda kapandı", Yazdırma Merkezi'ndeyken; ALFABE_COKME_IZI.log: Tk içinde "access violation"):
+  * Tk nesneleri (resim, değişken) arka plan iş parçacığında çöp toplayıcı tarafından silinirse artık Tk'ye dokunulmaz; silme ana iş parçacığına ertelenir (Windows'ta bu tür erişim ihlali çökmesine yol açabilir).
+  * Yazdırma Merkezi ön gösterim tablosu her yenilemede yeniden kurulur (canlı tablonun sütunlarını değiştirmek yerine).
+  * ALFABE_COKME_IZI.log'a "son işlem" satırları yazılır (açılan bölüm, ön izleme, Yazdır düğmesi, ön gösterim raporu); bir daha kapanırsa hangi işlemde olduğu görünür.
+  Not: çökme Tk'nin içinde olduğundan kesin nedeni kanıtlanamadı; bu üç değişiklik olası nedenleri kapatır ve iz bırakır. Test: tests/test_tk_guvenli_sil.py
+
+461.54 - ADET / KUTU / KOLİ: aynı ürüne birden çok birim, her birimin kendi barkodu ve fiyatı:
+  * Stok kartında yeni "Birimler / Barkodlar" sekmesi: ADET (ana birim) satırı hazır gelir; "+ KUTU", "+ KOLİ", "+ DİĞER BİRİM", "BARKOD ÜRET". Sütunlar: Birim | Barkod | İçerdiği adet | Perakende (KDV dahil) | Toptan | Özel | Stoktaki miktar ("20 kutu" gibi; ana stoktan hesaplanır) | Sil.
+  * Stok her zaman ana birim (adet) cinsinden tutulur. Birim fiyatı boş bırakılırsa adet fiyatı x içerdiği adet olarak hesaplanır.
+  * Aynı barkod iki birimde, birimle ana/ek barkodda ya da iki üründe kullanılamaz (kayıtta engellenir). Mevcut "Ek barkodlar" aynen çalışır; birim barkodları o listede görünmez.
+  * Hızlı Satış: kutu/koli barkodu okutulunca satır o birimin fiyatıyla ve notuyla ("1 KUTU x 12") eklenir, stok içerdiği adet x miktar kadar düşer (fiş, fatura, raporlar aynı satırı kullanır). Aynı kutuyu tekrar okutunca satır toplanır. Ana barkod adet olarak satılır. Stok yetersizliği kontrolü de çarpanla yapılır. Birim seçim kutusundan (KUTU/KOLİ) seçilen satışta da birim fiyatı kullanılır.
+  * Alış (mal kabul): kutu/koli barkodu okutulunca satır o birimde eklenir (miktar = kutu sayısı, fiyat = kutu fiyatı); stok içerdiği adet kadar artar, maliyet adet başına hesaplanır.
+  * Diğer ekranlar (Fiyat Gör, Etiket, Sipariş vb.) birim barkodunu okutunca doğru ürünü bulur.
+  * "Çeşit / Birim / Muadil / Görsel" penceresindeki Birim Dönüşümü sekmesinden bir birim silinince barkodu da kaldırılır.
+  Veritabanı: stock_unit_conversions tablosuna barcode, retail, wholesale, special_price sütunları eklendi (mevcut kayıtlar korunur). Test: tests/test_birim_barkod.py, tests/test_birim_alis.py
+  Not: Toptan/Özel birim fiyatları kayıt altındadır; satış ekranlarında şimdilik perakende birim fiyatı kullanılır.
+
+461.55 - YEDEKTEN KISMİ GERİ YÜKLEMEDE STOK YAN TABLOLARI:
+  Sorun (deneyle doğrulandı): "Stok Kartları" dosya grubu ve "Sadece stok" seçeneği stok kartlarını yedekten alıyor, ama kartlara bağlı yan tabloları canlıda bırakıyordu. Sonuç: kutu/koli tanımı kalıyor ama barkodu ek barkod listesinden düşüyordu (kutu barkodu okutulunca "ürün bulunamadı"); vergi/e-fatura bilgisi (GTİP, ÖTV, KDV muafiyeti, e-fatura birimi) eşleşmeyen kartın bilgisiyle kalıyordu. Çeşit, muadil, görsel, set bileşeni ve kitap bilgisi tabloları da aynı durumdaydı.
+  Düzeltme:
+  * Stok Kartları grubuna şu tablolar eklendi: stock_tax_info, stock_unit_conversions, stock_variant_links, stock_alternatives, stock_images, stock_components, stock_book_info (stok kartlarıyla birlikte yedekten gelir).
+  * "Sadece stok" yolunda yedekteki kartlara ait yan kayıtlar canlıdakilerin yerine yedekten alınır; yedekte olmayan kartların yan kayıtlarına dokunulmaz.
+  * Yan tablolar canlı veritabanında yoksa (Stok Ek Özellikler penceresi hiç açılmamışsa) geri yükleme öncesi oluşturulur. Yedek eski sürümdense (yan tablo yok) hata vermeden atlanır.
+  DEĞİŞMEYEN: Tam yedek geri yüklemesi, KTS yedeği aktarımı, cari/satış/hareket geri yüklemeleri.
+  Test: tests/test_yedek_stok_yan_tablolar.py (eski kodda başarısız, yeni kodda geçer).
+
+461.56 - KUTU/KOLİ BARKODU: CARİ SATIŞ VE STOK SAYIMI:
+  * Cari Satış: kutu/koli barkodu okutulunca satır o birimin fiyatıyla (birim fiyatı / içerdiği adet = adet fiyatı) ve "1 KUTU x 12" notuyla eklenir; miktar adet cinsindendir, kayıtta stok içerdiği adet kadar düşer. Aynı kutu tekrar okutulursa satır toplanır; adet ve kutu ayrı satır olur. Birim fiyatı tanımlı değilse adet fiyatı x içerdiği adet kullanılır. Satır notu satış kaydına (sale_lines.note) yazılır; ekranda ürün adının yanında [not] olarak görünür.
+  * Stok Sayımı: kutu/koli barkodu okutulunca sayım miktarı içerdiği adet kadar artar (örn. 1 kutu = 12 adet); "barkod;adet" dosyasından içe aktarmada da aynı kural uygulanır. Ana barkod ve ek barkodlar eskisi gibi 1 adet sayar.
+  Hızlı Satış ve Alış ekranları 461.54'te yapılmıştı. DEĞİŞMEYEN: kutu tanımı olmayan ürünlerin satış/sayımı.
+  Test: tests/test_birim_cari_sayim.py (sayım + Cari Satış'ta satır, birleştirme, kayıt ve stok düşüşü).
+
+461.57 - KUTU/KOLİ: ETİKET, EXCEL, FİYAT YÖNETİMİ:
+  * Etiket & Barkod: kutu/koli barkodu okutulunca (arama kutusu ya da ÜRÜN EKLE) o birimin etiketi ayrı satır olarak kuyruğa girer; etikette birim barkodu, ürün adı + (KUTU) ve birim fiyatı basılır (birim fiyatı yoksa adet fiyatı x içerdiği adet). Normal ürün etiketi (fiyat değişimi, alış, elle ekleme) ayrı satır kalır; birbirine karışmaz. labels_queue tablosuna unit_name sütunu eklendi.
+  * Excel stok dışa/içe aktarma: yeni sütunlar "Birim 2/3 Adı, Barkodu, İçerdiği Adet, Perakende (KDV Dahil)". Dışa aktarmada ürünün ilk iki ek birimi yazılır (daha fazlası dosyaya girmez, kayıtlı kalır); içe aktarmada kutu/koli tanımları yeni ve mevcut kartlara işlenir, barkod çakışmaları (başka kart, aynı dosyada tekrar, ana barkodla aynı) ve geçersiz adet HATA satırı olur, önizlemede görünür. Birim barkodu ek barkod tablosuna da işlenir. Dosyayı değiştirmeden geri yüklemek "değişiklik yok" verir. Şablon örneği güncellendi.
+  * Fiyat Yönetimi (toplu fiyat değişimi/Excel fiyat yükleme/liste fiyat) ve tek ürün fiyat değiştirme: adet fiyatı değişince o ürünün elle girilmiş kutu/koli fiyatları (perakende/toptan/özel) aynı oranda değişir; boş bırakılan birim fiyatı zaten adet fiyatı x adetten hesaplandığı için kendiliğinden uyar. Fiyat uygulaması hata verirse birim fiyatları da değişmez.
+  Bilerek DEĞİŞTİRİLMEYEN: E-fatura. Kutu satışı faturada ana birim cinsinden (örn. 12 adet C62, adet fiyatıyla; tutar aynı) yazılır, bu doğru ve tutarlıdır. Kutu/BX olarak yazmak satır notundan geri dönüştürmeyi gerektirir; not elle değiştirilebildiği için güvenilir değildir.
+  KDV oranı değişiminde (net mod) kutu/koli fiyatları ayrıca ölçeklenmez; gerekirse stok kartındaki Birimler / Barkodlar sekmesinden güncellenir.
+  Test: tests/test_birim_etiket.py, tests/test_birim_excel.py, tests/test_birim_fiyat_yonetimi.py
+
+461.58 - Hızlı Satış: sepette satırın birimini ADET / KUTU / KOLİ arasında değiştirme
+  - Sepette bir satır seçilince, ürünün kutu/koli tanımı varsa listenin altında birim şeridi çıkar:
+    [ADET Ctrl+1] [KUTU (12) Ctrl+2] [KOLİ (120) Ctrl+3]. Aktif birim koyu mavi görünür.
+    Ürünün birim tanımı yoksa şerit hiç görünmez (mevcut ekran değişmez).
+  - Kısayollar Ctrl+1 / Ctrl+2 / Ctrl+3'tür; mevcut F1-F12 kısayollarına dokunulmadı.
+  - Birim değişince miktar SAYISI aynı kalır (3 ADET -> 3 KUTU), fiyat yeni birimin fiyatına geçer
+    (birim fiyatı boşsa ürünün normal fiyatı), stok temel birim (adet) olarak düşer; satırda "3 KUTU x 12" notu görünür.
+  - Elle fiyatı değiştirilmiş veya iskontolu satırda birim değişmez (fiyat bozulmasın); uyarı çıkmaz.
+  - Aynı üründe aynı birim ve fiyatta başka satır varsa (birleştirme ayarı açıksa) satırlar tek satırda toplanır.
+  - Test: tests/test_birim_sepet_degistir.py
+
+461.59 - Cari Satış: sepette satırın birimini ADET / KUTU / KOLİ arasında değiştirme
+  - Hızlı Satış'taki (461.58) birim şeridinin aynısı Cari Satış'a eklendi: satır seçilince tablonun altında
+    [ADET Ctrl+1] [KUTU (12) Ctrl+2] [KOLİ (120) Ctrl+3]. Ürünün kutu/koli tanımı yoksa veya satış kaydedilmişse şerit görünmez.
+  - Miktar sayısı aynı kalır, fiyat yeni birimin fiyatına geçer (birim fiyatı boşsa normal fiyat), stok adet olarak düşer,
+    satırda "3 KUTU x 12" notu görünür. Satırdaki iskonto yüzdesi korunur ve toplam yeniden hesaplanır.
+  - Elle fiyatı değiştirilmiş satırda birim değişmez. Aynı ürün/birim/fiyat/iskontolu başka satır varsa satırlar birleşir.
+  - Test: tests/test_birim_cari_sepet_degistir.py
+
+461.60 - SESSİZ HATA ONARIMI (hatalar artık ALFABE_HATA_GUNLUGU.log dosyasına yazılır)
+  - Tarama: 145 sessiz "except: pass" bloğu çıktı. Çoğu zararsızdı (pencere kapanırken oluşan görsel hatalar); bunlara dokunulmadı.
+  - Gerçek zararı olabilecek 17 yer, ekranda uyarı çıkarmadan hata günlüğüne yazacak şekilde düzeltildi:
+    firma kayıt listesi okunamaması; yedeğe firma logosu eklenememesi; eski yedeklerin silinememesi (ana ve ikinci yedek konumu);
+    yedek geçmişi/olay kayıtlarının kısaltılamaması; set/paket ürün satılabilir adedinin hesaplanamaması;
+    firma/dönem ayarının yazılamaması; planlı KDV tarih okunamaması; sipariş özeti; geri yükleme özeti ve disk alanı denetimi;
+    POS bekleyen komisyon/valör yenilemesi ve POS ekranlarının "bitti" bildirimleri.
+  - Program akışı değişmedi: hata yine yutulur, yalnızca günlüğe iz bırakılır. Yan modüllerde ortak küçük _log() yardımcısı kullanılır.
+  - Test: tests/test_sessiz_hata_gunluk.py
+
+461.61 - OTOMATİK YEDEK DOĞRULAMASI VE GÜNLERCE AÇIK KALMA DÜZELTMESİ
+  - Uçtan uca denendi: günlük yedek tetiği -> ZIP + sağlama -> yedek doğrulama -> yedekten geri yükleme; geri yüklenen
+    stok/cari/satış/finans verisi canlı veriyle birebir aynı çıktı. Aynı gün ikinci yedek alınmıyor. Yedek başarısız olursa
+    "Günlük Otomatik Yedek / Hata" olayı yazılıyor ve "bugün alındı" işareti konmuyor (yeniden denenir).
+  - BULUNAN AÇIK: günlük yedek yalnızca program açıldıktan 25 sn sonra BİR KEZ deneniyordu. Bilgisayar günlerce açık kalırsa
+    ikinci günün otomatik yedeği alınmıyordu (yalnız kapanışta alınırdı). Düzeltme: kontrol 30 dakikada bir yenilenir;
+    o gün yedek alınmışsa anında döner (maliyeti yok), alınmamışsa/başarısızsa tekrar dener.
+  - Test: tests/test_otomatik_yedek_uctan_uca.py
+
+461.62 - KASA MERKEZİ TESTLERİ + KÜÇÜK SAĞLAMLAŞTIRMA
+  - Kasa Merkezi ilk kez testle kapsandı (tests/test_kasa_merkezi.py): kasa bakiyesi (banka hariç), bugün giriş/çıkış/net,
+    satır bazlı "Kasa Bakiyesi" sütunu, Giriş/Çıkış ve dönem filtreleri, Türkçe harf duyarsız arama, iptal satırı görünümü,
+    gün sonu AÇIK/KAPALI ve son kapanış farkı, liste limiti (toplamlar tüm kayıtlardan), hızlı Tahsilat/Ödeme
+    (boş tutar reddi, bakiyeyi eksiye düşüren ödemede onay, ekranın yenilenmesi), kasa sayımı (hesap, negatif/harf reddi,
+    kaydetmede finans kaydı OLUŞMAMASI + denetim izi), bozuk para değeri ayarında varsayılana dönüş. Hesaplamalarda hata çıkmadı.
+  - Sağlamlaştırma: Para Sayımı penceresindeki 3 olay bağı (Configure x2, Enter) argümansız çağrılırsa
+    "missing 1 required positional argument: 'e'" hatası veriyordu (aralıklı, testte 8 çalıştırmada 2). Düzeltildi (10/10 temiz).
+
+461.63 - E-FATURA TESTLERİ (kod değişikliği YOK; yalnız test eklendi)
+  - E-Fatura / E-Arşiv modülü ilk kez kapsamlı testle denendi (tests/test_efatura.py): VKN/TCKN doğrulama, kuruş yuvarlama,
+    tutarın yazıyla gösterimi, birim kodları, GİB numaralama (seri/yıl/sıra, önek değişimi), satıştan fatura taslağı
+    (satış verisinin DEĞİŞMEDİĞİ doğrulandı), E-Arşiv/E-Fatura otomatik tür, iskonto, ÖTV, KDV istisna kodu ve GTİP,
+    doğrulama kuralları, UBL-TR XML üretimi (iyi biçimlilik, profil, toplamlar, özel karakter kaçışı) ve kendi XML'ini
+    geri okuma, iade faturası (orijinal fatura numarasına bağlanma), durum makinesi (XML yokken yükleme yok, geri alma yok,
+    iptal sonrası değişmez, iptalde satış yeniden faturalanabilir), numara düzenleme (XML yeniden üretilir), toplu fatura,
+    XML/CSV dışa aktarma, kontrol görünümü ve ekran (liste, filtre, arama, iptal, doğrulama). Hata bulunmadı.
+  - GÖZLEM (değiştirilmedi): satır bazlı kuruş yuvarlaması nedeniyle fatura toplamı, satış fişi toplamından nadiren
+    (rastgele 180 satışta 3'ünde) en fazla 2 kuruş farklı çıkabilir. Faturanın kendi içindeki KDV/matrah/toplam uyumu bozulmuyor.
+    Bu fark GİB şematron toleransına bağlı olduğundan, resmî doğrulayıcı olmadan vergi tutarı oynanmadı.
+
+461.64 - MUHASEBE & BEYAN: TEST + 2 DÜZELTME (ALFABE_MUHASEBE.py)
+  - Muhasebe ilk kez kapsamlı testle denendi (tests/test_muhasebe.py): dönem sınırları (ay sonu, artık yıl, Aralık), satış/iade/iptal/
+    dönem dışı ayrımı, alış (doğrudan + onaylı tedarikçi faturası + alış iadesi), Ba-Bs (eşik, iade, VKN'siz uyarısı, cari kartsız belge),
+    KDV özeti (SQL'den bağımsız hesapla karşılaştırıldı), yevmiye fişi (her fiş borç=alacak; 300 rastgele belgede dengesiz fiş yok),
+    fatura listesi, CSV/XLSX çıktı, ekran (hesaplama, sekmeler, eşik girişi 5.000,50 / 5000 / bozuk, hesap kodu özelleştirme).
+  - HATA 1 (düzeltildi): Program iptal edilen alışı purchases.status='İptal' olarak yazıyor, ancak Muhasebe yalnız büyük harfli
+    'İPTAL' değerini dışlıyordu. Sonuç: İPTAL EDİLMİŞ ALIŞLAR İndirilecek KDV ve Ba toplamına giriyordu (KDV özeti şişiyordu).
+    Artık 'İptal' / 'Iptal' de dışlanıyor (satışta da CANCELED/VOID/İptal savunması eklendi).
+  - HATA 2 (düzeltildi): Ba-Bs cari kartı bazında topluyordu. Aynı VKN'li iki cari kartı (mükerrer kart) ayrı ayrı eşik altında kalıp
+    bildirimden düşebiliyordu. Mevzuat VKN/TCKN bazındadır; artık geçerli VKN varsa aynı VKN tek satırda toplanır (VKN yoksa cari bazında).
+  - Sonuç: önceki aylara ait raporlarda iptal alış varsa KDV özeti ve Ba listesi yeniden hesaplanınca düşer (veri değişmez, hesap düzelir).
+
+461.65 - KAMPANYA TESTLERİ
+- tests/test_kampanya.py: % İndirim, TL İndirim (satır tutarı sınırı), Sabit Fiyat, 2 Al 1 Öde / 3 Al 2 Öde / X Al Y Öde (en ucuz birimler bedava),
+  kapsamlar (Barkod, Stok Kodu, Ürün, Marka, Grup, Çoklu hedef), tarih sınırları, pasif kampanya, çakışma modları (İlk/Son/En Avantajlı),
+  zararına kampanya politikası (izin/uyar/engelle, bedelsiz satır) ve toplamlar doğrulandı. Kod değişikliği yok; hata bulunmadı.
+- NOT: Kampanya formundaki 'Paket (Set)' ve 'Miktara Göre Fiyat' türlerinin motorda karşılığı yok (min_cart, discount_pct, campaign_tiers kullanılmıyor). Karar kullanıcıda.
+
+461.66 - KAMPANYA FORMU: DESTEKLENMEYEN TÜRLER
+- 'Paket (Set)' ve 'Miktara Göre Fiyat' türleri yeni kampanya türü listesinden kaldırıldı (kasada karşılığı yoktu); yanıltıcı 'miktar kademeleri' notu kaldırıldı; yardım listesinden çıkarıldı.
+- Eskiden bu türle kaydedilmiş kampanya listede 'Desteklenmiyor' gösterilir, düzenlerken türü listede kalır ve kırmızı bir not görünür. Kayıtlara dokunulmadı.
+- Test: tests/test_kampanya_form_turler.py
+
+461.67 - GÜVENLİK TESTLERİ
+- tests/test_guvenlik.py (çekirdek): hatalı girişte sayaç ve hesap kilidi (kilitliyken doğru şifre de girmez), kilit açma, başarılı girişte sayaç sıfırlanması,
+  pasif/şifresiz/olmayan kullanıcı, giriş geçmişi, eski SHA-256 şifrenin PBKDF2'ye yükselmesi, şifre kuralları, şifre süresi, rol yetkileri, rol kopyalama/silme,
+  son yönetici koruması, şablonlar, iskonto limiti onayı ve kritik işlem kapısı.
+- tests/test_guvenlik_ekran.py (ekran): yeni kullanıcı doğrulamaları (zorunlu alan, şifre eşleşmesi, iskonto aralığı, yaygın/kısa şifre, aynı ad), kayıt, düzenleme,
+  aktif/pasif, son yönetici korumasının ekranda çalışması, şifre sıfırlama, kilit gösterimi ve kilidi açma, seçimsiz işlem, alt pencerelerin açılması.
+- Kod değişikliği yok; hata bulunmadı.
+
+461.68 - VERİ AKTARIM (EXCEL/CSV) TESTLERİ + 1 DÜZELTME
+- tests/test_veri_aktarim.py: sayı/barkod/VKN/TCKN/telefon/rol/bakiye ayrıştırma, CSV okuma, sütun otomatik eşleme, cari planı (yeni/güncelle/atla/hata, dosya içi tekrarlar,
+  yalnız-yeni / yalnız-güncelleme modları, ünvanla eşleşme), açılış bakiyesi hareketi, kontrol raporu, hata ortasında geri alma, stok ve fiyat aktarımı (stok sayısı/miktarı değişmeden),
+  hata raporu CSV, bozuk/desteklenmeyen dosya, kayıtlı eşleme, tarih girişi.
+- tests/test_veri_aktarim_ekran.py: Veri Aktarım Merkezi açılışı, geçmiş listesi, sihirbazın stok/fiyat/cari için açılması, cari sihirbazı uçtan uca (önizleme + içe aktarma + rapor).
+- DÜZELTME (ALFABE_VERI_AKTARIM.py): sihirbazdaki 9 olay bağlantısı 'lambda e:' idi; Tk bazen olayı argümansız çağırınca 'missing argument e' hatası oluşuyordu.
+  Hepsi 'lambda e=None:' yapıldı (fare tekerleği ve kapanış olayları korumalı).
+
+461.69 - AYARLAR TESTLERİ
+- tests/test_ayarlar.py: kayıt defteri bütünlüğü (112 ayar: tekrar yok, varsayılanlar geçerli ve aralıkta, bağımlılıklar mevcut), doğrulama (Evet/Hayır, sayı aralığı, saat, belge öneki, metin uzunluğu),
+  kapsam öncelik sırası (Kullanıcı > Firma > varsayılan), okurken sınır kırpma, değişiklik geçmişi; ekran: tüm kategoriler açılır, kaydet, geçersiz değerde kayıt engeli, iptal, varsayılana dön,
+  kapsamdan kaldır, arama, ayar yedeğini dışa/içe aktarma (tanınmayan/bozuk kayıtlar atlanır), bozuk dosya, kapsam temizle, geçmiş ve sağlık kontrolü. Kod değişikliği yok; hata bulunmadı.
+
+461.70 - GİRİŞTE KULLANICI ADI HARF DUYARSIZ
+- 'Ali' kullanıcısına 'ali' / 'ALI' yazılarak girilebilir (giriş, yetkili onayı, kilit açma, yönetici onayı). Kayıttaki yazım biçimi esas alınır; hatalı deneme sayacı ve giriş geçmişi aynı hesaba işlenir.
+  (SQLite NOCASE yalnız İngilizce harfleri eşler: 'İ/ı' gibi Türkçe harf farkı hâlâ ayrı sayılır.)
+- Değişen: ALFABE_GUVENLIK.py (authenticate), ALFABE_SATIS_PRO.py (_verify_company_user_password, yönetici onayı sorgusu). Test: tests/test_guvenlik.py bölüm 13.
+
+461.71 - E-FATURA KURUŞ FARKI BİLGİLENDİRMESİ
+- Fatura satır bazlı kuruşa yuvarlandığı için toplam fişten en fazla 0,02 TL sapabilir (200 rastgele satışta ölçüldü; en büyük sapma 0,02 TL). Vergi/matrah HESABI DEĞİŞTİRİLMEDİ
+  (GİB toleransı belirsiz olduğu için kalem toplamı esas alındı).
+- DOĞRULA artık fark 0,01–0,05 TL ise bilgi uyarısı ('satır bazlı kuruş yuvarlaması, normaldir'), 0,05 TL'den büyükse 'satış değiştirilmiş olabilir' uyarısı verir. Hata değildir, XML'i engellemez.
+- Değişen: ALFABE_EFATURA.py (validate_doc). Test: tests/test_efatura.py bölüm 8.
+
+461.72 - KUTU/KOLİ FİYATI MÜŞTERİ FİYAT TİPİNE UYAR (SEÇENEK A)
+- Kural (Hızlı Satış ve Cari Satış): kutu/koli ADET başına fiyatı = birimin o fiyat tipindeki (Toptan/Özel) fiyatı ÷ içerdiği adet; birimde yoksa ürünün o tipteki adet fiyatı;
+  o da yoksa birimin perakende fiyatı; o da yoksa ürünün perakende adet fiyatı. Perakende müşteri ve fiyat tipi ayarı kapalıyken (Ayarlar: toptan/özel kullan) davranış eskisi gibidir.
+- Uygulanan yerler: birim barkodu okutma, birim seçimi (alt şerit Ctrl+1/2/3 ve açılır liste), müşteri sonradan seçilince/değişince sepet satırlarının yenilenmesi.
+  Elle fiyat/iskonto verilmiş satırlara dokunulmaz.
+- Cari Satış: önceki sürümde müşterinin fiyat tipi HİÇ uygulanmıyordu (ADET dahil perakende fiyat geliyordu). Artık Toptan/Özel cari için varsayılan fiyat fiyat tipine göredir;
+  elle yazılan fiyat her zaman önceliklidir.
+- DÜZELTME: Hızlı Satış'ta açılır listeden birim (KUTU/KOLİ) seçilerek eklenen satırın birim adı 'ADET' olarak kaydediliyordu (birim sıfırlandıktan sonra okunuyordu);
+  bu yüzden toptan/özel müşteride birim fiyatı bulunamıyor, adet fiyatı × adet kullanılıyordu.
+- Yeni yardımcılar: tier_of_customer, unit_row, unit_base_price. Test: tests/test_birim_fiyat_tipi.py.
+
+461.73 - TOPLU KDV DEĞİŞİMİNDE KUTU/KOLİ FİYATLARI
+- Sorun: Toplu KDV oranı değişikliğinde 'KDV hariç fiyat sabit' seçilince adet fiyatları (perakende/toptan/özel) yeni orana göre ölçekleniyordu ama kutu/koli (birim) fiyatları ESKİ KALIYORDU;
+  geri almada da dönülemiyordu. Birim fiyatı ile adet fiyatı birbirinden koptuğu için kutu satışı yanlış fiyatla yapılabiliyordu.
+- Düzeltme: Aynı oranda ölçeklenir (birim perakende/toptan/özel; boş fiyat boş kalır; pasif ürünler dahil; farklı orandaki ürünlere dokunulmaz). Eski değerler plana 'unit_snapshot' olarak kaydedilir,
+  geri alma birebir eski fiyatları döndürür. Eski kayıtlı planlar (unit_snapshot yok) hatasız geri alınır. 'KDV dahil fiyat sabit' seçeneğinde fiyatlara dokunulmaz (değişmedi).
+- Değişen: ALFABE_SATIS_PRO.py (vat_plan_apply, vat_plan_revert). Test: tests/test_kdv_degisim.py.
+
+461.74 - BELGEDEN ALIŞ AL (PDF / EXCEL / CSV / E-FATURA XML)
+  Alış & Mal Kabul penceresine "BELGEDEN ALIŞ AL (PDF / EXCEL)" düğmesi eklendi.
+  Firmadan gelen belge seçilir; program satırları okur ve stok kartlarıyla eşleştirir:
+    barkod -> hatırlanan tedarikçi kodu -> stok kodu -> birebir ad -> benzer ad -> yeni ürün.
+  Kontrol ekranı: ✔ eşleşti / ≈ benzer / ＋ yeni ürün / ✖ okunamadı renkleriyle; hücreye çift tıklayıp miktar, fiyat,
+  KDV, ad düzeltilir; ürün değiştirilir, satır çıkarılır. Belge toplamı ile satır toplamı karşılaştırılır (fark gösterilir).
+  "ALIŞ BELGESİNE AKTAR" denilmeden hiçbir şey kaydedilmez; yeni ürünler o anda stok kartı olarak açılır (stok 0, miktar alışla girer).
+  "Bu tedarikçinin ürün kodlarını hatırla" işaretliyse sonraki belgede aynı kod otomatik eşleşir.
+  Belgedeki birim (KOLİ gibi) stok kartının alt birimiyse çarpanla girilir. Fiyatlar KDV dahil seçeneği vardır.
+  Dijital PDF için program klasöründeki "pypdf" klasörü kullanılır (BSD lisanslı, kurulum gerektirmez).
+  Fotoğraf / taranmış PDF (JPEG) bir sonraki aşamada eklenecek; şimdilik anlaşılır bir mesaj verir.
+  Yeni dosya: ALFABE_BELGE_ALIS.py, pypdf/, tests/test_belge_alis.py, tests/ornek_alis_faturasi.pdf
+
+461.75 - BELGEDEN ALIŞ: FOTOĞRAF (JPEG/PNG) VE TARANMIŞ PDF
+  Belge seçiminde .jpg/.jpeg/.png fotoğraflar ve metin katmanı olmayan (taranmış) PDF'ler de kabul edilir.
+  Windows 10/11'in yerleşik yazı tanıması (Türkçe, internet gerekmez) kelimeleri konumlarıyla okur; program
+  satırları yeniden kurar ve dijital PDF ile aynı hattan geçirir (eşleştirme, kontrol ekranı, onay).
+  Okuma hatasına karşı: miktar x birim fiyat belgedeki satır tutarıyla tutmuyorsa satır "⚠" ile işaretlenir,
+  ekranın üstünde "fotoğraftan okundu, sayıları kontrol edin" notu görünür, belge toplamı farkı gösterilir.
+  Windows dışında ya da Türkçe dil paketi yoksa anlaşılır mesaj verir. Sınır: yazılar net/aydınlık olmalı.
+  NOT: Windows okuma adımı yalnız Windows'ta çalışır; satır kurma ve işaretleme mantığı gerçek PDF kelime
+  konumlarıyla test edildi, Windows'un kendi okuma çağrısı kullanıcının bilgisayarında denenmelidir.
+
+461.76 - BELGEDEN ALIŞ: GERÇEK "SİPARİŞ FİŞİ" DÜZENİ + TAM SAYFA
+  Kontrol ekranı tam sayfa (büyütülmüş) açılır.
+  Gerçek tedarikçi fişiyle (ADET BRM MALINCİNSİ ... ÜRÜN KODU BARKOD B.FİYAT TUTAR) düzeltildi:
+  - Satır miktar + birimle başlıyorsa (1 PAKET, 0,5 PAKET, 1 DZ) doğru okunur; barkodlar miktar/fiyat sayılmaz.
+  - 1.117,20 ve 1.117.20 gibi binlik ayraçlı tutarlar doğru çözülür; "28.763.90 TL" toplamı okunur.
+  - Adında BANKASI / PASTEL geçen ürünler (eski filtre yüzünden) artık atlanmaz.
+  - Barkodu bir alt satıra kaymış satırlar ve iki satıra bölünmüş ürün adları birleştirilir.
+  - KDV ayrı gösterilmeyen fişte (KDV : 0.00) fiyatlar "KDV dahil" sayılır; belge toplamı ile karşılaştırma tutar.
+  - Tedarikçi adı fişte yoksa boş bırakılır (adres/alıcı satırı alınmaz).
+  Gerçek fişte 64 satır okundu; satır toplamı belge toplamıyla kuruşu kuruşuna tuttu (28.763,90).
+
+461.77 - BELGEDEN ALIŞ: SAYISI FARKLI BENZER ÜRÜN OTOMATİK BAĞLANMAZ
+  Belgedeki ad ile stok kartı adında birbirini tutmayan sayılar varsa (3.SINIF / 7.SINIF, 2.SINIF / 8.SINIF gibi)
+  program kartı kendiliğinden bağlamaz; satır "＋ Yeni ürün" olur. Benzer kartlar yine "ÜRÜNÜ DEĞİŞTİR" listesinde önerilir.
+
+461.78 - BELGEDEN ALIŞ: İSKONTO, AYRI BARKOD/KOD SÜTUNLARI, BARKOD ÖĞRENME
+  Okunan alanlar: Barkod - Ürün Kodu - Stok Adı - Miktar - Birim - Birim Fiyat - İskonto % - KDV %.
+  İskonto: Excel "İskonto/İsk/İndirim" sütunu, PDF'te İSK % sütunu (başlıktaki sıraya göre KDV'den ayrılır),
+  e-fatura XML AllowanceCharge; sütun yoksa ama satır tutarı miktar x fiyattan düşükse örtük iskonto hesaplanır.
+  İskonto kontrol ekranında düzenlenebilir ve alış belgesindeki satır iskontosuna (İskonto %) aktarılır.
+  Satır tutarı kontrolü artık iskonto ve KDV dahil tutarı da hesaba katar (yanlış ⚠ azaldı).
+  Kontrol ekranında Barkod ve Ürün Kodu ayrı sütundur; ikisi de çift tıkla düzeltilir.
+  Eşleşen stok kartında barkod boşsa, belgedeki barkod karta yazılır (başka kartta yoksa).
+
+461.79 - STOK MERKEZİ: NEGATİF STOK SATIRLARI SİYAH YAZI
+  Negatif stoklu satırlar pembe fon korunarak kırmızı yerine siyah yazıyla gösterilir (okunabilirlik).
+  Program geneli: fonlu (renkli arka planlı) tablo satırlarında kırmızı yazı siyaha çevrildi, fonlar aynen kaldı
+  (stok negatif, cari gecikmiş/riskli, çek-senet gecikmiş, iptal, kritik, maliyet altı, hatalı satırlar vb. - 19 yer).
+  Fonsuz kırmızı yazılar (ör. hata/iptal metinleri) ve turuncu-kahve yazılar değişmedi.
+
+461.80 - ETİKET & BARKOD: İŞİ KAYDET / KAYITLI İŞLER
+  Üst çubuğa "İŞİ KAYDET" ve "KAYITLI İŞLER" düğmeleri eklendi.
+  İşi kaydet: etiket listesi (ürün + adet + şablon + kutu/koli birimi) ile ölçü, şablon, kağıt, yazıcı, satır/sütun ve
+  boşluk ayarları isimle kaydedilir (aynı isim varsa üzerine yazmayı sorar).
+  Kayıtlı işler: YÜKLE (listeyi değiştirir, ayarlar aynen gelir), LİSTEYE EKLE (mevcut listeye ekler, ayarlar değişmez),
+  YENİDEN ADLANDIR, SİL. Çift tıkla yükler.
+  Fiyatlar kaydedilmez; yüklenince ürünlerin GÜNCEL satış fiyatı kullanılır. Silinmiş ürünler atlanır ve bildirilir.
+  Yeni dosya: ALFABE_ETIKET_IS.py, tests/test_etiket_is_kaydet.py
+
+461.81 - ETİKET TASARIMCISI (V2) KUSURSUZLAŞTIRMA
+- Yeni: her nesne için "Yazıyı kutuya doldur (en büyük punto)" seçeneği. Kutuyu istediğiniz boyuta çekin, yazı/rakam kutuyu otomatik doldurur (ön izleme, PDF ve baskıda aynı).
+- Yeni: GERİ AL düğmesi ve Ctrl+Z (ekleme, silme, taşıma, boyutlandırma, hizalama, özellik değişiklikleri).
+- Yeni: seçili nesneyi ok tuşlarıyla 0,5 mm, Shift+ok ile 0,1 mm kaydırma.
+- Düzeltme: punto kutusuna yazarken (ör. 1 yazıp 12'ye geçerken) nesne kutusunun küçülüp bozulması engellendi; punto Enter / odak çıkışı / ok ile uygulanır.
+- Düzeltme: aynı alan ikinci kez eklenmek istenince, OKUNAKLI YAP'ta ve hizalamada gereksiz uyarı pencereleri kaldırıldı.
+- Hazır "Dolu Fiyat 80x38" şablonu isteğe bağlı başlangıç olarak duruyor; tasarımı sizin yapmanız için zorunlu değildir.
+- Test: tests/test_etiket_tasarimci.py
+
+461.82 - AI ASİSTAN: CEVAP ORTADA AÇILAN PENCEREDE
+- Asistana soru sorulunca (yazarak ya da hazır düğmeyle) cevap, programın ortasında açılan ayrı bir pencerede yazılır. Pencerede soru ve cevap görünür; KAPAT düğmesi veya Esc ile kapanır. Sonraki soruda aynı pencere güncellenir.
+- Sohbet alanı ve alttaki tablo/Excel aktarımı eskisi gibi çalışır.
+- Test: tests/test_asistan_cevap_penceresi.py
+
+461.83 - AI ASİSTAN: "Invalid column index c0" HATASI
+- Sonuç tablosu sütun değiştirirken Tk'dan hata gelirse artık tablo yeniden kurulur; hata olsa bile cevap penceresinde ve sohbette doğru cevap yazılır (eskiden "Bu soru yanıtlanırken bir hata oluştu" ile ezilirdi).
+- Test: tests/test_asistan_cevap_penceresi.py (hata simülasyonu dahil)
+
+461.84 - HIZLI SATIŞ: SON ÜRÜN OTOMATİK SEÇİLİ
+- Ürün okutulunca / eklenince sepetteki o satır otomatik seçilir (aynı ürün tekrar okutulup satır birleşirse birleşen satır seçilir). Miktar, F7 Birim Fiyat, Açıklama, Satır Sil düğmeleri artık önce satıra tıklamadan ve uyarı çıkmadan çalışır.
+- Satış, stok, ödeme mantığına dokunulmadı.
+- Test: tests/test_hizli_satis_son_urun_secili.py
+
+461.85 - HIZLI SATIŞ: NOKTA ATIŞI ÜRÜN ARAMA
+- En az iki kelime yazılıp ürün adı yazılanla birebir aynıysa (ör. "FABER KIRMIZI KALEM") yalnız o adlı ürünler listelenir; diğer gruplar/benzerleri gelmez. Büyük/küçük harf, Türkçe karakter ve fazla boşluk farkı yok sayılır.
+- Benzerlerini de görmek için aramanın sonuna * yazılır (ör. "FABER KIRMIZI KALEM*"); liste başlığında bu ipucu görünür.
+- Birebir ad yoksa, tek kelimelik veya sayıyla biten aramalarda (ör. "ürün 12") hiçbir sonuç gizlenmez; adında aynen geçenler en üstte, kelimelerin hepsini adında taşıyanlar sonra, diğerleri en altta sıralanır.
+- Barkod / stok kodu tam eşleşmesi eskisi gibi çalışır. Canlı liste, Enter ve Büyük Ekran aynı kuralı kullanır.
+- Test: tests/test_hizli_satis_nokta_atisi.py
+
+461.86 - HIZLI SATIŞ: AÇILAN ÜRÜN LİSTESİ UZADI
+- Arama yazınca açılan ürün listesi artık sepet tablosunun alt çizgisine kadar uzar (ekrana sığmazsa ekran sınırında durur). Daha fazla ürün aynı anda görünür.
+
+461.87 - HIZLI SATIŞ: KLAVYE KISAYOLLARI DÜZELTMELERİ (22 kısayol gerçek tuş olaylarıyla denendi)
+- Düzeltme: F12 (Kaydet ve Kapat) Hızlı Satış'ta Yardım penceresini açıyordu; artık ekranın kendi işlevini yapar. (Yardım düğmesi alt çubukta duruyor.)
+- Düzeltme: F4 (Beklet) ve F2 (POS) ana pencerenin kendi kısayollarına takılabiliyordu; F-tuşları (F1,F2,F4,F5,F6,F8,F9,F10,F11,F12) bu ekranda artık belirli olarak bağlı.
+- Düzeltme: Ürün listesi açıkken Esc yalnız listeyi kapatır; satışı iptal edip ekranı kapatmaz. Liste kapalıyken Esc eskisi gibi iptal et ve kapat.
+- Düzeltme: Hızlı Satış'tan çıkıp tekrar girince F3, F7, Ctrl+F6, Ctrl+1/2/3 eski kapanmış ekrana gidip hata verebiliyordu; korundu.
+- Düzeltme: Etiket & Barkod ekranından sonra F9 bağı ana pencerede kalıp Hızlı Satış F9 (Ödeme) tuşunu bozabiliyordu; korundu.
+- Ctrl+B (büyük ürün arama) liste açılmadan da çalışır.
+- Test: tests/test_hizli_satis_kisayollar.py
+
+461.88 - HIZLI SATIŞ: DEL TUŞU
+- Ürün okutulduktan sonra imleç arama kutusunda kaldığı için Delete tuşu seçili satırı silmiyordu. Artık arama kutusu BOŞKEN Delete seçili (son okutulan) satırı siler; kutuda yazı varsa Delete yazıyı düzenlemeye devam eder.
+- Test: tests/test_hizli_satis_kisayollar.py
+
+461.89 - CARİ SATIŞ: KISAYOL ÇAKIŞMALARI (28 kontrol gerçek tuş/düğme olaylarıyla denendi)
+- Düzeltme: Cari Satış F6/F8/F10/F11/F7 tuşlarını ana pencerede "ekleme olmadan" bağlıyordu; bu yüzden Cari Satış'a girildikten sonra Hızlı Satış'ın aynı tuşları ezilebiliyor, Cari Satış'tan çıkınca da kapanmış ekrana gidip hata verebiliyordu. Artık hepsi yalnız Cari Satış görünürken çalışır, diğer ekranları etkilemez.
+- Denenip sorunsuz çıkanlar: barkod/ad ile ürün ekleme, aynı ürün birleştirme, birim fiyat + iskonto ile ekleme, EKLE, Stok Ara (F11), Cari Seç (F4), Birim Fiyat (F7, Ctrl+F6), İskonto (F8), Ctrl+1/2/3, Seçili Satırı Sil, Yeni Satış, Son Satış Ön İzle, İptal Et ve Kapat, Kaydet (F6) ve Kaydet ve Kapat (F10); ödeme: Açık Hesap, Nakit, Kart/POS, Parçalı, Havale/IBAN, Senet/Taksitli (satış, stok, cari borç kayıtları doğrulandı).
+- Test: tests/test_cari_satis_kisayollar.py
+
+461.91 - ANA SAYFA YENİ TASARIM (düzen korunarak):
+ - Saatlik satış tablosuna "Fark" sütunu (Bugün/Dün yüzde, ▲/▼) ve tablonun üstüne Bugün (mavi) / Dün (gri kesik) çizgi grafiği eklendi. Tam Ekran penceresinde de Fark sütunu var. Tablo açılışta güncel saate kaydırılır.
+ - Yeni satır: SON 7 GÜN (Dün/Bugün vurgulu çubuklar, yüzde fark), SON SATIŞLAR (son 6 satış: saat, müşteri, ödeme, tutar), ACİL STOK (son 30 günde satılan, asgari seviyede/altında ürünler).
+ - Alttaki boşluk: satır yükseklikleri pencere boyuna göre büyür; küçük ekranda eskisi gibi kaydırılır.
+ - Sol menü: grup başlığına tıklayınca grup açılır/kapanır (▾/▸); YÖNETİM kapalı başlar, menü 1080p ekranda kaydırmasız sığar. 28 modül, yetki kontrolü ve kısayollar (F2/F3/F4/F12) aynen çalışır.
+ - Satış/stok/cari/finans verisine yazma yok; yalnız ana sayfa görünümü. Test: tests/test_ana_sayfa_yeni_tasarim.py (21 kontrol), test_ana_sayfa_dugmeler.py (24).
+
+461.92 - CARİ SATIŞ YENİ TASARIM (A: açık kart tema):
+ - Müşteri, Cari Durum, Ödeme Şekli, Satış Bilgileri ve Ürün Ekle alanları kart görünümüne alındı; tablo satırları daha ferah, seçili satır açık mavi; Genel Toplam daha büyük (mavi); KAYDET VE KAPAT yeşil.
+ - Satış Özeti paneli genişletildi; "Bu satıştan sonra" bakiye / vade / risk uyarısı bu panele taşındı.
+ - YENİ: Cari Durum kartında Risk Limiti kullanım çubuğu (yeşil <%70, sarı <%100, kırmızı aşım; Açık Hesap/Senet satışında bu satış da hesaba katılır).
+ - YENİ: Müşteri satırında Vergi No gösterilir.
+ - YENİ: Ürün seçilince (öneri listesinden) bu müşteriye o ürünün SON SATIŞ FİYATI ve tarihi ipucu olarak çıkar (fiyatı değiştirmez).
+ - YENİ: Tabloda Del tuşu seçili satırı siler.
+ - DÜZELTME: Sepet boşken "Senet / Taksitli" seçilince çıkan "önce ürün ekleyin" uyarısı kaldırıldı (plan sepet doluyken TAKSİTLENDİR ile veya kayıtta istenir).
+ - Tablo: yalnız Ürün Adı sütunu genişler (boş yan alan kalmaz).
+ - Kayıt/cari hareket mantığına dokunulmadı. Test: tests/test_cari_satis_yeni_tasarim.py (24), test_cari_satis_kisayollar.py (28).
+
+461.93 - STOK MERKEZİ: GÖRSEL SÜTUNU KALDIRILAMIYORDU (DÜZELTME):
+ - Neden: "Görsel" (en sol) başlığına sağ tıklayınca menü ilk gerçek sütunu (Özel Kod/Barkod) seçiyordu; "Bu alanı kaldır" Görsel yerine o sütunu kaldırmaya çalışıyordu.
+ - Şimdi: Görsel başlığında menü "Sütun: Görsel" der ve "Bu alanı kaldır (Görsel)" Görsel sütununu gizler (ürün resimleri silinmez). Geri getirmek için aynı menüde "Görsel sütununu göster". Yenilemede / yeniden açılışta gizli kalır. Tüm tablolardaki ortak sağ tık menüsünde geçerli.
+ - Not: Listede küçük resim yalnız ürüne GÖRSEL eklenmişse çıkar (DÜZENLE > ÇEŞİT / BİRİM / MUADİL / GÖRSEL).
+ - Test: tests/test_gorsel_sutunu_kaldir.py (8 kontrol).
+
+461.94 - STOK MERKEZİ: BOŞ GÖRSEL SÜTUNU OTOMATİK GİZLENİR:
+ - Hiçbir ürüne görsel eklenmemişse "Görsel" sütunu kendiliğinden gizli açılır; herhangi bir ürüne görsel eklenince sütun otomatik geri gelir. İstenirse sağ tık menüsünden elle gizlenip gösterilebilir. Test: tests/test_gorsel_otomatik_gizle.py (3).
+
+461.95 - SÜTUN SIRASI / GİZLEME / GENİŞLİK ARTIK HER ZAMAN KAYDEDİLİR
+  Sorun: Stok Merkezi'nde sütun başlığını sürükleyip (örn. Stok Kodu'nu başa alıp) başka ekrana gidip dönünce
+  eski düzene dönüyordu. "Sütun düzenini hatırla" ayarı kapalıysa sürükleme kaydedilmiyordu.
+  Çözüm: Kullanıcının kendi yaptığı sütun sürükleme, gizleme/gösterme ve genişlik değişiklikleri artık
+  ayardan bağımsız olarak kalıcı kaydedilir. Otomatik (sistemin yaptığı) kayıtlar eskisi gibi ayara bağlıdır.
+  Test: tests/test_tablo_sira_kalici.py (ayar kapalıyken sürükle, ekran değiştir, geri dön, gizle - 5 kontrol).
+
+461.96 - ANALİZ BULGULARI DÜZELTMELERİ (v1.2.291.468)
+  - Tutar alanları (tahsilat, ödeme, banka, virman, hesap açılışı, senet): "1.500" artık 1500 okunur; nan/inf geçersiz sayılır.
+  - Stok kartı kaydı: kart açıkken başka yerde değişen güncel stok miktarı ezilmez.
+  - Cari Satış: ürün ekleme/silme, miktar ve iskonto değişince taksit planı sıfırlanır (eski plan toplamı kaydedilmez).
+  - Hızlı Satış: koli/paket satışında stok kontrolü çarpanlı adetle yapılır.
+  - Toplu fiyat: maliyeti 0 olan ürünün fiyatı "Maliyete göre %" ve "Hedef marj" modlarında değişmez.
+  - Finans/Kasa'dan cari tahsilat: YAZDIR çalışır; İŞLEMİ İPTAL ET bu ekranlarda pasif (iptal Cari Merkezi'nden).
+  - Vade sütunu: 'Ödendi' ve 'ÖDENDİ' durumlu taksitler açık sayılmaz.
+  - Alış belgesi eşleştirme sırası: barkod, tedarikçi kodu, kendi stok kodu.
+  - Eski BCK yükleme hata dönüşü yalnızca doğrulanmış güvenlik yedeğine yapılır.
+  Test: tests/test_duzeltmeler_468.py (28 kontrol). Tam takım: 81 geçti, yalnız test_onizleme_hiz (bilinen) başarısız.
+  Bekleyen kararlar: Ana Sayfa kısmi iade, yetki hatasında davranış, kritik stok kuralı.
+
+469 - FİRMA SEÇİM EKRANINA "KULLANICI GİRİŞİ" PANELİ (v1.2.291.469)
+  - Firma seçim ekranında, sağ panelde FİRMAYI AÇ düğmesinin üstüne Kullanıcı Girişi paneli eklendi (Kullanıcı Adı listesi + Şifre).
+  - Panel YALNIZ "açılışta kullanıcı girişi" ayarı AÇIKSA görünür. FİRMAYI AÇ veya Şifre kutusunda ENTER ile giriş yapılır.
+  - Panel görünürken FİRMAYI AÇ'a basınca eski ayrı giriş penceresi açılmaz; kullanıcı/şifre panelden okunur.
+  - Hatalı şifre / kullanıcı seçilmemesi panelde kırmızı satırla yazılır; uyarı penceresi çıkmaz. İlk girişte şifre değiştirme ve süresi dolan şifre kuralları eskisi gibi çalışır.
+  - Firma veya dönem değişince kullanıcı listesi ve panelin görünürlüğü yeniden belirlenir.
+  DEĞİŞMEDİ: Giriş ayarı KAPALIYSA ekran eskisi gibidir (panel görünmez). Şifre doğrulama, kilitleme, yetki ve eski giriş penceresi koduna dokunulmadı (panel görünmezse yedek olarak eskisi gibi açılır).
+  Test: tests/test_giris_paneli.py (20 kontrol). Boş şifreyle giriş denenmez (firma listesinde çift tıklama hesabı kilitlemesin).
+
+470 - STOK ENVANTERİ (v1.2.291.470)
+  - Stok Merkezi'ne yeni düğme: STOK ENVANTERİ (MALİYET KONTROL ile KİTAP GİRİŞ arasında). Stok miktarını seçilen fiyatla değerler, toplam değeri verir.
+  - ENVANTERİ HESAPLA ile listelenir; ÖN İZLE / YAZDIR, PDF ve EXCEL düğmeleri vardır. Alt çubukta kayıt sayısı, toplam mevcut, TOPLAM DEĞER, toplam giriş/çıkış yazar.
+  - Hesaplama fiyatı: Ortalama Maliyet, Son Alış, Ortalama Alış (Ağırlıklı), Ortalama Alış (Basit), Perakende, Toptan, Özel. KDV Hariç / KDV Dahil seçilir.
+  - "Fiyatı yoksa (0 ise)": fiyatı sıfır olan ürün için yedek fiyat seçilir (Hiçbiri / Perakende / Toptan / Özel). Yedek fiyat kullanılan satırlar SARI görünür ve alt çubukta sayısı yazar.
+  - Başlangıç-Bitiş tarihi: Ortalama Alış ve Toplam Giriş / Toplam Çıkış bu iki tarih arasını kapsar (varsayılan: yıl başı - bugün). Giriş: açılış hariç artı hareketler, Çıkış: eksi hareketler (Stok listesiyle aynı kural; ancak burada seçilen tarih aralığına bağlıdır, Stok listesindeki tüm zamanlar sütunlarından farklı çıkabilir).
+  - Ortalama alış hesabında iade belgeleri sayılmaz; kısmi iade ortalamadan düşülmez. Maliyet alanları KDV hariç, Perakende/Toptan/Özel KDV dahil kabul edilir ve istenen duruma çevrilir.
+  - "İskontolu fiyattan hesaplansın" AÇIKSA (varsayılan) iskontolu net maliyet kullanılır. KAPALIYSA Son Alış ve Ortalama Alış, alış satırındaki net maliyetten cari ve satır iskontoları geri alınarak bulunur (net / ((1-cari%)x(1-satır%))); birim/koli çarpanından etkilenmez. Ortalama Maliyet her zaman net maliyettir. Alış iskonto tablosu henüz yoksa iskonto yok sayılır (çökmez).
+  - Ekran yalnız OKUR: stok, alış ve hareket verisine hiçbir şey yazmaz. Pasif ürünler listelenmez. "Sadece mevcut olanlar" varsayılan AÇIK.
+  DEĞİŞMEDİ: Stok Merkezi'ndeki mevcut düğmeler ve davranışları, stok/alış/satış verisi. Eski KTS'deki USD/EURO para birimi çevirimi ve "Seçenekleri Kaydet" bu sürümde YOK.
+  Yeni dosya: ALFABE_ENVANTER.py. Test: tests/test_stok_envanter.py (46 kontrol; hesaplar elle hesaplanmış değerlerle karşılaştırılır).
+
+470 (ek) - ETİKET & BARKOD MERKEZİ: KESİK YAZILAR VE FİYAT TARİHİ
+  - Sol tabloda "Etiket Adedi" başlığı "Etiket Aded" diye kesiliyordu: sütun 85 -> 105 piksel yapıldı.
+  - Alt düğmelerde (Üretim Yeri Ata, Toplu Adet, Listeyi Temizle, Seçimi Sil) yazı düğmeye sığmıyordu: düğmeler yazıya göre genişleyecek şekilde ayarlandı (yalnız bu 4 düğme; diğer ekranlardaki düğmeler aynı).
+  - Tasarım ekranındaki örnek etikette FİYAT TARİHİ bugünü gösteriyor, alttaki baskı önizlemesi ürünün gerçek tarihini (fiyat geçmişi yoksa kart tarihini) gösteriyordu. Tasarım örneği artık baskıyla aynı kuralı kullanır.
+  DEĞİŞMEDİ: Etiket tasarımı, şablonlar, baskı çıktısı, fiyat hesapları.
+  Test: tests/test_etiket_kesik_yazi.py (8 kontrol; eski kodda 4 kontrol hata verir).
+
+470 (ek 2) - LİSTE FİYATLA: FOTOĞRAFTAN OKUMA
+  - Küçük/düşük çözünürlüklü liste fotoğrafında (ör. 300x480 piksel, yazı ~8 piksel) Windows okuma motoru yazıyı bozuk okuyor ve çoğu maddeyi kaçırıyordu. Fotoğraf artık okutulmadan önce en fazla 4 kat (en büyük kenar 2400 pikseli geçmeyecek şekilde) büyütülür; büyütme yapılamazsa orijinal fotoğraf okutulur.
+  - Okunan metinde madde işareti olarak ✔ ✓ ✅ ☑ √ da tanınır (satırlar doğru yerden bölünür).
+  - Büyütme yalnız Liste Fiyatla ekranında devrede. Fiş okuma (gider) eskisi gibi çalışır.
+  SINIR: Okuma kalitesi yine fotoğrafa bağlıdır; çok küçük/bulanık fotoğrafta eksik madde olabilir. Daha büyük/net çekim en iyi sonucu verir. Okunan metin her zaman kontrol edilip düzeltilebilir.
+  Test: tests/test_foto_okuma_buyut.py (6 kontrol). Büyütme betiği Linux'ta çalıştırılamadı; Windows'ta gerçek fotoğrafla denenmesi gerekir.
+
+470 (ek 3) - LİSTE FİYATLA: FOTOĞRAFTAN OKUNAN VİRGÜLLÜ SATIRLAR
+  - Yalnız fotoğraftan okunan metinde: miktarla başlayan satırda virgülden sonra sayı ya da ölçü sözcüğü (kareli, çizgili, telli, boy, yaprak, dik, klavuz, büyük, küçük, orta...) varsa virgüller tek ürünün özelliği sayılır ve satır bölünmez ("1 adet büyük boy,60 yaprak, dik klavuz çizgili defter" tek ürün).
+  - Miktarlı satır "kareli/çizgili/telli/düz" ile bitiyorsa alt satıra taşan ürün adı ("Matematik defteri.") önceki satıra eklenir.
+  DEĞİŞMEDİ: Elle yazılan/yapıştırılan listeler; "Pritt, küçük bant, ucu küt makas" gibi gerçekten ayrı ürünlerin virgüllü satırları ve "3 adet silgi, kalem" gibi sayı/ölçü içermeyenler eskisi gibi ayrılır.
+  Test: tests/test_foto_okuma_buyut.py (10 kontrol). OCR'ın yanlış okuduğu kelimeler (eoy, yapıak, Pntt...) bu düzeltmeyle değişmez.
+
+470 (ek 4) - LİSTE FİYATLA: OCR'IN VİRGÜLÜ NOKTA OKUMASI
+  - Yalnız fotoğraftan okunan metinde: en az 3 harfli sözcükten sonra gelen ". " ve ardından küçük harfle başlayan sözcük varsa nokta virgül sayılır ("Pntt. küçük bant. küt makas" -> 3 ürün; "Kırmızı kalem. silgihazneli kalem traş" -> 2 ürün).
+  DEĞİŞMEDİ: Satır sonu noktası, "H.B.", "yp.çizgili", "eoy.60" gibi kısaltma/rakamlı noktalar; büyük harfle devam eden nokta; elle yazılan/yapıştırılan listeler.
+  Test: tests/test_foto_okuma_buyut.py (14 kontrol).
+
+470 (ek 5) - LİSTE FİYATLA: ÜRÜN SEÇ PENCERESİNE KAYDIRMA ÇUBUĞU
+  - "Ürün seç" listesinin sağ kenarına dikey kaydırma çubuğu eklendi (on binlerce ürün arasında hızlı gezinmek için). Fare tekeri ve ok tuşları eskisi gibi çalışır.
+  - Bilgi (değişmedi): Aranan yazıya hiç ürün uymazsa pencere boş kalmasın diye TÜM stok gösterilir ve Stok grubu sırasıyla dizilir; grubu boş ürünler en üstte çıkar (ilk ~25 satırın sebebi budur).
+  Test: tests/test_liste_fiyat_ekran.py içine kontrol eklendi.
+
+470 (ek 6) - LİSTE FİYATLA: OCR HARF KARIŞIKLIĞI ("Pntt" = "Pritt")
+  - Yalnız FOTOĞRAFTAN okunan satırlarda ve yalnız ürün bulunamayan (yok) satırlarda: stokta hiç geçmeyen sözcük için OCR'ın sık karıştırdığı harf grupları denenir (ri<->n, rn<->m, i<->l, 0->o, 1->l/i, 5->s, c<->e). Değiştirilmiş sözcük stok sözcük dizininde VARSA o ürün önerilir.
+  - Öneri hiçbir zaman "kesin" olmaz: satır sarı kalır ve Durum sütununda "kontrol (OCR)" yazar; satıcı kontrol eder.
+  DEĞİŞMEDİ: Elle yazılan/yapıştırılan listeler; doğru bulunan satırlar; stokta zaten olan sözcükler.
+  Sınır: yalnız tek harf-grubu değişimi denenir (ör. "ımjzik" -> "müzik" gibi çok harfli hatalar düzelmez).
+  Test: tests/test_foto_okuma_buyut.py (20 kontrol), tests/test_liste_fiyat_ekran.py (ekranda "kontrol (OCR)" ve elle yazılanda eşleşmeme).
+
+470 (ek 7) - TAM EKRAN PENCERELER VE KESİK YAZILAR
+  - Boyutu 1000x650 ve üstü tasarlanmış alt pencereler (Yeni Alış / Mal Kabul, listeler, raporlar, ayar ekranları...) artık tam ekran (büyütülmüş) açılır. Küçük giriş/onay pencereleri, çerçevesiz pencereler değişmedi; pencere açıldıktan sonra küçültülebilir.
+  - Düğme/etiket yazısı sabit genişliğe (width=N) sığmıyorsa, pencere açılırken gerçek yazı tipi ölçüsüyle genişlik yazıya göre otomatik ayarlanır (tüm program). Yazısı sığan düğmelere dokunulmaz; satır kıran (wraplength) etiketlere dokunulmaz.
+  - Yeni Alış / Mal Kabul: "EXCEL'DEN SATIR AL ... BİRİM FİYAT (F7)" düğmeleri ikinci satıra alındı (dar ekranda son düğmenin yazısı kesiliyordu). Düğmelerin işlevi aynı.
+  SINIR: Düğme satırı sığmadığı için yarım kalan başka ekranlar varsa (sıkışan satırlar), bunları Windows ekranında görmeden tek tek bulamıyorum; ekran görüntüsü gönderilirse aynı şekilde ikinci satıra alınır.
+  Test: tests/test_pencere_tam_ekran.py (19 kontrol).
+  (ek 7 notu) Günlük Özet penceresi kullanıcı isteğiyle eskisi gibi normal boyutta açılır (tam ekran kuralının dışında); isteyen kendisi büyütür.
+  (ek 7 notu 2) Günlük Özet penceresine Windows'un Küçült / Büyüt / Kapat düğmeleri eklendi (pencere artık ana pencereye "bağlı" değil; yeniden boyutlanabilir). Veri Sağlık Taraması, Yetki Raporu ve Yardım pencereleri eskisi gibi.
+  (ek 8) STOK MERKEZİ DÜZELTMELERİ (inceleme sonucu):
+  - "Çıkışlar" sütunu: negatif Açılış kaydı artık hem Açılış'a hem Çıkış'a yazılmıyor (çift sayım kalktı). Stok listesi + Stok Envanteri.
+  - "Kritik" ve "Sipariş Gereken" sekmeleri yalnız minimum miktarı tanımlı (min>0) ürünleri gösterir; alt çubuktaki "Kritik: N" ile satır sayısı artık aynı.
+  - Günlük Özet: "(N negatif)" artık gerçek negatif stok sayısıdır (önceden 300 ile sınırlıydı).
+  - Kâr %: maliyeti olmayan üründe yanıltıcı 100 yerine "—".
+  - "Ort. Maliyet (KDV Hr.)" başlığı kesik görünmüyordu diye sütun genişletildi; ayrıca kesik kalan başlıklar açılışta kendiliğinden genişler (kayıtlı yerleşim yalnız başlık sığmıyorsa genişler).
+  DEĞİŞMEDİ: stok kartları/mükerrer kartlar, negatif stoklar, eksik maliyetler (veri sorunu; "Stok Kayıt Kontrolü" önerilir). Stok araç çubuğu düğme aralığı incelenmedi.
+  Test: tests/test_stok_liste_duzeltme.py (11 kontrol). Windows görünümü burada doğrulanamadı.
+  (ek 9) SICAK SATIŞ (yalnız okur, hiçbir kayıt değişmez):
+  - Rapor & Analiz'e 2 yeni rapor: "Sıcak Satış - Yükselen Ürünler" (son 7 gün ile önceki 7 gün; seçilen bitiş gününe göre) ve "Sıcak Satış - Hızlı Satanlar ve Stok Yeterliliği" (günlük hız, stok kaç güne yeter, ACİL/YAKINDA/YETERLİ).
+  - Hızlı Satış sağ panelinde "🔥 SICAK SATIŞ" düğmesi (favori paneli kapalıyken de var): ayrı pencerede Hızlı Satanlar / Yükselenler; çift tık ürünü sepete ekler. Düğmeye basılmadıkça hiçbir şey açılmaz.
+  DEĞİŞMEDİ: mevcut raporlar, favori panelinin içeriği, satış akışı. Test: tests/test_sicak_satis.py (13 kontrol). Çift tık bağlantısı elle denenmedi (işleyici doğrudan çağrıldı); Windows görünümü doğrulanamadı.
+  (ek 10) Kullanıcı isteğiyle Hızlı Satış sağ panelinden "🔥 SICAK SATIŞ" ve "🎒 OKUL İHTİYAÇ LİSTESİ" düğmeleri kaldırıldı (favori paneli açık ve kapalı iki görünümde de). Sıcak satış RAPORLARI (Rapor & Analiz) duruyor. DİKKAT: Okul ihtiyaç listesi ekranının başka giriş yolu yoktu; kodu duruyor ama şu an ekrandan açılamaz.
+  (ek 11) Kullanıcı isteğiyle: "Liste Fiyatla" ve "Okul İhtiyaç Listesi" sol menüye taşındı (Fiyat Gör'ün altında, Hızlı Satış yetkisi gerekir). Menüden tıklayınca Hızlı Satış açılır ve araç onun üstünde çalışır (seçilen ürünler satış sepetine gider). Hızlı Satış sağ panelinden düğmeleri kalktı.
+  - Yeni ayar: Ayarlar > Hızlı Satış > "Müşteri ekranı düğmesini Hızlı Satış panelinde göster" (varsayılan HAYIR). Kapalıyken panelde yalnız favori ürünler ve "Favorileri düzenle" kalır; favori paneli de kapalıysa boş sütun bırakılmaz. DİKKAT: ayar kapalıyken Müşteri Ekranı'nın başka giriş yolu yoktur (istenirse menüye eklenebilir). Ayar değişince Hızlı Satış ekranı yeniden açılınca geçerli olur.
+  Test: tests/test_menu_arac_tasima.py (13 kontrol).
+  (ek 12) ÖNCEKİ TARAMADAN BEKLEYEN 3 KONU:
+  - Hızlı Satış dar ekran (1366 ve 1280 genişlik): sağ favori paneli 1 piksele eziliyor ve sepetin son sütunu ("Toplam") kesiliyordu. Panel önce yerleşir (1500 px altında 300, üstünde 360 px); sepet sütunları dar alanda önce Açıklama, Barkod, Stok Kodu, Kampanya... sırasıyla daralır (alt sınırları var), geniş ekranda eski genişliğe döner. Veri ve satış akışı değişmedi. 1024 px gibi çok dar ekranda yine tüm sütunlar sığmaz.
+  - Stok Merkezi düğme satırı: 14 düğmeli satır sığmayınca son satıra 1-2 düğme yetim kalıyordu. Ortak sarma kodu (ALFABE_PENCERE) artık son iki satırı dengeler (örn. 7+7); genişlik aşılmaz. Aynı kural düğme satırı sarılan diğer ekranlarda da geçerlidir (yalnız son satır 1-2 düğmeyse).
+  - KDV raporları: "Hesaplanan KDV Özeti (İadeler Düşülmüş)" raporunda iki hata vardı: (1) hizmet satışı hem satış satırında hem hizmet tablosunda kayıtlı olduğundan KDV'si iki kez sayılıyordu - artık bir kez; (2) eski / içe aktarılmış satış satırlarında KDV kaydı yoksa (oran 0 ve tutar 0) KDV 0 görünüyordu - artık ürün kartındaki oranla hesaplanır ve "tahmini" diye AYRI satırda gösterilir (gerçekten %0 olan, kartı da %0 olan ürünler olduğu gibi kalır).
+  İKİ KDV RAPORU NEDEN FARKLI OLABİLİR (hata değil, tanım farkı): "KDV Oranına Göre Satış" yalnız kesin satışları ve ürün kartının GÜNCEL KDV oranını kullanır, iade ve hizmet içermez; "Hesaplanan KDV Özeti" satış anındaki oranı kullanır, iadeleri düşer ve hizmeti ekler. Karttaki oran sonradan değiştiyse iki rapor ayrışır.
+  Testler: tests/test_dar_ekran_duzen.py, tests/test_kdv_ozet_tutarlilik.py. Windows görünümü burada doğrulanamadı.
+  (ek 13) LİSTE FİYATLA: PDF OKUMA. Düğme artık "📷 FOTOĞRAF / PDF OKU"; dosya seçiminde *.pdf de var.
+  - Yazı katmanlı (dijital) PDF: metin doğrudan, hatasız okunur (OCR yok; en çok 60 sayfa). Tablo başlığı ("Sıra Malzeme Adet") varsa başlık atılır, sıra numarası atılır, sondaki sayı adet sayılır.
+  - Taranmış / fotoğraf PDF (yazı katmanı yok ya da okunamayan özel kodlu yazı tipi): sayfalar Windows okuma (OCR) ile okunur, en çok 20 sayfa; fotoğraftaki gibi "okuma hatası olabilir, kontrol edin" uyarısı çıkar.
+  - Şifreli, bozuk veya yazısız PDF'te açık uyarı verilir; fotoğraf okuma değişmedi.
+  - Test: tests/test_liste_pdf_okuma.py + tests/pdf_ornek/*.pdf. SINIRLAR: taranmış PDF'in Windows OCR kısmı burada çalıştırılamadı (testte taklit edildi); gerçek dünya PDF çeşitliliği (çok sütunlu, iç içe tablolar) örneklerle sınırlı denendi. Yazı tahtası kalemi gibi "Kırmızı, Mavi ve Siyah" satırları mevcut davranışla renklere ayrılır.
+  (ek 14) YARDIM MERKEZİ (KULLANIM KILAVUZU) - yeni:
+  - KTS'deki gibi pencere: solda konu ağacı (8 grup, ~50 konu), sağda anlatım; üstte Gizle, Geri, Yazdır, PDF ve Ara. Konular programdaki gerçek ekran/düğme adlarıyla yazıldı; çoğu Asistan bilgi tabanından (ALFABE_ASISTAN_BILGI) gelir, böylece iki yerde aynı anlatım görünür. Eklenen yeni konular: ekran düzeni, yardım kullanımı, Liste Fiyatla (PDF okuma dahil), Okul İhtiyaç Listesi, Belgeden alış, sık karşılaşılan durumlar, tam kısayol listesi.
+  - Açılış yolları: Ana Sayfa sol menüsünün altında "Yardım / Kılavuz"; alt çubukta "Kılavuz (F1)"; F1 tuşu (açık bölümün konusunu seçer); F12 Yardım penceresinde "TAM KILAVUZ".
+  - ÖNEMLİ: Hızlı Satış'ta F1 = "nakit öde" olduğu için orada F1 kılavuzu AÇMAZ (satış tuşu korundu); orada kılavuza Ana Sayfa'dan ulaşılır.
+  - PDF: ALFABE_KULLANIM_KILAVUZU.pdf (program klasöründe, 21 sayfa); Yardım penceresindeki PDF düğmesi bunu açar. Metin değişirse kilavuz_uret.py (reportlab gerekir, yalnız bu betik için) ile yeniden üretilir.
+  - DEĞİŞMEDİ: mevcut bölümler, F12 penceresinin içeriği, Hızlı Satış kısayolları. Test: tests/test_yardim_merkezi.py.
+  - SINIR: Windows görünümü (yazı tipi/boyut) burada doğrulanamadı; metinler koddan ve testlerden doğrulandı ama ekran görüntüsü yoktur. Yazdır düğmesi sayfayı tarayıcıda açıp yazdırma penceresini çıkarır.
+  (ek 15) SETUP HAZIRLIĞI: KURULUM_HAZIRLIK/ALFABE_SATIS_PRO.spec güncellendi: yeni modüller (ALFABE_YARDIM, BELGE_ALIS, LISTE_FIYAT, EDGE_SERVIS, ENVANTER, ETIKET_IS, pypdf) gizli içe aktarma listesine, ALFABE_KULLANIM_KILAVUZU.pdf veri dosyası olarak pakete eklendi. Setup .exe BU ORTAMDA ÜRETİLEMEZ (Windows + PyInstaller + Inno Setup gerekir); üretim: KURULUM_HAZIRLIK/1_EXE_OLUSTUR.bat sonra 2_KURULUM_OLUSTUR.bat. Üretilmiş setup denenmedi.
+  (ek 16) SETUP SİHİRBAZI KTS kurulumundaki akışa getirildi (alfabe_setup.iss): Hoş geldiniz (yan görselli) > Kurulum bilgileri > Hedef klasör > Başlat Menüsü klasörü ("oluşturulmasın" kutusuyla) > Ek işlemler (masaüstü simgesi) > ALFABE'ye özel Veri Klasörü sayfası (tek bilgisayarda boş bırakılır) > Kurulmaya hazır > Bitti (programı başlat). Kaldırma Program Ekle-Kaldır'da ve Başlat klasöründe. Eklenenler: KURULUM_BILGILERI.txt, kurulum_yan.bmp, kurulum_kucuk.bmp. Script UTF-8 BOM'la kaydedildi (Türkçe karakterler için). ALINMADI: "Portatif kurulum" (verilerin ayrı klasörde durması buna uymuyor) ve lisans sayfası (lisans metni sizden gelmedi, uydurulmadı). Dil seçim penceresi tek dil (Türkçe) olduğundan çıkmaz. Inno Setup burada çalıştırılamadığı için script DERLENİP DENENMEDİ.

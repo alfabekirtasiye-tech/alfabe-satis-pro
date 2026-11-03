@@ -1,0 +1,25 @@
+ALFABE SATIŞ PRO  v1.2.291.455  —  BÜYÜK VERİDE HIZ
+=====================================================
+Sorun: Yedekten yüklenen çok stoklu / çok işlemli veritabanında program yavaşlıyordu.
+Test: 400.000 satış, 1.000.000 satış satırı, 1.000.000 stok hareketi, 400.000 kasa kaydı, 12.000 stok (300 MB veritabanı).
+
+ÖLÇÜM (önce -> sonra)
+- Stok Merkezi açılışı ........ 38 sn  -> 1,4 sn   (günlük yedek açılışta ekranı donduruyordu)
+- Kasa Merkezi ................ 25 sn  -> 0,3 sn
+- Rapor & Analiz (stok listesi) 22 sn  -> 1,8 sn
+- Hızlı Satış ekranı .......... 3,4 sn -> 0,3 sn
+- Finans Merkezi .............. 2,0 sn -> 0,5 sn
+- Program açılışı ............. 2,0 sn -> 1,1 sn
+
+YAPILANLAR
+1. Günlük otomatik yedek arka planda alınır (açılıştan 25 sn sonra); ekran donmaz.
+2. Yedek öncesi veritabanı kontrolü hızlı moda (quick_check) alındı; günlük yedek sıkıştırması hafifletildi.
+3. İlk açılışta arka planda tarih/kaynak indeksleri kurulur (satış, finans, cari, stok hareketleri,
+   ödeme, denetim kaydı). İlk kurulum büyük veride birkaç saniye sürer; sonraki açılışlarda yoktur.
+4. Kasa Merkezi: son N satır (Ayarlar > Liste kayıt limiti) listelenir; bakiye ve toplamlar veritabanından hesaplanır.
+5. Finans Merkezi: yürüyen bakiye yalnızca gösterilen son 3000 satır için hesaplanır.
+6. Tablo sütun genişliği hesabı satır başına tekrar etmiyor; ilk 300 satırla ölçülür.
+7. Hızlı Satış / "Hızlı Satan" sorguları satış tarihi indeksinden başlar.
+8. Tablolara satır eklerken tekrar eden metin dönüştürmeleri önbelleğe alındı.
+
+NOT: Liste kayıt limiti Ayarlar > Genel bölümündedir (varsayılan 500). Arama ile eski kayıtlara ulaşılır.

@@ -1,0 +1,31 @@
+ALFABE SATIŞ PRO 1.2.291.452 - AYARLAR MERKEZİ (YENİDEN YAZILDI)
+
+NEDEN: Önceki sürümde 150 ayarın 110'u kaydediliyor ama programda hiçbir yerde okunmuyordu. Güvenlik ayarları iki
+yerde ayrı tutuluyordu; "Kullanıcı" ve "Bu Bilgisayar" kapsamlarının hedefi yoktu; belge ön ekleri güvensizdi.
+
+YENİ YAPI
+- Tek kaynak: ALFABE_AYAR_KAYIT.py (altyapı) + ALFABE_AYAR_LISTE.py (21 kategori, 100 ayar). Listede olmayan ayar
+  ekranda görünmez; listedeki her ayar programda okunur (tests/ayar_denetimi.py).
+- Okuma sırası: Bu Bilgisayar > Kullanıcı > Dönem > Firma > Sistem > eski genel ayar > varsayılan.
+  Kullanıcı / Bilgisayar kapsamı artık gerçekten o kullanıcıya / bilgisayara özeldir.
+- Güvenlik, yedek, belge numarası ve sistem ayarları yalnız Firma kapsamında tutulur (tüm firmayı bağlar).
+- Doğrulama: sayı aralığı, seçenek, saat (SS:DD), belge ön eki (1-4 harf/rakam). Hata varsa hiçbir şey yazılmaz.
+- Ayar geçmişi + geri alma, profiller (Hızlı Kasa, Sıkı Kontrol), arama, dışa/içe aktarma, sağlık kontrolü.
+- Kaydedilen ayarlar yeniden başlatma gerekmeden etkili olur (etiketi "yeniden açın" olanlar hariç).
+
+KATEGORİLER
+Firma Bilgileri, Firma Logosu, KDV Oranları, Hızlı Satış (24), Cari Satış, Kampanya, Hizmetler / Fotokopi,
+Stok & Fiyat, Alış & Mal Kabul, Cari & Risk, Belge Numaraları & Klasörler, Yazıcı & Baskı, Etiket & Barkod,
+Görünüm & Ekran, Tablolar, Rapor & Analiz, Yedekleme (+ ikinci kopya/NAS), Kullanıcı & Güvenlik,
+Açılış Kapanış & Bakım, Klavye Kısayolları, Ayar Yönetimi.
+
+YENİ ÇALIŞAN ÖZELLİKLER (ayar karşılığı olarak gerçekten uygulandı)
+Terazi barkodu, iade süresi sınırı, alış fiyatı uyarısı, maliyet altı satış kontrolü (İzin Ver / Uyar / Engelle),
+sıfır fiyat ve eksi stok denetimi, genel iskonto limiti, kampanya çakışma / zarar kontrolü, POS sabitleme,
+maliyet yöntemi (Ortalama / Son Alış), açılış ekranı seçimi, kapanışta açık işlem kontrolü, liste kayıt limiti,
+Ana Sayfa yenileme aralığı, tablo hizası, yazı boyutları, varsayılan yazıcı / kopya / kâğıt / yön,
+rapor ve belge klasörlerinin dosya pencerelerinde varsayılan olması, belge ön ekleri (PS/CS/TM/OM hariç
+raporlara bağlı olanlar sabit kalır).
+
+NOT: Belge numaralarında PS-, CS-, TM- ön ekleri raporlar buna bağlı olduğu için değiştirilemez.
+Windows'a özgü yazdırma parçaları (Edge ile PDF/PNG, PowerShell yazıcı listesi) Linux'ta sınanamadı.

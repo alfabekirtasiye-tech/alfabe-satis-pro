@@ -1,0 +1,27 @@
+﻿ALFABE SATIŞ PRO - KURULUM BİLGİLERİ
+====================================
+
+Lütfen devam etmeden önce okuyun.
+
+1) PROGRAM VE VERİ AYRIDIR
+   Program dosyaları seçtiğiniz klasöre kurulur. Firma, dönem, yedek ve hata kayıtları (VERİLER) program klasöründe DEĞİL,
+   şu klasörde tutulur:   C:\Users\<kullanıcı>\AppData\Local\ALFABE_SATIS_PRO
+   Çok bilgisayarlı çalışmada veriler seçtiğiniz ortak klasörde durur.
+
+2) GÜNCELLEME
+   Yeni sürümü eskisinin üzerine kurabilirsiniz; verilerinize dokunulmaz. Güncellemeden önce programdan "Yedek Al" yapmanız önerilir.
+   Kurulum sırasında program açıksa kapatmanız istenir.
+
+3) KALDIRMA
+   Programı Windows "Ayarlar > Uygulamalar" bölümünden kaldırabilirsiniz. Kaldırma sırasında verilerin de silinip silinmeyeceği
+   size sorulur (varsayılan: SİLME).
+
+4) ÇOK BİLGİSAYARDA ÇALIŞMA
+   Kurulumun bir sonraki adımında ortak veri klasörünü yazabilirsiniz (tek bilgisayarda çalışacaksanız boş bırakın).
+   Ayrıntılar programın Yardım / Kılavuz bölümünde ve KURULUM_HAZIRLIK klasöründeki AG_COK_BILGISAYAR_REHBERI.txt dosyasındadır.
+
+5) YEDEK
+   Verilerinizin güvenliği için düzenli olarak programdan "Yedek Al" yapın ve yedeğin bir kopyasını başka bir diske alın.
+
+6) GEREKSİNİMLER
+   Windows 10 veya 11. Python kurmanız gerekmez. PDF raporları için Microsoft Edge (Windows ile gelir) kullanılır.

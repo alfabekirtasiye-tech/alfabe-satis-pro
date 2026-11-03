@@ -1,0 +1,36 @@
+ALFABE SATIŞ PRO  v1.2.291.454  —  TOPLU STOK SAYIMI YENİDEN YAZILDI
+====================================================================
+
+YENİ MODÜL: ALFABE_SAYIM.py  (sayım motoru)  +  Stok Merkezi > Toplu Stok Sayımı ekranı
+
+HIZ
+- Stok kataloğu oturum açılırken belleğe alınır (barkod / stok kodu / alternatif barkod).
+  Okutma aramaları veritabanına gitmez (30.000 üründe 2000 arama ≈ 3 ms).
+- Her okutma tek bir UPSERT + commit (≈1 ms). Toplamlar artımlı hesaplanır (O(1)).
+- Ekranda yalnızca değişen satır güncellenir; tüm liste yeniden çizilmez.
+- Kesinleştirme toplu (executemany) yapılır: 2000 satır + 12.000 sıfırlama ≈ 0,4 sn.
+- El terminali dosyası içe aktarma tek commit ile yapılır.
+- Genel liste hızlandırma: başlık türü önbelleği, hücre normalleştirme önbelleği.
+
+YENİ ÖZELLİKLER
+- Sayım kapsamı: Tüm Stok / Bölüm / Raf / Ürün Grubu / Depo.
+- Kör sayım: sistem, fark, maliyet ve değer sütunları taslakta gizlenir.
+- "Sayılmayanları sıfırla" (tam sayım) seçeneği; yalnızca kapsamdaki ürünleri etkiler.
+- Okutma modları: Ekle (+1 / Adet kutusu), Miktar sor, Üzerine yaz.
+- "12*barkod" veya "barkod*3" biçiminde çarpanlı okutma.
+- Son okutulan ürün paneli (ad, sistem, fark, geri alındı bilgisi).
+- Geri al (Ctrl+Z), satır sil (Del), miktar düzenle (F2), not (F3), tekrar say işareti (F4).
+- Filtre: Tümü / Sadece Farklı / Fazla / Eksik / Sayılmayanlar / Yeniden Say; ad ile arama.
+- Bilinmeyen barkod: YENİ KART AÇ / LİSTEYE KAYDET / ATLA (Ayarlar > Stok > Toplu Stok Sayımı).
+- El terminali metin dosyası alma, SAYIM FÖYÜ (HTML/CSV), BİLİNMEYENLER listesi.
+- Kesinleştirme öncesi ön izleme, belirlenen tutarı aşan fark uyarısı, yönetici onayı.
+- Sayım Merkezi: kapsam, satır, fark, değer sütunları.
+- Stok hareketi: "Toplu Sayım Farkı". Kesinleşmiş sayıma yazma engellenir.
+
+AYARLAR (Stok > Toplu Stok Sayımı)
+count_scan_mode, count_sound, count_blind_default, count_unknown_action,
+count_approval, count_warn_value.
+
+NOT: Yazıcı / çekmece / Windows yazıcı listesi gibi donanım işlevleri Windows üzerinde denenmelidir.
+
+TESTLER (tests/): test_stok_sayim_mantik.py  (kapsam, sıfırlama, kesinleştirme, hız)

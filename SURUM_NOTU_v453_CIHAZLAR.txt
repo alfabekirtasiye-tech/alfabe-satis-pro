@@ -1,0 +1,22 @@
+ALFABE SATIŞ PRO 1.2.291.453 - CİHAZLAR & ENTEGRASYONLAR (YENİDEN YAZILDI)
+
+ÖNCEKİ DURUM: Ekranın üstünde yanlışlıkla Kampanya yazısı vardı. "Bağlantı testi" gerçekte hiçbir şeyi sınamıyordu
+(NAS dışında). Tanımlanan cihazlar fiş, etiket, rapor ve yedekleme akışlarında kullanılmıyordu.
+
+YENİ
+- GERÇEK TESTLER: klasör / NAS (erişim + yazma denemesi), TCP/IP (adres çözümleme + port bağlantısı + zaman aşımı),
+  seri port (COM), Windows yazıcı listesi. Sonuç: Bağlı / Bağlı Değil / Doğrulanamadı (ayrıntı nedeni yazar).
+- TEST BASKISI: fiş yazıcısına ham ESC/POS test fişi (TCP, seri, Windows); etiket / A4 yazıcıya Windows önizlemeli test sayfası.
+- PARA ÇEKMECESİ: ESC/POS komutuyla açma (TCP / seri / Windows yazıcı). Ayarlar'da "Nakit satışta çekmeceyi aç".
+- OKUTMA TESTİ: barkod okuyucunun hızlı giriş yaptığını ölçerek doğrular.
+- VARSAYILAN CİHAZ GERÇEKTEN KULLANILIR: fiş yazıcısı, etiket yazıcısı, A4/rapor yazıcısı (bu bilgisayar için) ve
+  NAS (ikinci yedek konumu). Yazdırma ekranında yazıcı seçerseniz cihaz tanımı otomatik eklenir / varsayılan olur.
+- Ekran: arama, tür ve durum süzgeci, renkli durum, KOPYALA, SİL (onaylı), aktif/pasif, CSV dışa aktarma, olay geçmişi
+  süzgeçli; formda bağlantıya göre adres ipucu, Windows yazıcı listesi, klasör seç, doğrulama, aynı ad uyarısı,
+  "Kaydet ve test et".
+- Açılışta etkin cihazlar arka planda sınanır (kapatılabilir); sorun varsa bir kez uyarı verilir, program kilitlenmez.
+- Ayarlar > Cihazlar & Entegrasyonlar: cihaz varsayılanlarını kullan, nakitte çekmece, açılış kontrolü / uyarısı,
+  zaman aşımı, olay geçmişi saklama günü.
+
+NOT: Gerçek yazıcı, çekmece ve Windows yazıcı listesi bu sürümde Linux'ta sınanamadı; mantık sahte TCP cihazı,
+klasör ve port denemeleriyle test edildi (tests/test_cihazlar.py). Windows'ta bir fiş ve bir çekmece denemesi yapın.

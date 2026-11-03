@@ -1,0 +1,15 @@
+PROGRAM GENELİ GÖRÜNÜM KURALLARI (v1.2.291.242)
+===============================================
+Bu kurallar programın başında tek bir "ortak görünüm katmanı" ile uygulanır; her ekranı tek tek değiştirmek gerekmez.
+
+1) HİZALAMA  : Tüm tablolarda (145 tablo) yazı sütunları SOLDA, rakam ve tarih sütunları ORTADA. Sütun başlığı da aynı hizada.
+               Karar, sütundaki verinin ilk 80 satırına bakılarak otomatik verilir (%90 ve üstü rakam/tarih ise ortalanır).
+               Raporlarda da aynı kural vardır. Raporda belirli bir sütunu sağa almak isterseniz Rapor Düzenleyici > Hizalama > Sağa.
+2) SAYILAR   : Miktar/adet sütunlarında tam sayı ondalıksız görünür: 1 (1,0 değil), 12 (12,00 değil). Küsurat Türkçe virgülle: 1,5.
+               Para sütunları 2 hane kalır: 240,00. Tek başına yazılmış "1,0" gibi değerler de "1" olur.
+3) TARİH     : Ekranda, tablolarda, etiketlerde, mesaj kutularında ve giriş kutularında 17.10.2026 (saatli: 17.10.2026 09:05:03).
+               Giriş kutularına gg.aa.yyyy yazılır (eski 2026-10-17 yazımı da kabul edilir).
+               Veritabanı ve program içi mantık eskisi gibi ISO (2026-10-17) ile çalışır; dönüşüm yalnız görüntüdedir
+               (kutudan okunurken ve tablodan okunurken otomatik geri çevrilir).
+KORUNANLAR   : Dosya adları (yedek_2026-10-12.zip), barkod/belge numaraları ve geçersiz tarih görünümlü kodlar değiştirilmez.
+BİLİNEN SINIR: Elle çizilen/özel HTML çıktılar (fiş, teklif belgesi) kendi tarih biçimini kullanır; gerekirse ayrıca uyarlanır.

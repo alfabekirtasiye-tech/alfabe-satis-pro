@@ -1,0 +1,627 @@
+ALFABE SATIŞ PRO 1.2.291.257 - AYARLAR MERKEZİ DÜZELTMELERİ
+
+1. Ayarlar artık programın geri kalanı tarafından görülüyor: Ayarlar Merkezi'nde seçilen kapsam
+   (Bu Bilgisayar > Kullanıcı > Dönem > Firma > Sistem) sırasıyla okunur. Önceden bazı ayarlar kaydedilse de etki etmiyordu.
+2. Kaydet iki aşamalı: önce tüm değerler doğrulanır (sayı aralığı, seçenek listesi); hatalıysa HİÇBİR şey yazılmaz,
+   hatalı alana odaklanılır. Geçmiş kaydında gerçek kullanıcı adı yazılır.
+3. Ayar yedeğini içe aktarma doğrulamalı: tanınmayan/geçersiz kayıtlar atlanır ve rapor edilir.
+4. Yeni kategori "Hızlı Giriş & Asistan": Enter ile geçiş, barkod sonrası otomatik geçiş, tek tıkla ekleme (aç/kapat),
+   sipariş önerisi stok kapsama günü ve güvenlik günü.
+5. Arama Gecikmesi ayarı satış arama kutusuna bağlandı. Menü genişliği kayıttan sonra yeniden açmadan uygulanır.
+6. Varsayılan Menü Genişliği 270, Arama Gecikmesi 120 olarak düzeltildi (önceki varsayılanlar gerçek kullanımla uyumsuzdu).
+
+7. v257: Kapanış yedeği pencereleri ekranın ortasında açılır; yedek sonrası program her durumda kapanır (donup kalma düzeltildi).
+
+8. v258: Kapanışta "can't delete Tcl command" hatası giderildi (zamanlayıcı temizliği artık Tcl komutlarını çift silmiyor).
+
+9. v259: Ana Sayfa yeni "A - Klasik mavi" tasarım: gruplu sol menü (başlıklı), beyaz KPI kartları (renkli şerit), sade paneller, daha büyük arama kutusu, yeni düğme renkleri.
+
+10. v260: Hızlı Satış: tekrar eden başlık kaldırıldı; tablo başlığı satır yazısından küçük; KDV % ve KDV Dahil başlıkları; alt özette kalem/adet ve KDV toplamı, daha büyük yazı; son ürün bandı boşken lacivert, ürün eklenince yeşil.
+
+11. v261: Hızlı Satış alt özet 2 sütuna alındı (ödeme düğmeleri kesilmesin); KDV/Dahil başlıkları kısaltıldı.
+
+12. v262: Hızlı Satış sağ alt düğmeler büyütüldü, renkli arka plan.
+
+13. v263: Birim Fiyatlar (F7) penceresi: Son Alış/Ortalama Maliyet KDV hariç kayıtlı değerler artık seçili KDV DAHİL/HARİÇ moduna göre çevrilerek gösterilir (Stok Kartı ile aynı rakam); mod değişince tutar da dönüşür. Stok/Fiyat listelerinde maliyet sütunları "(KDV Hariç)", satış fiyatı sütunları "(KDV Dahil)" olarak etiketlendi.
+
+14. v264: Hızlı Satış: seçili satır mavi vurgulu; favori paneli 2 sütun büyük renkli kutular, çalışan arama, kaydırma; favori azsa son 30 günün çok satanları otomatik.
+
+15. v265: Cari Satış: çift başlık kaldırıldı; seçili ödeme şekli mavi; müşteri bilgisi sadeleştirildi (Bakiye Borç/Alacak, Limitsiz); satış sonrası bakiye + vade tarihi + risk uyarısı (yalnız gösterim); toplam paneli (KDV dahil ara toplam, KDV hariç tutar, KDV, büyük Genel Toplam, kalem/adet); ürün tablosu büyük yazı ve seçili satır vurgusu; giriş kutusu etiketi; taksit paneli yalnız Senet/Taksitli seçilince görünür.
+
+16. v266: Cari Satış: belge gerçekten yazdırılır (program içi ön izleme + yazıcı seçimi); "Kaydedince yazdır" kutusu (varsayılan açık); Kaydet ve Kapat yazdırma ön izlemesi kapanınca Ana Sayfaya döner.
+
+17. v267: Cari Satış: Kaydet (F6) sonrası satış ekranda kalır (silinmez), "KAYDEDİLDİ + belge no" gösterilir; çift kayıt engellenir; yeni ürün eklenince veya YENİ SATIŞ ile yeni satış başlar.
+
+18. v268: Cari Ayrıntı: listede satırın üzerine gelince tüm sütunları ayrıntılı gösteren ipucu kutusu; "LİSTEYİ YAZDIR" düğmesi (açık sekmedeki liste + cari özeti, program içi yazdırma ön izlemesi).
+
+19. v269: Cari Ayrıntı: Hareketler / Satışlar / Tahsilat-Ödeme listesinde satış satırına tıklayınca kaydedilen satış belgesi (ürünler, toplamlar, taksit planı, YAZDIR) açılır; satır ipucu kutusu kaldırıldı.
+
+20. v270: Cari Ayrıntı: Hareketler / Satışlar / Tahsilat-Ödeme / Taksitler listelerinin TÜM satırları tıklanınca belge açılır (satış -> satış belgesi, tahsilat/ödeme -> makbuz, iptal/peşinat/diğer -> yazdırılabilir ayrıntı belgesi). Sipariş & Teklif listesinde tek tıklama belgeyi (önizleme/yazdırma) açar; düzenleme için çift tık veya AÇ / GÖRÜNTÜLE.
+
+21. v271: Rapor Düzenleyici düzeltmeleri: Cari Hesap Ekstresi artık düzenleyicideki sütun göster/gizle, sıra, başlık, hizalama, biçim, genişlik (elle mod) ile rapor başlığı, alt başlık, üst not, alt bilgi, kağıt, yön, yazı/başlık boyutu, tema rengi, zebra, sayfa numarası ve özet ayarlarını uyguluyor (önceden sütun seçimi yok sayılıyordu). Eski görsel tasarımcıdan kalan gizlenemeyen ek stok sütunları baskıya eklenmiyor. Tüm sütunlar gizliyken canlı önizleme artık tüm sütunları göstermiyor.
+
+22. v272: Stok kartına yeni "Vergi / E-Fatura" sekmesi: GTİP No (4-12 rakam doğrulamalı), ÖTV oranı %, KDV istisna/muafiyet sebep kodu, e-fatura birim kodu (C62, KGM, LTR...). Değerler stock tablosunu değiştirmeyen ayrı tabloda (stock_tax_info) saklanır; kopyalamada taşınır. Henüz e-fatura XML üretimi/entegratör bağlantısı yoktur; bu alanlar o aşama için hazırlıktır.
+
+23. v273: E-Fatura / E-Arşiv modülü (sol menü, FİNANS grubu; GİB Portal yolu). Satış ve iadelerden fatura taslağı (alıcıda 10 haneli VKN varsa E-Fatura, yoksa E-Arşiv; iade faturası), GİB biçiminde numaralama (3 harf/rakam seri + yıl + 9 hane) ve ETTN, KDV / ÖTV / KDV %0 istisna kodu / GTİP / birim kodu desteği (Stok kartı > Vergi / E-Fatura), VKN-TCKN doğrulaması ve ön kontrol, UBL-TR 1.2 XML üretimi, XML dosyası kaydetme, portal giriş listesi (CSV), kontrol görünümü, durum takibi (Taslak > XML Hazır > Portala Yüklendi > Onaylandı / İptal), numara düzenleme, işlem geçmişi. Program GİB'e kendisi göndermez. XML canlıya çıkmadan GİB doğrulayıcısında denenmelidir. Yeni dosya: ALFABE_EFATURA.py. Satış/stok verisi değiştirilmez.
+
+24. v274: Stok Merkezi listesi: sütun başlıkları kısaltıldı, kesilme giderildi (KDV bilgisi alt çubukta: maliyet KDV hariç, satış fiyatları KDV dahil); negatif stok satırı kırmızı, kritik stok (mevcut <= min, min > 0) turuncu vurgulanır; alt çubukta toplam mevcut adet, maliyet değeri (KDV hariç), satış değeri (KDV dahil), kritik ve negatif ürün sayısı (negatif miktarlar değere katılmaz).
+
+25. v275: Stok Merkezi: (a) MALİYET KONTROL: ortalama maliyeti sıfır olan stokları bulur, alış geçmişinden (kesinleşmiş alışların miktar ağırlıklı ortalaması; yoksa maliyetli giriş hareketleri; yoksa son alış) öneri üretir; seçilenleri onayla ve gerekçeyle toplu düzeltir. Yalnız ortalama maliyet değişir; stock_corrections + audit'e eski/yeni değerle yazılır (Stok Sağlık > Düzeltme Geçmişi). Alt çubukta "MALİYETİ EKSİK: N" uyarısı. (b) EXCEL ▾ menüsü: Excel/CSV'den içe aktarma (otomatik sütun eşleme, YENİ/GÜNCELLE/ATLA/HATA önizlemesi, ekle/güncelle modları, KDV hariç-dahil seçenekleri, uygulamadan önce veritabanı yedeği, tek işlemde yazma, fiyat geçmişi, açılış hareketi, hata raporu), stok listesini Excel'e aktarma (düzenleyip geri yüklenebilir) ve boş şablon. Yeni dosyalar: ALFABE_STOK_MALIYET_KONTROL.py, ALFABE_STOK_EXCEL.py. Kayıt sayısı alt çubuğa taşındı.
+
+26) v276-277: Stok Merkezi başlıklarında KDV tabanı açık yazıldı (Maliyet = KDV Hr., Satış fiyatları = KDV D.). Yeni 'Kaç Gün Yeter' sütunu: mevcut stok / son 30 gün ortalama günlük satış. '-' = son 30 günde satış yok, '0' = stok bitmiş ama satılıyor.
+
+27) v278: Stok Merkezi sağ üstte kırmızı '₺ TOPLU FİYAT GÜNCELLE' butonu. Stok listesinde seçili ürünler varsa Fiyat Yönetimi'ne geçip Toplu Fiyat penceresini bu ürünlerle açar; seçim yoksa Fiyat Yönetimi'ndeki mevcut listeyle açılır.
+
+28) v280: Herhangi bir tabloda sütun başlığının üstüne gelince sağ kenarda kırmızı ✕ belirir; ✕'e tıklamak o sütunu gizler (veri silinmez, yerleşim kaydedilir). Geri getirmek: başlığa sağ tık > Alan Seçici.
+
+29) v281: Görsel sütunu da (üstüne gelince ✕ ile) gizlenebilir; geri getirmek için başlığa sağ tık > 'Görsel sütununu göster'.
+
+30) v282: Sütun sürükleme tüm tablolarda yenilendi: başlığı tutup sağa/sola çekin; sürüklerken sütun adı ve kırmızı bırakma çizgisi görünür, bırakınca yerleşir, fare kenara gelince tablo otomatik kayar, fare başlıktan aşağı/yukarı çıksa da sürükleme devam eder. Yerleşim kaydedilir.
+
+31) v283: Eski (v291.95) canlı-yer değiştirme sürüklemesi kapatıldı; yeni sürükleme ile çakışıp sola çekmeyi bozuyordu. Görsel sütununun gizli olması artık tablo yerleşimiyle kaydedilir ve yeniden açınca hatırlanır.
+
+32) v284: Ayarlar > Tablo Görünüm Ayarları'ndaki Metin / Rakam / Başlık Hizalama seçenekleri artık gerçekten çalışır (önceden ekranda vardı ama koda bağlı değildi). Varsayılan: yazılar SOLA, rakamlar (miktar, para, oran, tarih, kod/barkod) ORTALA, başlıklar ORTALA. Kaydedince açık tüm tablolar anında güncellenir; sütun başlığı sağ tık > Hizalama ile elle verilen hizalar önceliklidir.
+
+33) v285: Hizalama artık sütundaki gerçek değerlere de bakar: tüm dolu hücreleri sayı/para/yüzde/tarih/saat olan sütun (Açılış, Girişler, Çıkışlar, Min., Kaç Gün Yeter vb.) 'Rakam Hizalama' ayarını, diğerleri 'Metin Hizalama' ayarını izler. Başlık adından anlaşılamayan sütunlar da doğru hizalanır.
+
+34) v286: Sütun başlığı üstündeki kırmızı ✕ kaldırıldı (kullanıcı isteği). Sütun gizleme: başlığa sağ tık > 'Bu alanı kaldır'; Görsel sütunu: sağ tık > 'Görsel sütununu gizle/göster'.
+
+35) v287: YENİ MODÜL 'Muhasebe & Beyan' (menüde E-Fatura / E-Arşiv'in altında). Kayıtlar yalnız okunur, hiçbir veri değişmez. İş mantığı ALFABE_MUHASEBE.py.
+   a) Ba-Bs: ay seç → Bs (satış) / Ba (alış) cari bazında, eşik (varsayılan 5.000 TL KDV hariç, ekrandan değişir). Eksik/hatalı VKN kırmızı + uyarı. Cari seçilmeyen perakende belgeler Ba-Bs dışı bırakılır ve toplamı uyarıda yazılır. EXCEL/CSV.
+   b) KDV Özeti: oran bazında satış matrahı/hesaplanan KDV, alış matrahı/indirilecek KDV, ÖDENECEK veya DEVREDEN KDV. İadeler otomatik düşer.
+   c) Muhasebe Aktarımı: yevmiye fişi taslağı (tek düzen hesap kodları, HESAP KODLARI ile değişir; her fiş borç=alacak), satış ve alış fatura listeleri. EXCEL/CSV.
+   Kaynaklar: satış=sales+sale_lines (iptaller hariç), alış=doğrudan alış (purchase_line_tax) + onaylı tedarikçi faturaları (iptal/ters kayıt hariç). Mal kabul tek başına dahil edilmez.
+   NOT: Resmi beyanname değildir; mali müşavir kontrolü içindir. Ba-Bs eşiği ve oranlar mevzuata göre teyit edilmelidir.
+
+36) v288: Açılış ekranı başlığı yenilendi: renk geçişli zemin, logoya halka, firma adı iki satır (ALFABE / KIRTASİYE), slogan iki yanında çizgiyle, altta parlayan vurgu çizgisi, saat paneline üst çizgi. 'Denizli' ve '2002'den beri' yazıları başlıktan ve alt çubuklardan kaldırıldı.
+
+37) v289: Açılış ekranı başlığında firmanın kendi logosu (alfabe_logo_header.png) beyaz plaka üzerinde gösterilir; eski 'AK' kutusu ve yazı kaldırıldı. Dosya program klasöründe bulunmazsa eski görünüme düşer. Kurulum (spec) dosyasına eklendi.
+
+38) v290: Ayarlar > 'Firma Logosu' (Firma & Dönem'in altında): LOGO SEÇ / LOGOYU KALDIR, önizleme. Logo firma bilgilerine kaydedilir; raporlar, sipariş/teklif/fatura çıktıları, ekstreler, fişler ve E-Fatura kontrol görünümü aynı logoyu kullanır. Eski çalışmayan 'Logo Dosyası' ayar satırı kaldırıldı.
+
+39) v291-292: Firma bilgisi penceresinde (Yeni/Değiştir) ve Ayarlar > Firma Logosu'nda seçilen logo artık ekranda önizlenir. Pillow varsa JPG dahil her logo PNG'ye çevrilip 1200 px'e küçültülerek saklanır; yoksa JPG olduğu gibi saklanır (raporlarda çalışır, ekranda önizlenmez, PNG önerilir). Logo ayrıca şu çıktılara eklendi: A4 yapılandırılmış belgeler (mutabakat, açık belgeler, borç yaşlandırma, cari çıktı, mal kabul, tedarikçi faturası), iade belgesi, cari belge/ayrıntı çıktıları ve cari satış belgesi. Rapor Düzenleyici, sipariş/teklif/ekstre/stok raporları zaten kullanıyordu. 80 mm fişlerde logo yoktur (düz metin baskı).
+
+40) v293: Açılış ekranı sol üstteki resim artık sabit değil: seçili FİRMANIN logosu varsa gösterilir, yoksa boş kalır (firma değiştirilince güncellenir). Logo hem dönem hem firma ana veritabanında aranır; Ayarlar ve Firma Bilgileri'nden yapılan seçim ana veritabanına da yazılır, böylece tüm dönemler aynı logoyu görür.
+
+41) v294: Rapor Düzenleyici > 'Logo yüksekliği (mm)' ayarı (8-40, varsayılan 22; önceki sabit 15 mm idi). Logo, firma adı yazısı okunacak kadar büyük basılır; rapora göre ayrı ayrı değiştirilebilir.
+
+42) v295: FİYAT YÖNETİMİ yenilendi (yeni modül ALFABE_FIYAT_YONETIMI.py).
+   Tablo: yeni sütunlar Stok Kodu, Grup, Birim (varsayılan gizli), KDV %, Stok, Son Alış Tarihi; yatay/dikey kaydırma çubuğu. Satır renkleri: Maliyet altı = kırmızı, Kârsız (satış=maliyet) = turuncu, Maliyeti yok = sarı, Fiyatı yok = gri. Altta renk açıklaması ve sayım özeti.
+   Filtreler: Maliyeti Olmayan, Toptanı Olmayan, Bugün Değişen, Son 7 Gün Değişen; Marka ve Grup listesi; Kâr % aralığı; FİLTRELERİ TEMİZLE. Satır sınırı kaldırıldı (tüm ürünler listelenir).
+   Perakende / Toptan / Özel hücresine ÇİFT TIK = yerinde düzenleme (Enter kaydeder, Esc vazgeçer; maliyet altı fiyatta onay; fiyat geçmişine yazılır). Diğer hücrelerde çift tık = Tek Ürün Fiyatı.
+   EXCEL'E AKTAR: görünür sütunlar, ekrandaki sıra, seçili veya tüm filtreli ürünler (.xlsx / .csv). EXCEL'DEN FİYAT YÜKLE: Barkod veya Stok Kodu ile eşleştirir, Perakende/Toptan/Özel sütunlarını okur, önizleme + atlanan satır listesi + maliyet altı uyarısı, tek işlemde uygular, fiyat geçmişi kaydeder. Dışa aktarılan dosya doğrudan şablon olarak kullanılabilir.
+   YAZDIR / PDF: görünür sütunlarla fiyat listesi (önizleme veya PDF). Toplu fiyat ve Excel yükleme sonrası değişiklik özeti gösterilir (ürün sayısı, artan/azalan, ortalama % değişim).
+   Windows GUI testi yapılmadı; mantık modülü ve filtreler sahte veritabanıyla test edildi, sözdizimi kontrol edildi.
+   v295 görünüm: Fiyat Yönetimi, Stok Merkezi ile aynı canlı tasarıma getirildi: iri satırlar (34 px), belirgin mavi zebra, büyük arama kutusu ve başlığı, hap biçimli hızlı filtre düğmeleri, büyütülmüş Marka/Grup/Kâr % alanları, Stok'taki gibi mavi alt özet çubuğu. Alttaki renk açıklaması tıklanabilir renkli düğmelere dönüştü (sayı gösterir; tıklayınca ilgili filtreyi uygular).
+
+43) v296: ALIŞ & MAL KABUL liste ekranı yenilendi (Fiyat Yönetimi ile aynı tasarım): iri satırlar (34 px), mavi zebra, büyük arama kutusu, hap biçimli hızlı filtreler (Durum: Tümü/Kesinleşti/Taslak/İade/İptal; Tarih: Tümü/Bugün/Bu Hafta/Bu Ay), FİLTRELERİ TEMİZLE, dikey kaydırma çubuğu, altta tıklanabilir renk düğmeleri (belge sayısıyla) ve mavi özet çubuğu.
+   Satır renkleri: Taslak = sarı, İade = turuncu, İptal = gri.
+   Düzeltmeler: (a) 'İptal' belgeler artık filtrelenebilir. (b) 'Listelenen toplam' iptal ve iade belgelerini de katıyordu; artık 'Geçerli alış toplamı' bunları hariç tutar, hariç kalanlar ayrıca yazılır. (c) Arama belge no + tedarikçinin yanında ürün adı / barkod / stok kodunu da arar (birden çok sözcük birlikte). (d) Satır sınırı 1000 -> 5000. (e) ALIŞ İADESİ yalnızca 'Kesinleşti' belgede çalışır; önceden İPTAL edilmiş bir belge iade edilebiliyor ve stok ikinci kez düşüyordu.
+   Windows GUI testi yapılmadı; liste mantığı (filtre/arama/toplam) sahte veritabanıyla test edildi, sözdizimi kontrol edildi.
+
+44) v297: ALIŞ TASLAĞI. Yeni Alış penceresinde 'TASLAK KAYDET' düğmesi: belge stok, cari, kasa ve fiyat geçmişini ETKİLEMEDEN ayrı tabloda (purchase_drafts) saklanır; raporlara ve toplamlara girmez. Alış listesinde TASLAK-000001 gibi sarı satır olarak görünür; çift tık = taslağı açıp devam et, KAYDET = normal alış olarak kesinleşir ve taslak silinir. 'TASLAĞI SİL' düğmesi eklendi. Taslak belge iade edilemez. Arama taslaklarda tedarikçi ve ürün adına da bakar.
+   Düzeltme: Yönetim Özeti ('Bu ay alış', tedarikçi toplam alışı) ve Rapor Merkezi 'Tedarikçi Analizi' İPTAL edilen alışları da topluma katıyordu; artık iptal ve iade hariç.
+   Windows GUI testi yapılmadı; liste/taslak mantığı sahte veritabanıyla test edildi, sözdizimi kontrol edildi.
+
+45) v298: KISMİ ALIŞ İADESİ. ALIŞ İADESİ artık belge satırlarını gösteren bir pencere açar (Alınan / Önceki İade / Kalan / İADE MİKTARI / İade Tutarı); satıra çift tık = iade miktarı. 'KALAN TÜMÜNÜ İADE ET' ve 'SIFIRLA' düğmeleri. Aynı belgeden birden çok kez iade yapılabilir; iade edilen miktarlar purchase_return_lines tablosunda satır bazında izlenir.
+   İşlem: stok miktarı ve ortalama maliyet iade miktarına göre düşer, stok hareketi 'Alış İadesi', cari borç (vadeli) veya kasa girişi (peşin) KDV DAHİL iade tutarı kadar ters kayıt olur; satırın son kalanında kuruş farkı kalmaz. Kalan miktar kayıt anında kilit altında yeniden doğrulanır. Tüm satırlar iade edilince belge 'İade' olur ve son alış maliyeti önceki alışa döner; kısmi iadede belge 'Kesinleşti' kalır.
+   Listede kısmi iadeli belge 'Kısmi İade' (turuncu) görünür, 'İade' filtresi/düğmesine dahildir; 'Geçerli alış toplamı' iade tutarını düşer. Kısmi iade yapılmış alış iptal edilemez (mevcut 'alıştan sonra hareket var' koruması). İşletme kredi kartıyla yapılan alışlarda otomatik iade engellenir (önceden kasaya yanlış giriş yazıyordu).
+   Bilinen sınır: Yönetim Özeti alış toplamları kısmi iadeyi henüz düşmez. Windows GUI testi yapılmadı; tutar/kalan hesabı ve liste mantığı sahte veritabanıyla test edildi.
+
+46) v299: Kısmi iade tamamlayıcıları. (a) Yönetim Özeti: 'Bu ay alış' ve tedarikçi 'Toplam Alış' kısmi iade tutarını düşer. (b) Alış belge detayı: 'İade Edilen' sütunu, iadeli satırlar turuncu, altta 'iade edilen / kalan alış' özeti; kesinleşmiş belgede 'ALIŞ İADESİ' düğmesi. (c) Taslak ve iade tabloları ekran açılırken garanti altına alınır. Windows GUI testi yapılmadı; toplam sorguları sahte veritabanıyla denendi.
+
+47) v300: Gerçek veritabanı şemasıyla uçtan uca deneme (Tk yerine sahte pencere bileşenleriyle). Bulunan ve düzeltilen: (a) alış listesi ve iade penceresi veritabanı satırına değer atıyordu (sqlite3.Row) -> hata verirdi; sözlüğe çevrildi. (b) Belgenin tamamı iade edilince yalnız son adımdaki ürünlerin 'son alış maliyeti' sıfırlanıyordu; artık belgedeki tüm ürünler önceki alışa döner. Denenen akışlar: 3 adımlı kısmi/tam iade (240+540+420 = 1.200 ₺, cari bakiye 0, stok 0, audit kayıtları), tekrar iade engeli, taslak kaydet -> aç -> kesinleştir (stok +5, cari alacak 300 ₺, taslak silinir), liste filtreleri, kısmi iadeli alışın iptalinin engellenmesi. Gerçek Windows penceresi yine de elle denenmelidir.
+
+48) v301: ALIŞ İADE BELGESİ (A4 çıktı). Belge: firma adı + logo, alış belgesi/tedarikçi/durum bilgisi, belgeden yapılan TÜM iade hareketleri (tarih, barkod, kod, ürün, miktar, birim fiyat, KDV hariç ve dahil tutar), iade toplamı, KDV, alış belgesi toplamı ve iade sonrası kalan, imza alanları (Düzenleyen / Teslim Eden / Tedarikçi). Erişim: iade kaydedilince 'İade belgesi yazdırılsın mı?' sorusu; Alış listesi alt çubuğunda 'İADE BELGESİ YAZDIR' (seçili alış); belge detayında (iadesi olan belgede). Tarayıcıda açılır, yazdır/PDF için Ctrl+P. Rapor Motoru 2 / Rapor Düzenleyici'ye henüz bağlı değildir (kendi sabit düzeni vardır). Windows'ta yazıcı çıktısı elle denenmelidir; HTML içeriği gerçek şemada üretilip doğrulandı.
+
+49) v302: TEDARİKÇİLER ekranı yenilendi (önceden yalnız ad / telefon / bakiye). Arama (ad, telefon, vergi no; Türkçe İ/ı duyarsız), hızlı filtreler (Tümü, Borcumuz Var, Açık Fatura, Vadesi Geçmiş, Alışı Olan), sütunlar: Tedarikçi, Telefon, Vergi No, Belge, Toplam Alış (iade düşülmüş, iptal hariç), Son Alış, Bakiye (Borcumuz), Açık Fatura, Vadesi Geçmiş. Satır renkleri: kırmızı = vadesi geçmiş fatura, sarı = borcumuz var. Alt çubukta toplam borcumuz ve vadesi geçmiş tutar. Çift tık / ALIŞLARINI GÖSTER = Alış listesini o tedarikçiye göre süzer. MERKEZİ YAZDIRMA düğmesi.
+   Düzeltme: rolü 'Tedarikçi' olmayan ama alış yapılmış cariler (ör. rolü Müşteri kalmış) listede hiç görünmüyordu; artık en az bir alışı olan her cari listelenir.
+   Windows GUI testi yapılmadı; veri/filtre/çift tık akışı gerçek şemada denendi.
+
+50) v303: GELİŞMİŞ MAL KABUL iyileştirmeleri. (a) Mal Kabul Geçmişi'ne arama (mal kabul no, sipariş, tedarikçi, not, kullanıcı; Türkçe İ/ı duyarsız), durum düğmeleri (Tümü / Kesinleşti / İptal) ve alt özet çubuğu (adet, geçerli toplam, iptal sayısı). (b) Bekleyen siparişlerde arama Türkçe harf duyarsız ve çok sözcüklü. (c) Satırlar daha yüksek (32 px). (d) Mal kabul penceresinde 'KALANI KABUL ET' düğmesi (tüm satırlarda kalan miktarı sağlam kabul eder, hasarlıyı sıfırlar) ve Hasarlı sütununa tek tıkla yerinde düzenleme.
+   Güvenlik düzeltmeleri: (e) Mal kabulden doğan alış belgesi, ALIŞ İADESİ ile geri gönderilemez (önceden gönderilebiliyor, sonra mal kabul iptal edilince stok ikinci kez düşüyordu); uyarı, SİLMEDEN İPTAL yolunu gösterir. (f) Alış iadesi yapılmış / kesinleşmiş durumda olmayan alışa bağlı mal kabul iptal edilemez.
+   Gerçek şemada denendi: sipariş (20 + 10 adet) -> KALANI KABUL ET -> kesinleştir (stok +20 / +10, tutar 500 ₺, sipariş 'Tamamlandı') -> iade engeli -> SİLMEDEN İPTAL (stok geri döndü, mal kabul 'İptal'). Windows GUI testi yapılmadı.
+
+51) v304: TEDARİKÇİ FATURASI iyileştirmeleri. (a) 'Tedarikçi Faturaları' sekmesine arama (fatura no, tedarikçi, mal kabul, not; Türkçe İ/ı duyarsız), durum düğmeleri (Tümü / Açık / Kısmi Ödendi / Ödendi / Vadesi Geçmiş / Fark Var / İptal), alt özet çubuğu (fatura sayısı, ödenecek kalan, vadesi geçmiş tutar) ve vadesi geçmiş faturalar için turuncu satır. 'Faturasız Mal Kabuller' sekmesine arama. Satırlar daha yüksek. (b) Fatura oluştururken satır KDV % artık stok kartındaki KDV oranıyla gelir (önceden 0 geliyordu, KDV tek tek elle girilmeliydi); 'Fatura Toplamı' siz elle değiştirene kadar hesaplanan toplamı (matrah + KDV + kargo + ek masraf) otomatik izler. Elle yazılan fatura toplamı korunur, farklıysa uyarı ve fark kaydı eskisi gibi çalışır. (c) ÖDEME YAP: ödeme hesabı serbest yazı yerine kayıtlı kasa/banka hesapları listesinden seçilir (yazım hatasıyla var olmayan hesap oluşması engellendi).
+   Güvenlik: (d) Aktif tedarikçi faturası bağlı olan mal kabul 'SİLMEDEN İPTAL' ile iptal edilemez; önce fatura iptal edilmelidir (önceden cari kayıtları tutarsız kalabiliyordu).
+   Gerçek şemada denendi: siparişten mal kabul -> fatura oluştur (KDV %20 otomatik, fatura toplamı 240 ₺; cari 200 ₺ mal kabul borcu + 40 ₺ KDV düzeltmesi) -> ödeme (Ana Kasa) -> faturayı iptal denemesi (ödeme varken engellenir) -> son ödemeyi iptal -> fatura iptal. Windows GUI testi yapılmadı.
+
+52) v305: YENİ ALIŞ — son alış fiyatı önerisi. Barkod/ürün seçilince alış fiyatı kutusu, seçili tedarikçiden yapılan SON KESİNLEŞMİŞ alış fiyatıyla (KDV hariç birim) otomatik dolar; o tedarikçiden alış yoksa stok kartındaki son alış maliyeti kullanılır. EKLE yanında mavi ipucu: 'Son alış: 9,25 ₺ (10.10.2026) • bu tedarikçiden / stok kartı' ya da 'Bu ürün için önceki alış yok'. Girilen fiyat son alıştan %20'den fazla sapıyorsa eklemeden önce onay sorulur (yanlış rakam/virgül hatalarını yakalar). İptal edilmiş alışların fiyatı öneride kullanılmaz. Tedarikçiyi ürün eklemeden ÖNCE seçmek tedarikçiye özel fiyatı getirir.
+   Denendi: öneri mantığı gerçek şemada (tedarikçi bazlı / stok yedeği / önceki alış yok / iptalli alış hariç) ve pencere kurulumu. Fiyat kutusuna yazma ve sapma uyarısı Windows'ta elle denenmelidir.
+
+53) v306: CARİ MERKEZİ liste ekranı yenilendi (Alış ve Fiyat Yönetimi ile aynı tasarım). Büyük arama kutusu (unvan, telefon, vergi no, il, ilçe, e-posta, grup, özel kod, rol; çok sözcüklü); hızlı filtreler artık hap düğmeleri, seçili olan belli ve her birinde cari sayısı var (Tümü • 4, Borçlu • 1 ...); iri satırlar, mavi zebra, kaydırma çubuğu. Satır renkleri: kırmızı = risk limiti aşımı, turuncu = vadesi geçmiş taksit, mavi = alacaklı bakiye (tedarikçiye borcumuz), gri = pasif. Alt özet çubuğuna iki kutu eklendi: 'ALACAĞIMIZ (BORÇLU BAKİYELER)' ve 'BORCUMUZ (ALACAKLI BAKİYELER)'; mevcut Toplam Borç / Toplam Alacak / Net Bakiye korunur (pasif kartlar bu iki yeni kutuya girmez).
+   Düzeltmeler: (a) Türkçe arama: 'cicek', 'ciçek', 'ÇİÇEK' hepsi aynı kaydı bulur (İ/ı, ş, ç, ğ, ö, ü duyarsız); aynı yardımcı Alış, Mal Kabul ve Tedarikçi Faturası aramalarında da kullanılır. Önceden SQLite LIKE yalnızca İngilizce harflerde büyük/küçük harf ayırmıyordu (ör. 'kırtasiye' yazınca 'KIRTASİYE' bulunmuyordu). (b) Liste sıralaması Türkçe alfabeye göre (Ç, Ğ, İ, Ö, Ş, Ü yerinde). (c) 'Vadesi Geçen' süzgeci her cari için ayrı sorgu yerine tek sorguyla çalışır ve ödenmiş / iptal / iade taksitleri saymaz. (d) 'active' alanı boş olan cariler artık Pasif'te değil aktif listede görünür.
+   Windows GUI testi yapılmadı; süzgeç, arama, sıralama, renk ve toplamlar gerçek şemada denendi.
+
+54) v1.2.291.307 - Cari Merkezi / Yönetim Özeti yenilendi
+- Taksit sayımı artık Cari listesindeki 'Vadesi Geçen' ile aynı kural: kalan>0 ve durum Ödendi/İptal/İade değil.
+- 8 özet kutusu (alacağımız, borcumuz, net, açık/gecikmiş/7 gün taksit, risk aşımı).
+- Yeni sekmeler: Borçlu Cariler, Alacaklı Cariler; gecikmiş taksitlerde gecikme günü; sekme başlığında kayıt sayısı.
+- Zebra satırlar, kaydırma çubuğu, renkli gecikmiş/yaklaşan satırlar.
+- Satıra çift tık: ilgili carinin ayrıntısı açılır.
+- YENİLE ve MERKEZİ YAZDIRMA düğmeleri eklendi.
+
+55) v1.2.291.308 - Yeni Cari / Cari Düzenle kartı
+- E-posta biçim kontrolü eklendi.
+- Vergi / TCKN 10 veya 11 hane değilse uyarı verir (isterseniz yine de kaydedebilirsiniz).
+- Aynı unvanlı (Türkçe harf farkı gözetmeden) başka cari varsa uyarı verir.
+
+56) v1.2.291.309 - Cari Sil / Pasife Al - Aktife Al
+- Silme engeli mesajı artık okunabilir Türkçe başlıklarla bağlı kayıtları listeler (Cari hareketleri, Taksitler...).
+- Silme işlemi güvenli işlemle yapılır; bağlantılar kapatılır.
+- Pasife alırken bakiye veya açık taksit varsa onay penceresinde uyarı gösterilir.
+
+57) v1.2.291.310 - Cari Merkezi / Cari Satış kısayolu
+- Pasif cariye satış açılmaya çalışılırsa açık uyarı verilir (eskiden boş ekran açılıyordu).
+- Cari Satış penceresi kapanınca Cari Merkezi listesi ve bakiyeler otomatik yenilenir.
+
+58) v1.2.291.311 - Cari Merkezi / Tahsilat (ve Ödeme) girişi
+- Tahsilat carinin borcundan fazlaysa fazla tutar (avans) belirtilerek onay istenir; Ödeme için de aynı kontrol vardır.
+- Otomatik taksit dağıtımı artık İptal/İade taksitlere tahsilat yazmaz (liste kuralıyla aynı).
+- Kayıttan sonra Cari Merkezi listesi ve bakiyeler hemen yenilenir.
+
+59) v1.2.291.312 - Cari Merkezi / Satış İadesi
+- İade edilebilir belge yoksa boş pencere yerine açık bilgi mesajı verilir.
+- Belge seçim listesine arama kutusu (belge no / ödeme türü, Türkçe harf duyarsız), zebra satırlar, kısmi iadeli belgelerde sarı vurgu ve belge sayısı eklendi.
+- Enter ile tek sonuç otomatik seçilip iade ekranı açılır.
+- İade hesabı (stok, KDV, cari mahsup) değiştirilmedi.
+
+60) v1.2.291.313 - Cari Merkezi / Mutabakat
+- Açık taksit sayımı liste kuralıyla aynı (Ödendi/İptal/İade hariç).
+- Cari bakiye kartı ve mutabakat kayıt penceresi bakiye yönünü yazar (müşteri bize borçlu / biz borçluyuz) ve beyan girişinde işaret kuralını hatırlatır.
+- Müşteri beyanı boş/sayı değilse kayıt engellenir (eskiden sessizce 0 sayılıyordu).
+
+61) v1.2.291.314 - Cari Merkezi / Açık Belgeler
+- Liste zebra satırlı, kaydırma çubuklu; gecikmiş/kısmi/ödenmiş renkleri korunur.
+- Belge arama Türkçe harf duyarsız yapıldı.
+- Yeni LİSTEYİ YAZDIR düğmesi (merkezi yazdırma).
+- Belge tahsilat, detay ve taksit planı davranışı değiştirilmedi.
+
+62) v1.2.291.315 - Cari Merkezi / Borç Yaşlandırma
+- Liste en çok gecikmiş borcu olandan başlayarak sıralanır; zebra satırlar ve kaydırma çubuğu eklendi.
+- Cari arama Türkçe harf duyarsız (isim ve telefon).
+- Aktif alanı boş olan cariler de rapora dahil edilir (diğer ekranlarla tutarlı).
+- YENİLE (tahsilat sonrası güncelleme) ve MERKEZİ YAZDIRMA düğmeleri eklendi.
+
+63) v1.2.291.316 - Cari Merkezi / İşlem İptali
+- Güvenli iptal mantığı (ters hareket, kasa/banka, taksit, satış tahsilat bağlantıları) aynen korundu.
+- Liste zebra satırlı, kaydırma çubuklu; yeni 'İptal edilenleri gizle' seçeneği ve işlem sayısı göstergesi eklendi.
+- Uyarı/onay pencereleri artık iptal ekranının üstünde açılır.
+
+64) v1.2.291.317 - Cari Merkezi / Cari Ayrıntı
+- Açık taksit ve vadesi geçen kartları liste kuralıyla aynı hesaplanır (Ödendi/İptal/İade hariç, kalan>0); eskiden iptal taksitler de sayılıyordu.
+- Güncel bakiye kartı yönü yazar (bize borçlu / biz borçluyuz).
+- Listeler zebra satırlı; gecikmiş taksitler kırmızı, iptal/ters hareketler soluk kırmızı gösterilir.
+- Yeni YENİLE düğmesi: tahsilat/satış sonrası ayrıntı ekranını güncel haliyle yeniden açar.
+
+65) v1.2.291.318 - Cari Merkezi / Cari Ekstre (Çıktı Merkezi)
+- Hızlı dönem düğmeleri: Bu Ay, Son 3 Ay, Bu Yıl, Geçen Yıl, Tümü (başlangıç/bitiş tarihini tek tıkla ayarlar).
+- Ekstre tablosu satır yüksekliği diğer Cari ekranlarıyla aynı.
+- Önceki bakiye, yürüyen bakiye, yazdırma ve PDF mantığı değiştirilmedi.
+
+66) v1.2.291.319 - Cari Merkezi / Çıktı Al (Cari listesi)
+- Yazdırılan başlık artık ekrandaki filtreyi ve aramayı da yazar (ör. "Cari Listesi - Vadesi Geçen - Arama: zeytin"); çıktı neyin listesi olduğunu kendi söyler.
+- Yazdırma motoru ve kolonlar değiştirilmedi.
+
+67) v1.2.291.320 - Mutabakat / gerçek hesap kontrolleri
+- Eski "hesap hareketleri tutarlı" kontrolü (aynı hareketleri iki kez toplayıp hep tutarlı çıkıyordu) kaldırıldı.
+- Yerine gerçek kontroller: tahsilat/ödeme ↔ kasa-banka kaydı eşleşmesi, taksitte fazla/negatif ödeme, açık taksit toplamı ↔ cari bakiye, iptal kayıtlarının ters hareket denkliği.
+- Uyarı varsa durum çubuğu kırmızı olur ve ilk üç uyarıyı yazar.
+
+68) v1.2.291.321 - Cari hareket "Kaynak" sütunu Türkçe
+- CARI_SALE, MANUAL, REVERSAL gibi teknik kodlar Cari Ekstre, Cari Ayrıntı (Hareketler, Tahsilat/Ödeme), Mutabakat hareket listesi ve yazdırma çıktılarında Türkçe gösterilir (Cari Satış, Elle Giriş, İptal (Ters Kayıt), Satış İadesi, Mal Kabul...).
+- Tanınmayan yeni kodlar olduğu gibi görünür; veritabanı değerleri değişmedi.
+
+69) v1.2.291.322 - Cari listesi sağ tık menüsü
+- Cari listesinde satıra veya boş alana sağ tıklayınca artık Stok Merkezi'ndeki tablo menüsü de açılır (Bu alanı kaldır, Alan Seçici, Yeni Alan Ekle, Hizalama, yazı tipi, En iyi yerleşim, Akıllı Hizala, Yerleşimi Kaydet/Varsayılan, Baskı Ön İzleme, Tasarımı Düzenle/Kaydet).
+- Satıra sağ tıkta menünün üstünde cari işlemleri bulunur: Cari Ayrıntı, Cari Ekstre, Tahsilat, Ödeme, Cari Satış, Cari Düzenle, Cari Sil, Pasife Al / Aktife Al.
+- Boş alana sağ tıkta üstte Yeni Cari bulunur.
+- Sütun başlığına sağ tık eskisi gibi çalışır.
+
+70) v1.2.291.323 - Sipariş & Teklif / mantık düzeltmeleri
+- SİPARİŞİ SATIŞA DÖNÜŞTÜR: Alınan kapora artık satıştan düşülür. Eskiden nakit satışta kasaya toplam tekrar yazılıyor (kapora iki kez sayılıyor), vadeli satışta cariye toplam borç yazılıyordu. Şimdi kasa/cari yalnız kalan tutarı alır, notta "Kapora mahsup" yazar.
+- Satış satırlarına KDV oranı/tutarı yazılır (eskiden boştu); satır iskontosu % yerine tutar olarak kaydedilir (diğer satışlarla aynı).
+- Vadeli siparişten satışta vade tarihi cari vade gününe göre atanır; ORDER_SALE hareketleri Açık Belgeler, tahsilat bağlama ve iade hesaplarına dahil edilir.
+- Stok yetersizse dönüştürmeden önce uyarı verilir.
+- İPTAL: Satışa dönüşmüş veya tamamlanmış sipariş, siparişe dönüşmüş teklif iptal edilemez; zaten iptal belge tekrar iptal edilemez. Kapora varsa iade edilsin mi diye sorulur ve kasadan iade kaydı oluşur.
+- DURUM > İptal seçimi artık aynı korumalı iptal akışından geçer (rezervasyonlar kapanır); iptal edilen sipariş yeniden açılamaz (KOPYALA kullanılır).
+- KOPYALA: sipariş belge numarası çakışmadan üretilir ve müşteri siparişinde stok rezervasyonu oluşturulur.
+
+71) v1.2.291.324 - Sipariş & Teklif / liste ekranı yenilendi
+- Hızlı filtre düğmeleri (sayaçlı): Tümü, Müşteri Siparişi, Tedarikçi Siparişi, Teklif, Açık, Kısmi Teslim, Geciken, Bugün Teslim, Tamamlandı, İptal. Açılır liste kaldırıldı.
+- Sipariş ve teklifler tek listede tarihe göre yeni -> eski sıralanır (eskiden önce tüm siparişler sonra teklifler geliyordu).
+- Renkli satırlar: geciken teslim kırmızı, kısmi teslim sarı, süresi dolan teklif turuncu, tamamlanan/siparişe dönüşen yeşil, iptal gri; diğerleri zebra.
+- Arama Türkçe harf duyarsız (belge no, müşteri/tedarikçi, telefon, durum); sarı arama kutusu.
+- Özet kutuları 5'e çıktı: Teklif Sayısı, Bekleyen Sipariş, Teslim Bekleyen, Geciken Sipariş, Açık Sipariş Tutarı.
+- Satıra sağ tık: belge işlemleri + Stok'taki tablo menüsü; boş alana sağ tık: yeni sipariş/teklif + tablo menüsü.
+- LİSTEYİ YAZDIR düğmesi (merkezi yazdırma) eklendi.
+
+72) v1.2.291.325 - Sipariş & Teklif / düzenleme ekranı
+- Teslimatı yapılmış siparişi düzenlemek teslim edilen miktarları SIFIRLIYORDU (satırlar silinip yeniden yazılıyordu). Artık mevcut satırlar yerinde güncellenir; teslim edilen miktarın altına inilemez, teslimatlı satır silinemez; stok rezervasyonu yalnız teslim edilmeyen kalan miktar için oluşturulur.
+- İptal, tamamlanmış / satışa dönüşmüş sipariş ve iptal / siparişe dönüşmüş teklif salt okunur açılır (turuncu uyarı satırı), kaydedilemez.
+- Kayıtta doğrulamalar: kapora sayı ve negatif olmayan, sipariş toplamını aşmayan, yalnız müşteri siparişinde; genel iskonto 0-100; cari müşteri tipinde cari seçilmeli.
+- Pasif olmuş cariye bağlı belge düzenlenip kaydedilince cari bağlantısı artık kopmaz.
+- Tedarikçi siparişinde kapora kasaya işlenmez (yalnız müşteri siparişi).
+
+73) v1.2.291.326 - Sipariş & Teklif / teslimat
+- Sipariş tamamen teslim edildiğinde "şimdi satışa dönüştürülsün mü?" sorulur (stok düşümü ve satış kaydı satışa dönüştürmede yapıldığı için unutulmaması için). Satışa dönüşmemiş tamamlanmış müşteri siparişi listede turuncu görünür.
+- Yeni TESLİMAT GEÇMİŞİ penceresi (teslimat ekranından veya satıra sağ tık menüsünden): tüm teslimatlar listelenir, yanlış girilen teslimat GERİ ALINABİLİR (teslim edilen miktar düşer, sipariş durumu Açık / Kısmi Teslim / Tamamlandı olarak yeniden hesaplanır). İptal veya satışa dönüşmüş siparişte geri alma engellenir.
+
+74) v1.2.291.327 - Finans Merkezi / ana liste
+- "İşlem Sonrası Bakiye" artık gerçek: her hesabın (Kasa/Nakit/Ana Kasa tek kasa sayılır; banka ve POS hesapları ayrı) yürüyen bakiyesi. Eskiden son 3000 hareketin toplamı sıfırdan başlıyor, tüm hesapları karıştırıyordu.
+- Üst kartlar artık her işlemden sonra yenilenir (eskiden ekran açılışında bir kez hesaplanıyordu).
+- Hızlı filtreler: Tümü, Giriş, Çıkış, Kasa, Banka, POS, Tahsilat, Gelir / Gider + dönem (Bugün, Bu Hafta, Bu Ay, Tümü).
+- Zebra satırlar; giriş yeşil, çıkış kırmızı, iptal/ters kayıtlar gri. Arama Türkçe harf duyarsız, sarı kutu.
+- Liste altı özet: hareket sayısı, toplam giriş, çıkış, net. Satıra sağ tık menüsü ve LİSTEYİ YAZDIR düğmesi eklendi.
+- Yönetim Özeti'nde beklenen tahsilat iptal/iade taksitleri saymaz.
+
+75) v1.2.291.328 - Finans Yönetim Özeti: 4 sekme zebra satır, kaydırma çubuğu, sekme başlıklarında kayıt sayısı, Merkezi Yazdırma düğmesi.
+76) v1.2.291.329 - Finans Tahsilat/Ödeme: cari seçilirse Cari Merkezi tahsilat/ödeme akışı (bakiye, açık belge/taksit bağlama) kullanılır; cari seçilmezse tutar/hesap doğrulaması, boş açıklama uyarısı, kasa/banka bakiyesi eksiye düşerse onay, kayıt denetim izi.
+77) v1.2.291.330 - Finans Gelir/Gider: kayıt formu yenilendi (tür, tarih, hesap, kategori, tutar, açıklama; tutar/tarih doğrulaması, ileri tarih onayı, denetim izi, hesap artık seçilebilir - eskiden hep Ana Kasa). Gelir/Gider Raporu: zebra satır, kaydırma çubuğu, gelir yeşil/gider kırmızı.
+78) v1.2.291.331 - Gider / Masraf PRO: GİDER İPTALİ denetim kaydı hatası düzeltildi (iptal sonrası hata veriyor, liste yenilenmiyordu); iptal öncesi onay; Türkçe duyarsız arama; zebra satır + kaydırma çubuğu; tutar "1.250,50" biçimini doğru okur; tarih doğrulaması. Gelir/Gider Raporu artık iptal edilen giderleri toplam giderden düşer (eskiden iptal edilen gider raporda kalıyordu).
+79) v1.2.291.332 - Finans Transfer: hesaplar listeden seçilir (eskiden elle yazılıyor, yazım hatası hayali hesap açıyordu), seçili hesapların anlık bakiyesi gösterilir, Nakit/Kasa/Ana Kasa aynı hesap sayılır, bakiye yetersizse onay, kayıt öncesi özet onayı, aynı saniyedeki transferlerde farklı referans (mikrosaniye), hata mesajı, denetim izi.
+80) v1.2.291.333 - Finans > Taksit: düz liste yerine tam takip ekranı: süzgeç (Tümü/Açık/Gecikmiş/Bugün/Bu Hafta/Bu Ay/Ödenen), Türkçe duyarsız arama, özet kutuları (kayıt, tutar, ödenen, kalan, geciken), gecikme günü, renkli zebra satırlar (kırmızı gecikmiş, sarı kısmi, yeşil ödenmiş), TAHSİLAT AL (Cari Merkezi akışı), CARİ EKSTRE, merkezi yazdırma. "Açık" kuralı tüm programla aynı (kalan>0 ve durum Ödendi/İptal/İade değil).
+81) v1.2.291.334 - Finans > Çek / Senet: (1) Alt düğme çubuğu iki kez çiziliyordu, tekilleştirildi. (2) Taksite bağlı olmayan çek/senetler (Yeni Çek/Senet kartından girilenler) için TAHSİL ET / ÖDE akışı eklendi: Alınan -> cari alacak + kasa/banka girişi, Verilen -> cari borç + çıkış, durum Tahsil Edildi/Ödendi, çift işlem koruması, denetim izi (eskiden "taksite bağlı değil" uyarısıyla hiç kapatılamıyordu). (3) Kayıtlı durum listede doğru görünür. (4) Süzgeç (Tümü/Portföyde/Gecikmiş/Bu Hafta/Tahsil-Ödendi/İptal), Türkçe duyarsız arama, zebra satırlar, kaydırma çubuğu, renkler, merkezi yazdırma başlığı. (5) Tarih hata mesajları gerçek biçimle (YYYY-AA-GG) uyumlu.
+82) v1.2.291.335 - Finans > Finansal Takvim: eski hesapta taksite bağlı senet hem taksitte hem çek/senette sayılıyordu (çift sayım) ve tahsil edilmiş/iptal çek-senetler de beklenen girişe dahildi; ikisi de düzeltildi. Geciken alacak/ödeme ayrı gösterilir, kasa+banka bakiyesinden 7/15/30/60/90 gün tahmini bakiye hesaplanır, ayrıntılı vade listesi (Geciken/7/15/30/60/90/Tümü), renkli zebra satırlar, bugün vurgusu, merkezi yazdırma.
+83) v1.2.291.336 - Finans > Gün Sonu: ekrana günün hesap/işlem türü bazında hareket dökümü eklendi (banka/POS dahil tüm hesaplar; nakit mutabakatı için Kasa bakiyesi ayrıca gösterilir). "Fiziksel sayılan" alanı artık "1.250,50" gibi Türkçe biçimi doğru okur (eskiden virgül/nokta karışıp geçersiz sayılabiliyordu). Mevcut koruma kuralları (günde tek kapanış, bakiye değişti kontrolü, yetkili yeniden açma, fark için açıklama zorunluluğu) aynen korundu.
+84) v1.2.291.337 - Finans > Kredi Kartlarım: (1) İptal edilmiş kart taksitleri kart borcuna ve kullanılabilir limite dahil ediliyordu; düzeltildi. (2) Kart ödemesi kart borcunu aşabiliyordu (fazlası taksitlere işlenmeden hesaptan çıkıyordu); artık borçtan büyük ödeme engellenir, ödeme penceresi güncel borcu gösterir ve varsayılan olarak doldurur, kayıt öncesi onay istenir. (3) GECİKEN TAKSİT kutusu ve plan listesinde "Gecikmiş" durumu. (4) DÜZENLE (limit, kesim/son ödeme günü, not) ve PASİFE AL (açık borç varsa engellenir). (5) Aynı adlı kart için anlaşılır uyarı, zebra satırlar, kaydırma çubukları, limit aşımı kırmızı, merkezi yazdırma.
+85) v1.2.291.338 - Banka Merkezi: (1) Cari Tahsilat dağıtımı (hem yeni işlem hem DÜZELT) İptal/İade durumundaki taksitlere de tahsilat işleyebiliyordu; programın ortak "açık taksit" kuralına çekildi. (2) Cari tahsilat/ödeme cari alacağını/borcunu aşıyorsa onay istenir. (3) Banka virmanında bakiye eksiye düşecekse uyarı ve kayıt öncesi özet onayı. (4) Listede Türkçe duyarsız arama, zebra satırlar, giriş yeşil/çıkış kırmızı, iptal-düzeltilmiş işlemler gri, kaydırma çubuğu, hareket sayısı satırı. (5) "Bugün Giriş" kutusu açılış bakiyesini girişe saymaz.
+86) v1.2.291.339 - Kaynak sütunu programın tamamında Türkçe: Finans Merkezi listesi (arama Türkçe karşılığını da bulur) ve işlem ayrıntısı, stok kartı hareketleri ve stok hareket listesi, cari hareket ağacı, mutabakat CSV'si, Kasa Hareketleri ve Tahsilatlar raporları. Kod sözlüğü genişletildi (CARI, BANK_CARI, BANK_TRANSFER, ORDER_DEPOSIT, STOCK_COUNT, EXPENSE_PRO, BUSINESS_CARD vb.). Sözlükte olmayan yeni bir kod gelirse ham "XYZ_ABC" yerine "Xyz Abc" biçiminde gösterilir.
+87) v1.2.291.340 - Kasa Merkezi: (1) Kasa hareketleri yalnız son 500 satırla sınırlıydı ve bakiye sütunu yoktu; tüm hareketlerden hesaplanan "Kasa Bakiyesi" sütunu eklendi. (2) 6 özet kutusu: kasa bakiyesi, bugün giriş/çıkış/net, gün sonu durumu (AÇIK/KAPALI), son kapanış farkı. (3) Süzgeç: Tümü/Giriş/Çıkış + Bugün/Bu Hafta/Bu Ay/Tümü, Türkçe duyarsız arama, hareket sayısı-toplam satırı. (4) Hızlı işlemler: KASA TAHSİLAT, KASA ÖDEME, KASA → BANKA (Finans Merkezi'nin doğrulamalı pencereleri, hesap varsayılanı Ana Kasa). (5) Belge No ve Türkçe Kaynak sütunları, zebra satır, giriş yeşil/çıkış kırmızı, iptal satırları gri, kaydırma çubuğu. (6) Kasa sayımı: eksik/fazla/tutuyor göstergesi, Enter ile hesapla, SAYIMI KAYDET (finans kaydı oluşturmadan denetim izine sayım dökümü).
+88) v1.2.291.341 - Banka Merkezi (2): (1) Banka hesabı eklerken girilen IBAN hiç kaydedilmiyordu; artık kaydedilir (finance_accounts.iban/note sütunları eski veritabanlarında otomatik eklenir), IBAN mod-97 ile doğrulanır, aynı IBAN iki hesapta kullanılamaz. (2) HESAP DÜZENLE / PASİFE AL: IBAN-not güncelleme, bakiyesi sıfır olmayan hesap pasife alınamaz. (3) Hesap şeridi: her banka hesabının bakiyesi ve IBAN'ı (eksi bakiye kırmızı); hesap yoksa ne yapılacağını söyleyen boş durum mesajı. (4) Giriş/Çıkış ve Bugün/Bu Hafta/Bu Ay/Tümü süzgeçleri. (5) Hesap ekleme uyarıları artık pencerenin üstünde açılır.
+89) v1.2.291.342 - E-Fatura / E-Arşiv: (1) Durum geçişi denetimsizdi: iptal edilmiş fatura "Onaylandı"ya çevrilebiliyor (satış yeniden faturalanmışsa veritabanı hatası), onaylı fatura "Taslak"a geri alınabiliyor, XML'siz fatura "Portala Yüklendi" yapılabiliyordu. Artık durum yalnız ileri gider (Taslak → XML Hazır → Portala Yüklendi → Onaylandı), İptal son durumdur, Portala Yüklendi/Onaylandı için XML hazır olmalıdır; iptal edilmiş faturaya XML üretilmez ve numarası değiştirilemez. (2) Toplu durum/iptal işleminde hata veren faturalar atlanır ve nedeni listelenir (eskiden program hata penceresiyle kesiliyordu). (3) ONAYLANMIŞ faturayı iptal ederken GİB'de ayrıca iptal/iade gerektiği uyarılır. (4) Türkçe duyarsız arama (İ/ı, ş, ç...), Bugün/Bu Ay/Tümü tarih süzgeci, zebra satırlar, kaydırma çubuğu, listelenen sayı ve iade düşülmüş net toplam, YAZDIR düğmesi. (5) GEÇMİŞ artık tam pencerede tüm kayıtlarla açılır (eskiden son 25 satır mesaj kutusunda).
+90) v1.2.291.343 - Muhasebe & Beyan: (1) Alış iadeleri hesaba katılmıyordu: iade edilen alışın indirilecek KDV'si ve Ba tutarı dönemde tam kalıyordu. Alış iadeleri artık iade tarihinde negatif belge olarak KDV özetine, Ba-Bs'ye (İade Matrahı sütunu), yevmiye taslağına (320 borç / 153 ve 191 alacak) ve alış fatura listesine girer. (2) Ba-Bs: "Eşik altındakileri de göster" kontrol seçeneği, CARİSİZ BELGELER penceresi (cari kartı seçilmediği için Ba-Bs dışında kalan belgelerin dökümü), YAZDIR düğmesi. (3) Zebra satırlar ve yazdırma başlıkları tüm sekmelerde.
+
+91) v344 Kampanya Merkezi: "Etikete Gönder" çoklu seçimli kampanyalarda 0 ürün gönderiyordu; ortak ürün çözümleyiciyle düzeltildi, onay sorar, aynı gün tekrar eklemez. Kampanya silinince hedef/kademe artıkları temizlenir. Formda ondalık virgül (12,5) kabul edilir, negatif değer ve aynı ad engellenir, satışta kullanılmış kampanyanın adı değiştirilemez, varsayılan bitiş 30 gün. Listede Türkçe duyarlı arama, "Yaklaşan" filtresi, zebra/durum renkleri (SÜRESİ DOLDU/YAKLAŞAN), kaydırma çubuğu, tarihler GG.AA.YYYY, özet satırı ve YAZDIR.
+
+92) v345 Hizmetler / Fotokopi: liste, sonradan oluşturulan boş çerçevenin altında kalıp ekranın altına itiliyordu; yerleşim düzeltildi (liste artık düğmelerin altında, kaydırma çubuklu). Zebra satırlar, fiyatı 0,00 olan tarifeler kırmızı ve özet satırı, Türkçe duyarlı arama/kategori süzme, YAZDIR. "Tür/Ebat" sütununda aralığın tekrarı gizlendi. Fiyat/adet girişlerinde virgül (1,25) kabul edilir. Hızlı hizmet satışında kademe otomatik seçimi aynı türe bağlandı, ödeme türü yalnız Nakit/Kart kabul edilir. Hizmet Satışları listesi zebra ve tarih biçimiyle.
+
+93) v346 Etiket & Barkod Merkezi: TEK ÇİZİM MOTORU. Tasarımcı, ana ekran önizlemesi, alt şerit, Baskı Ön İzleme, PDF/resim ve Windows baskısı artık aynı yerleşim hesabını kullanır (eskiden her biri ayrı çiziyordu; yazılar ekranda üstte, yazıcıda ortada çıkıyor, tasarımcı adı yükleyince ortalıyordu, tek satırlık yazılar yazıcıda kırpılıyordu). Yazı kutuya sığmıyorsa otomatik küçülür; ürün adı en çok 3 satıra bölünür, kelime kesilmez; %72'nin altına küçülen yazı için sarı uyarı çıkar.
+ - İsimle kaydet: Tasarımcıda KAYDET ve FARKLI KAYDET; ana ekranda "Farklı Kaydet". Ad boş/60 karakterden uzun/hazır şablon adı olamaz, aynı ad varsa üzerine yazma sorulur, kaydedilmemiş değişiklikle kapatılırsa sorar. Şablon Yönetimi'ne ADI DEĞİŞTİR eklendi (kuyruk ve varsayılan ayar da güncellenir).
+ - Hazır şablonlar (20x40 Normal/Büyük, Kampanya, Kitap, Özel) mm tasarımına bağlandı; tasarımcıda açılıp "Kopyam" adıyla düzenlenebilir.
+ - Yeni nesneler: ÇİZGİ, KUTU, DOLU KUTU, KAMPANYA FİYATI, beyaz yazı seçeneği. Ana ekrandaki nesne düğmeleri ilgili nesneyi ekleyerek tasarımcıyı açar; çalışmayan "Logo / Resim" düğmesi kaldırıldı.
+ - Ön izleme gerçek ürün ve gerçek şablonla çizilir (alt şerit 24 karakterde kesmez). PDF Kaydet ve Resim Olarak Kaydet gerçekten çalışır (PDF: Edge ile; resim: PNG veya SVG).
+ - Yeni tasarım, seçili etiket ölçüsüne göre başlar (eskiden hep 40x20).
+
+94) v347 Etiket okunaklılığı: yazı, nesne kutusuna sığmak için küçülüyorsa (kutu küçük kaydedilmiş tasarımlar) yeni "Okunaklı Yap" düğmesi (ana ekranda ve Tasarımcı'da) kutuları etiket sınırını ve diğer nesneleri aşmadan otomatik büyütür (aşağı, yana, sola, yukarı). Hazır şablonda yeni ad ister, kayıtlı şablonda onayla günceller. Küçülme uyarı yazısı artık kesilmeden iki satıra sarılır.
+
+95) v348 Etiket Tasarımcısı: tam ekran açılınca boş gri ekran gelmesi düzeltildi (v346-v347'de uyarı şeridi değişkeni tanımlanmadan kullanılıyordu). Tasarımcı açılışı artık otomatik testte dört senaryoda (kayıtlı, hazır, yeni, nesne ekleyerek) denenir.
+
+96) v349 Türkçe arayüz taraması: Etiket Tasarımcısı'ndaki hizalama kutusu "left/center/right" yerine Sol/Orta/Sağ gösterir (iki tasarımcıda da; saklanan veri değişmedi). Giriş pencereleri (askstring/askfloat/askinteger) düğmeleri "OK/Cancel" yerine Tamam/İptal olur. Tablolarda ve etiketlerde kalan İngilizce durum kodları (FINAL, RETURN, PARTIAL_RETURN, OPEN, CLOSED, VOID, DRAFT, PAID, PENDING vb.) Türkçe gösterilir. Nesne Özellikleri paneli genişletildi, taşan yazılar sarılır.
+
+97) v350 Etiket yönü ve baskı güvenliği: "Normal Fiyat / Büyük Fiyat" hızlı düğmeleri etiket ölçüsünü zorla 20×40 (dik) yapıyordu; artık ölçü hiç değişmez, hazır şablonlar seçili ölçüye (yatay/dikey) uyum sağlar. Hazır şablonlar "20x40 - " ön ekinden arındırıldı (kuyruk ve ayarlar otomatik taşınır). Hazır ölçülere 40×20 ve 30×20 eklendi. Yazdırmada yazıcı sürücüsünün kâğıt ölçüsü etiketten küçükse (barkodun boş çıkma sebebi: alt kısım kırpılıyordu) baskıdan önce açık uyarı verilir.
+
+98) v351 ETIKET_YASAL - Etikete "Menşei / Üretim Yeri" ve "Fiyat Değişiklik Tarihi" satırları eklendi.
+    - Stok kartına "Menşei / Üretim Yeri" alanı; fiyat tarihi fiyat geçmişinden otomatik alınır.
+    - Etiket tasarımcısında MENŞEİ ve FİYAT TARİHİ nesneleri; hazır etiketlerde yerleşik, çakışmasız.
+    - "Yasal Bilgi Ekle": mevcut şablonda boş yer varsa ekler, yoksa yeni şablon önerir. "Menşei Ata": seçili ürünlere toplu menşei.
+    - Mevzuat metni/Yerli Malı logosu için Ticaret İl Müdürlüğü ile teyit ediniz; logo/resim nesnesi henüz yok.
+
+99) v352 STOK_FIYAT_TARIHI - Stok kartı > Fiyat & Maliyet sekmesine "Son fiyat değişiklik tarihi" satırı ve TARİHİ DEĞİŞTİR düğmesi eklendi.
+    - Perakende fiyatı kartta değiştirilip kaydedilince tarih otomatik kaydedilir (fiyat geçmişi).
+    - Fiyat geçmişi olmayan eski ürünlerde etikette kart tarihi kullanılır; istenirse elle tarih girilir (geçmişe "Fiyat tarihi elle girildi" olarak yazılır).
+
+100) v353 STOK_MENSEI_YERI - Stok kartında "Menşei / Üretim Yeri" kutusu ürün görselinin arkasında kalıyordu; Genel Bilgiler sekmesinde Grubu'nun altına alındı.
+
+101) v354 URETIM_YERI - "Menşei" adı her yerde "Üretim Yeri" oldu (stok kartı, etiket nesnesi, düğmeler, mesajlar). Etiket satırları büyük harfle: "ÜRETİM YERİ: ..." ve "FİYAT TARİHİ: ...". Eski şablonlardaki MENŞEİ nesnesi otomatik ÜRETİM YERİ olarak açılır.
+
+102) v355 TASARIM_ORNEK - Etiket tasarımcısında ürünün boş alanı (üretim yeri, marka, model, grup...) olan nesneler boş görünüyordu; bu yüzden Kalın/Sol-Orta-Sağ değişikliği fark edilmiyordu. Önizleme artık boş alanları örnek değerle doldurur; yazdırmada gerçek ürün bilgisi kullanılır.
+
+103) v356 NESNE_OZELLIK - Etiket tasarımcısı Nesne Özellikleri: X/Y/Genişlik/Yükseklik/Punto ve etiket En/Boy kutularına virgüllü sayı (5,5) yazılınca değişiklik sessizce yok sayılıyordu; artık virgül de kabul edilir. Uzun ondalıklar 2 haneye yuvarlanarak gösterilir.
+
+104) v357 NESNE_TEKRAR - Etiket tasarımcısında aynı nesne (Üretim Yeri, Fiyat Tarihi, Marka, Model...) ikinci kez eklenemez; mevcut nesne seçilir. Marka/Grup/Model/Stok Kodu küçük punto ve boş şeride eklenir (üst üste binmez).
+
+105) v358 NESNE_SINIR - Etiket tasarımcısı: etiket boyutu değişince veya şablon açılınca/kaydedilirken etiket dışında kalan nesneler (Fiyat Tarihi, Barkod...) otomatik etiketin içine alınır; sürüklenemeyen nesne sorunu giderildi. Etiket dışındaki nesneye tıklama da artık seçer.
+
+106) v359 URETIM_OTO - Stok kartı "Üretim Yeri": yazdıkça öneri listesi açılır (önce kartlarda kullanılanlar, sonra yaygın ülkeler). "Alt Grup" önerileri artık Grup seçilmemişken de tüm alt grupları gösterir.
+
+107) v360 STOK_KAYIT_GUVEN - Stok kartı kaydedildikten sonra liste yenilenirken sayfa kapanmış/yenilenmişse "Stok kaydedilemedi / bad window path name" hatası çıkıyordu (kayıt aslında yapılmıştı). Kayıt sonrası ekran yenileme artık güvenli; hata olursa kayıt geri alınmaz ve yanlış uyarı verilmez.
+
+108) v361 STOK_ADI_OTO - Stok kartı hızlı giriş: Stok Adı yazdıkça mevcut ürün adları önerilir; seçilince (yeni kartta) boş Marka/Model/Grup/Alt Grup/Üretim Yeri alanları o üründen dolar. Üretim Yeri ve Alt Grup'ta Tab tuşu ilk öneriyi yazar.
+
+109) v362 ULKE_BUYUK - Üretim yeri / ülke adları büyük harfle (TÜRKİYE, ÇİN...): öneri listesi, stok kartı kaydı, toplu "Üretim Yeri Ata" ve etiket çıktısı. Eski küçük harfli kayıtlar etikette büyük görünür.
+
+110) v363 ORT_MALIYET - Ortalama maliyet sıfır kalıyordu: (1) stok kartında mevcut ürünün miktarı artırılıp ortalama maliyet 0 bırakılırsa son alış fiyatı ortalama maliyet olur; (2) alış / mal kabulde stok eksi (veya maliyeti 0) iken yapılan girişte ağırlıklı ortalama bozulmaz, yeni alış maliyeti esas alınır. Mevcut sıfır maliyetliler için Stok Merkezi > MALİYET KONTROL kullanılır.
+
+111) v364 FIYAT_GOR - Fiyat Gör ekranı: ürün adı/marka/model/kod yazdıkça eşleşenler listelenir (İ/ı ve büyük-küçük harf duyarsız, ok tuşları + Enter / tıklama); barkod okutulunca doğrudan fiyat gelir. Pasif ürün yerine aktif olan öncelikli. Fiyatı tanımsız ürün "FİYAT YOK" yazar; "KDV DAHİL SATIŞ FİYATI" bilgisi eklendi; Esc ekranı temizler; 60 sn sonra önceki ürünün fiyatı ekrandan silinir.
+
+112) v365 FIYAT_KAMPANYA - Fiyat Gör: ürüne şu an uygulanan kampanya varsa "KAMPANYALI" uyarısı (X Al Y Öde, % / TL indirim, sabit fiyat; indirim ve sabit fiyatta kampanyalı fiyat, bitiş tarihi). Eşleştirme satış ekranıyla aynı kurallarla yapılır; süresi geçmiş/pasif kampanya gösterilmez.
+
+113) v366 FIYAT_ARAMA - Fiyat Gör: liste artık ilk harften itibaren açılır (eskiden 2 harf); adı yazılanla başlayan ürünler üstte, aktif ürünler önce. Enter listedeki seçili (ilk) ürünü getirir.
+
+114) v367 RAPOR_EK - Rapor & Gelişmiş Analiz: yeni raporlar "İade Fişleri", "KDV Oranına Göre Satış", "Satış Fiyat Listesi"; Stok Listesi'ne Birim, Raf, Min Stok, Son Alış sütunları eklendi; sütun başlıkları artık kesilmez (başlık genişliği kadar açılır).
+
+115) v368 RAPOR_TR - Rapor adları Türkçeleştirildi: GMROI → Stok Yatırım Getirisi, Sell-Through → Stok Satış Oranı, CLV → Müşteri Değeri, POS Hareketleri → Kartlı Ödeme Hareketleri, ABC Analizi → Ürün Önem Sınıfı (ABC) Analizi.
+
+116) v369 RAPOR_FILTRE_Z - Rapor & Gelişmiş Analiz: (1) FİLTRE satırı: Marka / Grup / Ödeme / Kullanıcı seçerek sonuçları daraltma (raporda ilgili sütun yoksa uyarı verir; yazdırma/Excel de filtreli sonucu kullanır); (2) yeni "Gün Sonu Özeti (Z Raporu)": günlük fiş, brüt, iskonto, net, iade, nakit/kart/açık hesap dağılımı, kasa farkı; (4) yeni "Dönem Karşılaştırma (Önceki Dönem)" ve "(Geçen Yıl)": fişten kâra 8 gösterge, fark ve yüzde; Geçen Hafta ve Geçen Ay hızlı dönem düğmeleri.
+
+117) v370 RAPOR_NAKIT_POS - Perakende raporlarında Nakit / POS (Kart) / Diğer tutarı her zaman görünür ve alt toplam, yazdırma, PDF, Excel'de toplanır: Perakende Satışlar (fiş bazında 3 sütun), Perakende Satış Detayı (fiş nakit/POS tutarı, her fişin ilk satırında), Günlük Satış & Kâr (gün bazında), Perakende Ödeme Dağılımı (ödeme kaydı olmayan eski fişlerde fiş ödeme türü esas alınır). Karma ödemeler parça parça ayrılır.
+
+118) v371 PERAKENDE_CS_HARIC - Perakende Satışlar, Perakende Satış Detayı ve Perakende Ödeme Dağılımı raporlarında Cari Satış (CS-) fişleri artık yer almaz; yalnız perakende (PS-) satışlar listelenir. Cari satışlar Gelişmiş Satış Raporları / Cari raporlarında kalır.
+
+119) v372 RAPOR_ARAMA_URUN - Rapor filtre/arama: (1) Ödeme filtresinde "Kart / POS" ile "Kart/POS" gibi yazım farkı olan aynı ödeme türleri tek satırda toplanır; (2) fiş bazlı raporlarda (Perakende Satışlar, Ödeme Dağılımı...) "Listede Ara" kutusuna ürün adı, marka, grup, stok kodu veya barkod yazılınca o ürünü içeren fişler gelir; Marka ve Grup filtreleri de fişteki ürünlere göre çalışır.
+
+120) v373 SIRALA_LISTE_GENIS - Rapor ekranında Sırala açılır listesi dar kaldığı için seçenekler kesik görünüyordu; kutu ve açılan liste en uzun seçeneğe göre genişletildi.
+
+121) v374 FILTRE_GENEL - Rapor filtreleri (Marka, Grup, Ödeme, Kullanıcı): raporda ilgili sütun yoksa Stok Kodu/Barkod/Ürün üzerinden stok kartındaki marka-grup, Belge sütunu üzerinden fişin ödeme ve kullanıcısı bulunarak filtre uygulanır. Perakende Satış Detayı gibi ürün satırlı raporlarda artık Marka ve Grup filtresi çalışır.
+
+122) v375 SATIS_KAYIT_PERAKENDE - Gelişmiş Satış Kayıtları ekranı yalnız perakende satışları gösterir; Cari Satış (CS-) fişleri ve bunlara bağlı iadeler listeden, kartlardan ve toplamlardan çıkarıldı (cari satışlar Cari/Sipariş modüllerinde izlenir).
+
+123) v376 CARI_ISLEM_GECMISI - Cari Merkezi'ne İŞLEM GEÇMİŞİ ekranı (düğme + sağ tık menüsü): tüm carilerin satış, tahsilat, ödeme, iade, iptal, banka, çek/senet hareketleri tek listede; dönem, cari, rol (müşteri/tedarikçi), işlem türü ve arama filtreleri; borç/alacak/fark toplamı; Excel/CSV. Cari seçiliyse o cariyle açılır. Cari satışlar perakende satış kayıtlarında değil burada izlenir.
+
+124) v377 CARI_HIZLI_FILTRE - Cari İşlem Geçmişi: HIZLI FİLTRE menüsü (liste üzerinde sağ tık ile de açılır): Bugünkü/Dünkü/Bu Hafta/Bu Ay işlemleri; iki tarih arası tüm işlemler, satışlar, alışlar, borç, alacak, faturalı alışlar, seçilen işlem türleri, seçilen cari grupları; bugün vadeli alış-satışlar; taksitli/senetli satışlar; ödeme ve tahsilatlar; iade ve iptal kayıtları. Etkin filtre ekranda gösterilir, 'Filtreyi Kaldır' ile temizlenir.
+
+125) v378 SATIS_KAYIT_RAPOR - Satış Kayıtları ekranına '📊 SATIŞ RAPORLARI': en çok satan ürünler / gruplar / markalar (adet, ciro, maliyet, kâr, pay %), günlük-haftalık-aylık-yıllık satış, saat dağılımı, ödeme türü dağılımı; dönem seçimi, ilk N, arama, toplam satırı, Excel/CSV. Yalnız perakende; iadeler düşülür.
+
+126) v379 SATIS_RAPOR_GENIS - Perakende Satış Raporları genişletildi: En Az Satan Ürünler, Düşük Kâr Marjlı Ürünler, Hiç Satılmayan Ürünler (stok değeri, son satış), Birlikte Satılan Ürünler, Haftanın Günü, Sepet Analizi (Saat), Kasiyer / Kullanıcı (iade tutarı/oranı), Hizmet / Ürün Ayrımı, Kampanyalı Satışlar, Dönem Karşılaştırma (önceki dönem + geçen yıl); tüm satış raporlarında Marj % sütunu; ürün satırına çift tıklayınca satış hareketleri; 📈 GRAFİK (çubuk); 🖨 YAZDIR / PDF (merkezi yazdırma).
+
+127) v380 CARI_RAPORLARI - Cari Merkezi'ne '📊 CARİ RAPORLARI' (düğme + sağ tık): Alacak Yaşlandırma (müşteri), Tedarikçi Borç Yaşlandırma, Vadesi Geçen / Yaklaşan Ödemeler (açık belgeler + portföydeki çek/senet), Risk Limiti, Bakiye Durumu, En Çok Satış Yapılan Cariler, En Çok Alış Yapılan Tedarikçiler, Cari Bazında Ürün Raporu, Cari Satış/Alış Karşılaştırması (önceki dönem + geçen yıl), Hareketsiz Cariler, Yeni Cariler, Tahsilat Performansı (ort. tahsilat günü), Tahsilat ve Ödeme Listesi, Vade Farkı, İade Raporu (liste / cari özeti), Hatırlatma Listesi (hazır mesaj kopyalama). Dönem, seçenek, cari, cari grubu, ilk N, arama, toplam satırı, Excel/CSV, yazdır/PDF, grafik, çift tıkla cariyi süz.
+
+
+128) v381 HATA_DUZELTME - (1) Dönem Devri Sihirbazı: son onay ve hata kutuları tanımsız "self" kullandığı için DEVİRİ GERÇEKLEŞTİR düğmesi NameError veriyordu, devir hiç başlamıyordu; pencere artık sihirbaz penceresine (w) bağlı. Hata kutusundaki aynı sorun yüzünden gerçek hata mesajı da gösterilmiyordu. (2) Yedekten geri yükleme: dosya yer değiştirme (_rc_replace) içinde "time" modülü içe aktarılmadığı için antivirüs/dizin tarayıcı dosyayı tuttuğunda yeniden deneme yerine NameError oluşuyordu; mevcut _alf_time kullanıldı. Windows GUI testi yapılmadı; sözdizimi, tanımsız isim ve argüman sayısı taraması temiz.
+
+129) v382 TURKCE_HATA_METINLERI - Program dili tamamen Türkçe olsun diye ekrandaki metinler tarandı; arayüz etiketleri, menüler, tablo başlıkları ve durum/kaynak kodları zaten Türkçe bulundu. Kalan tek İngilizce kaynak, hata kutularında ham gösterilen sistem iletileriydi (SQLite, Windows, Python). Mesaj kutuları (bilgi, uyarı, hata, onay) artık bu iletileri Türkçe gösterir: "database is locked" -> veritabanı kilitli; "UNIQUE constraint failed" -> aynı kayıt zaten var; "Permission denied" -> erişim izni yok; "no such table/column", disk dolu/bozuk veritabanı, dosya başka programda açık, geçersiz sayı, sıfıra bölme, bağlantı/zaman aşımı vb. Yalnızca görüntülenen metin değişir; hata günlüğü dosyası, veritabanı değerleri ve program mantığı aynen kalır. Windows yazıcı adı "Microsoft Print to PDF" ve Enter tuşu adı Windows tarafından bu adla geçtiği için değiştirilmedi. Windows GUI testi yapilmadi.
+
+130) v1.2.291.383 - Fiyatı değişenleri etikete gönder + Hızlı Satış'ta barkod yoksa stok kartı aç
+- Fiyat Yönetimi: yeni "Son 30 Gün Fiyatı Değişen" filtresi (fiyat geçmişinden; toptan/özel değişimi sayılmaz).
+- Fiyat Yönetimi: "DEĞİŞENLERİ ETİKETE" düğmesi; listedeki ürünler eski/yeni fiyatıyla Etiket Merkezi kuyruğuna gider.
+- "ETİKETE GÖNDER" artık seçili ürünlerde son fiyat değişimini (eski/yeni) etikete işler; aynı ürün kuyrukta varsa adedi artar.
+- Hızlı Satış: barkod bulunamazsa "Yeni stok kartı açılsın mı?" sorulur; kart kaydedilince ürün otomatik sepete eklenir.
+
+131) v1.2.291.386 - Müşteriye göre fiyat tipi, çoklu birim (koli/paket), çoklu POS
+- Cari kartı > İskonto sekmesi: "Satış fiyat tipi" (Perakende / Toptan / Özel). Hızlı Satış'ta müşteri seçilince sepet bu tipe göre fiyatlanır; ilgili fiyat boşsa perakende kullanılır; elle değiştirilen satır fiyatı korunur.
+- Hızlı Satış: Birim listesine stok kartında tanımlı dönüşüm birimleri (KOLİ, PAKET...) eklendi. Örn. 2 KOLİ (1 koli = 12 adet) seçilince sepete 24 adet girer; stok, iade ve raporlar tutarlı kalır; satır notuna "2 KOLİ x 12" yazılır.
+- Banka Merkezi > POS HESAPLARI: POS tanımı (ad, banka, komisyon %) ve son 30 gün POS bazında kart satışı raporu.
+- Hızlı Satış: birden fazla aktif POS varsa kart ödemesinde POS sorulur (tek ise otomatik, hiç yoksa eski davranış). Seçim satış ödemesine ve kasa hareketine işlenir.
+
+132) v1.2.291.392 - Tek faturada birleştirme, Excel alış faturası, ISBN/kitap, Personel Takibi, çeşit matrisi, el terminali dosyası
+- E-Fatura > Satıştan Fatura Oluştur: aynı cariye ait birden çok (açık hesap) satışı seçip "SEÇİLENLERİ TEK FATURADA KES"; faturaya dahil satışlar bir daha faturalanabilir listesinde çıkmaz, fatura iptalinde yeniden faturalanabilir olur.
+- Yeni Alış: "EXCEL'DEN SATIR AL" (Barkod/Stok Kodu, Miktar, Birim Fiyat, KDV, KDV Dahil sütunları; bulunamayan/hatalı satırlar raporlanır, kalanlar eklenir).
+- Yeni Alış: "EL TERMİNALİ DOSYASI AL" (CSV/TXT/XLSX; başlıksız barkod;miktar da olur, miktar yoksa her satır 1 adet, aynı ürün toplanır, fiyat yoksa stok kartındaki son alış/ortalama maliyet). Taslak olarak kaydedilip muhasebe onayından sonra stok girişi yapılabilir.
+- Stok Kartı > Ek Özellikler > "Kitap / ISBN": yazar, yayınevi, ISBN (10 haneli girilirse 13'e çevrilir ve ek barkod olarak tanımlanır). Hızlı Satış'ta ISBN-10 okutulunca ürün bulunur.
+- Yeni modül "Personel Takibi" (sol menü): personel kartı, aylık maaş hakedişi, yevmiye, avans, maaş/ödeme (isteğe bağlı kasadan çıkış), prim, kesinti, kalan bakiye ve kullanıcı bazında satış kârı raporu.
+- Stok Kartı > Ek Özellikler > Ürün Çeşitleri: "MATRİSTEN ÇEŞİT OLUŞTUR" (renk x beden gibi kombinasyonlar için kart açar, barkod/kod otomatik) ve "STOK / SATIŞ ÖZETİ" (çeşit bazında stok, satış, toplam).
+
+133) v1.2.291.393 - Set / paket ürün kartı
+- Stok Kartı > Ek Özellikler > "Set / Paket": bileşen ve adet tanımlanır; set maliyeti bileşenlerden hesaplanır, satılabilir set sayısı en kısıtlı bileşene göre gösterilir.
+- Hızlı Satış: set satılınca set kartının stoğu değil, bileşenlerin stoğu (adet x bileşen miktarı) düşer; satış iadesinde bileşen stoğu geri eklenir. Stok uyarısı bileşenlere göre verilir.
+- Not: set mantığı şimdilik Hızlı Satış ve onun iadesinde geçerlidir; Cari Satış / sipariş satışlarında set kendi stoğundan düşer.
+
+134) v1.2.291.394 - Okul ihtiyaç listesi
+- Hızlı Satış sağ paneldeki "OKUL İHTİYAÇ LİSTESİ" düğmesi: okul/sınıf bazlı liste oluştur, barkodla ürün ve adet ekle, liste tutarını gör, tek tıkla tüm listeyi sepete ekle.
+- Ürünler normal sepet yolundan eklenir (stok uyarısı, müşteri fiyat tipi, birleştirme geçerli). Pasif ürünler listeye alınmaz.
+- Yeni modül dosyası: ALFABE_OKUL_LISTE.py (kurulum tarifine eklendi).
+
+135) v1.2.291.395 - Gelen e-faturayı XML'den alış belgesine aktar
+- Yeni Alış: "E-FATURA XML AL" düğmesi. Tedarikçiden gelen UBL-TR fatura XML'i okunur; tedarikçi adı, fatura no, kalemler (miktar, birim fiyat, KDV) alış belgesine doldurulur.
+- Kalemler stokla satıcı kodu/barkod veya birebir ürün adıyla eşleşir; eşleşmeyenler uyarıda listelenir ve atlanır. Belge kaydedilmeden stok/cari etkilenmez.
+
+136) v1.2.291.396 - Konsinye alış ve sezon sonu iade
+- Alış & Mal Kabul: "KONSİYE GİRİŞ" (tedarikçi, barkodla ürün/adet/maliyet) stoğu artırır, cari borç oluşturmaz.
+- "KONSİYE HESAP / İADE": satılan kısım için hesap kesilir (tedarikçi cari hesabına alacak yazılır; önerilen satış adedi girişten sonraki satışlardan hesaplanır); satılmayan kısım tedarikçiye iade edilir (stok düşer). Kalan sıfırlanınca belge kapanır.
+- Rafta duran konsinye mal değeri (maliyetle) pencerenin üstünde görünür.
+- Yeni modül dosyası: ALFABE_KONSINYE.py (kurulum tarifine eklendi).
+
+137) v1.2.291.397 - Sevk irsaliyesi (satış / alış)
+- E-Fatura / E-Arşiv ekranında "SEVK İRSALİYESİ": satış veya alış belgesinden irsaliye oluşturur (numara IRS-YYYY-000001), plaka/şoför girilir, tarayıcıda önizleme/yazdırma (imza alanlı). Stok, cari ve kasa etkilenmez; aynı belge için ikinci irsaliye açılmaz.
+- Bu belge sevk/kontrol amaçlıdır; resmî e-İrsaliye GİB veya entegratör üzerinden düzenlenir.
+- Yeni modül dosyası: ALFABE_IRSALIYE.py (kurulum tarifine eklendi).
+
+138) v1.2.291.398 - Yazarkasa (ÖKC) gün sonu mutabakatı
+- Banka Merkezi > "YAZARKASA MUTABAKATI": cihazın (Ingenico vb.) Z raporundaki nakit ve kart toplamı girilir; programdaki o günün net (iade düşülmüş) nakit/kart satış ödemeleriyle karşılaştırılır, fark gösterilir, kayıt tutulur (farklı günler kırmızı).
+- Cihazla doğrudan bağlantı yoktur (mali cihaz entegrasyonu için üretici/banka belgesi gerekir); satış ve kasa kayıtları değiştirilmez.
+- Yeni modül dosyası: ALFABE_OKC_MUTABAKAT.py (kurulum tarifine eklendi).
+
+139) v1.2.291.399 - Fotokopi sayacı ve kağıt tüketim raporu
+- Hizmetler / Fotokopi > "FOTOKOPİ SAYACI / KAĞIT TÜKETİMİ": makine sayaç okumaları girilir; ardışık okumalar arasındaki makine sayfası, programa girilen fotokopi/çıktı satış adediyle karşılaştırılır (satılmadan basılan sayfa kırmızı). Tarama, laminasyon, spiral/cilt, kimlik kaplama makine sayfası sayılmaz.
+- "Hizmet Tüketimi" sekmesi: tarih aralığında hizmet/varyant bazında adet, ciro ve toplam makine sayfası.
+- Sayaç geriye gidemez (sıfırlanan cihaz için farklı cihaz adı kullanılır).
+- Yeni modül dosyası: ALFABE_FOTOKOPI.py (kurulum tarifine eklendi).
+
+140) v1.2.291.400 - Müşteri ekranı (2. monitör)
+- Hızlı Satış sağ panel > "MÜŞTERİ EKRANI (2. MONİTÖR)": müşteriye dönük, büyük yazılı ayrı pencere; sepet satırları, iskonto düşülmüş tutarlar ve toplam sepet değiştikçe canlı güncellenir. Pencereyi ikinci ekrana sürükleyip F11 ile tam ekran yapın (Esc çıkar).
+- Yalnız gösterim yapar; Hızlı Satış kapanınca pencere de kapanır.
+- Yeni modül dosyası: ALFABE_MUSTERI_EKRANI.py (kurulum tarifine eklendi).
+
+141) v1.2.291.401 - Döviz kurları (TCMB, internetten)
+- Finans > Banka/Kasa ekranı > "DÖVİZ KURLARI": TCMB günlük kur bültenini (tcmb.gov.tr/kurlar/today.xml) internetten çeker; USD, EUR, GBP, CHF vb. döviz alış/satış ve efektif alış/satış kurlarını listeler.
+- Çevirici: tutar + para birimi seçilerek döviz→TL veya TL→döviz hesaplanır (döviz satış kuru; JPY gibi birimi 100 olanlar doğru hesaplanır).
+- Çekilen kurlar yerelde saklanır; internet yoksa son kaydedilen kurlar gösterilir (uyarı verilir). Mevcut satış/cari/kasa kayıtları değiştirilmez.
+- Yeni modül dosyası: ALFABE_KUR.py (kurulum tarifine eklendi). Enflasyon farkı bu sürümde YOKTUR.
+
+142) v1.2.291.402 - Müşteri ekranı düzeni
+- Müşteri ekranında tablo artık pencere genişliğine göre Ürün sütununu genişletir; Tutar sütununun sağındaki boş şerit kaldırıldı.
+
+143) v1.2.291.403 - WhatsApp Asistan kaldırıldı
+- "WhatsApp Asistan" menüsü, ekranı ve arka plan dinleyicisi programdan çıkarıldı; ALFABE_WHATSAPP.py kurulum paketinden çıkarıldı. AI Asistan etkilenmedi.
+- Eski veritabanındaki WhatsApp talep kayıtları silinmez, yalnızca artık gösterilmez.
+
+144) v1.2.291.404 - AI Asistan: günlük özet
+- AI Asistan ekranı açılınca otomatik "Günlük özet" gelir: dün net satış, bugünkü satış (dünle oran), kritik/negatif stok sayısı, 90 gündür satılmayan stok, toplam alacak ve borçlu cari sayısı.
+- Üstteki "Günlük özet" düğmesi ya da "günlük özet / genel durum / işletme nasıl gidiyor" yazmak özeti yeniler. Kaynak sekmesinde dünün satış belgeleri görünür.
+- Yetkiniz olmayan bölümler (satış, stok, cari) özetten atlanır ve not düşülür. Hiçbir kayıt değiştirilmez.
+
+145) v1.2.291.405 - Yapay Zekâ Ayarları: anlaşılır uyarılar
+- Anahtar boşken "BAĞLANTIYI SINA" artık ham API hatası yerine Türkçe uyarı verir; geçersiz anahtarda (401) açıklama gösterilir. Yapay zekâ kipi isteğe bağlıdır, asistan anahtarsız da çalışır.
+
+146) v1.2.291.406 - AI Asistan: devam soruları
+- Asistan önceki sorunun konusunu hatırlar: "Bugün ciro ne kadar?" sonrası "peki dün" / "ya geçen ay"; "bu ay en çok satanlar" sonrası "ilk 20 olsun" / "peki geçen hafta"; "durgun stoklar" sonrası "60 gün olsun"; dönem karşılaştırma sonrası "peki yıllık".
+- Devam olarak yanıtlanan sonuçta not görünür. "TEMİZLE" düğmesi hafızayı da sıfırlar. Yeni konu sorulunca eski konu karışmaz.
+
+147) v1.2.291.407 - Çökme izi (program sessiz kapanırsa neden bulunsun)
+- Ekran (Tk) hataları, yakalanmamış hatalar ve iş parçacığı hataları artık ALFABE_HATA_GUNLUGU.log dosyasına yazılır (önceden hiç kaydedilmiyordu).
+- Python/Tk düzeyinde ani çökmede ALFABE_COKME_IZI.log dosyasına iz bırakılır (hata günlüğüyle aynı klasörde). Program davranışı değişmez.
+
+148) v1.2.291.408 - Kopyala / yapıştır (program genelinde)
+- Tüm metin kutularında (Entry, açıklama kutuları, açılır listeler, sayı kutuları) sağ tık menüsü: Kes, Kopyala, Yapıştır, Tümünü Seç. Ctrl+A kutudaki her şeyi seçer; Ctrl+C / Ctrl+V / Ctrl+X çalışmaya devam eder.
+- Tablolarda: Ctrl+C seçili satırları kopyalar, Ctrl+Shift+C başlıklarla birlikte kopyalar. Satır üstünde sağ tık: Satırı Kopyala, Hücreyi Kopyala, Seçilenleri Başlıklarla Kopyala, Tüm Tabloyu Kopyala. Metin sekmeyle ayrılır, Excel'e doğrudan yapıştırılır.
+- Kendi sağ tık menüsü veya Ctrl+C kısayolu olan ekranlara dokunulmaz; sütun başlığı menüsü eskisi gibidir.
+- Yeni modül dosyası: ALFABE_PANO.py (kurulum tarifine eklendi).
+
+149) v1.2.291.409 - Python 3.14 / Tcl-Tk 9 çökme koruması
+- Windows olay kaydında programın "tcl90.dll" (Tcl/Tk 9.0, Python 3.14 ile gelir) içinde aniden çöktüğü görüldü.
+- Program Tk 9 ile açılırsa ve bilgisayarda Python 3.12 / 3.13 / 3.11 varsa kendini otomatik olarak onunla yeniden başlatır (çift tıklayarak açmak yeterli). Yoksa bir kez uyarı gösterir ve çalışmaya devam eder.
+- BASLAT_ALFABE.bat eklendi: programı Tk 8.6'lı Python ile başlatır.
+- Öneri: python.org'dan Python 3.12 (64-bit) kurun. Verilere dokunulmaz.
+
+150) v1.2.291.410 - AI Asistan: Excel çıktısı
+- AI Asistan sonuç ekranında yeni "TABLOYU EXCEL OLARAK KAYDET" düğmesi (CSV düğmesi durur). .xlsx dosyasında: "Sonuç" sayfası (başlık, dönem, özet cümleleri, tablo) ve "Kaynak Kayıtlar" sayfası.
+- Tutar/adet sütunları gerçek sayı olarak yazılır (Excel'de toplanabilir; tutarlarda ₺ biçimi), başlık satırı renkli ve sabit. Excel kurulu olması ya da ek paket gerekmez.
+
+151) v1.2.291.411 - Yazdırma Merkezi: Excel hatası düzeltildi, yeni raporlar, dönem seçimi, ön gösterim
+- DÜZELTME: Yazdırma Merkezi'nden (ve aynı motoru kullanan diğer ekranlardan) .xlsx olarak kaydetme hata veriyordu ("too many values to unpack") ve dosyanın stil bölümü bozuktu (Excel "onarılması gerekiyor" diyebilirdi; ondalık biçimi de yanlıştı). İkisi de düzeltildi; CSV etkilenmemişti.
+- Yeni rapor türleri: Günlük Satış Özeti, Borçlu Cariler, Kritik / Negatif Stok, Sevk İrsaliyeleri, Konsinye Durumu, Fotokopi Kağıt Tüketimi, Personel Bakiyeleri, Döviz Kurları. Hepsi Önizleme / Yazdır / PDF / Excel-CSV / Tasarım düzenleme ile çalışır.
+- Dönem seçici (tarihli raporlarda): Tümü, Bugün, Dün, Bu hafta, Son 7 gün, Bu ay, Geçen ay, Son 30 gün, Bu yıl. Seçilen dönem rapor başlığına yazılır. (Günlük Satış Özeti varsayılan Son 30 gün, Fotokopi Bu ay.)
+- Ekranda "ÖN GÖSTERİM": seçili raporun kayıt sayısı ve ilk 12 satırı görünür; tarayıcı açmadan neyin basılacağı anlaşılır.
+- Cari Ekstre: rapor başlığında artık cari hesabın adı yazar; "Belge" sütununda satışın belge numarası görünür; cari seçimi yalnızca Cari Ekstre seçiliyken gösterilir.
+
+152) v1.2.291.412 - Yazdırma Merkezi sağlamlaştırma + sürüm bilgisi
+- Alt çubukta artık "Python x.y.z / Tk 8.6" yazar: program hangi Python ile açıldı hemen görülür (Tk 9 ise çökme riski vardır; Python 3.12 önerilir).
+- Yazdırma Merkezi: rapor seçince pencere öğeleri gizlenip gösterilmiyor (yerleşim sabit; Dönem ve Cari Seç yalnız aktif/pasif olur), ön gösterim liste tıklaması bittikten sonra hazırlanır, dönem seçici klasik açılır menüye çevrildi.
+
+153) v1.2.291.413 - KİTAP HIZLI GİRİŞ
+- Stok Merkezi araç çubuğunda yeni "📚 KİTAP GİRİŞ" düğmesi: yeni kitabı tek kart açma ekranlarıyla uğraşmadan, tek ekranda elle yazarak girersiniz.
+- Alanlar: ISBN/Barkod, Kitap Adı, Yazar, Yayınevi, Adet, Alış (KDV hariç), Satış (KDV dahil), KDV, Grup, Raf. Enter ile alanlar arasında ilerlenir; son alanda Enter veya Ctrl+S = KAYDET VE YENİ.
+- ISBN-10 yazılırsa otomatik ISBN-13'e çevrilir ve barkod olarak kullanılır. ISBN/barkod boşsa 290'lı iç barkod üretilir.
+- Kitap zaten kayıtlıysa (aynı ISBN/barkod ya da aynı ad + yazar) yeni kart AÇILMAZ; yazılan adet mevcut stoğa eklenir, ağırlıklı ortalama maliyet güncellenir, fiyat değiştiyse fiyat geçmişine yazılır.
+- Yeni kitapta stok kartı, açılış stok hareketi ve yazar/yayınevi/ISBN bilgisi birlikte kaydedilir; kayıt denetim günlüğüne işlenir.
+- Yayınevi, grup, KDV ve raf bir sonraki kitap için hatırlanır (aynı yayınevinden art arda giriş hızlanır). Altta son girilen kitaplar listelenir.
+
+154) v1.2.291.414 - GÜNLÜK ARAÇLAR (açılış özeti, veri kontrol, yedek sınama, yetki raporu, yardım, fişten gider)
+- Açılış özeti: program açılırken kritik/negatif stok, vadesi gelen-geçen çek/senet/taksit, borçlu cariler ve son yedek durumu tek pencerede görünür. Yalnız dikkat gerektiren bir konu varsa kendiliğinden açılır; pencerede "Program açılırken göster" kutusuyla kapatılır. Alt çubuktaki "📋 Günlük Özet" düğmesiyle her an açılır. Kullanıcı yalnız yetkili olduğu bölümleri görür.
+- Veri sağlık taraması (alt çubuk "🩺 Veri Kontrol"): çift barkod, aynı adlı kart, eksi stok, maliyeti sıfır ürün, satış fiyatı olmayan/zararına fiyatlı ürün, yetim kayıtlar, 30+ gün geçmiş vadeler, veritabanı bütünlüğü ve yedek yaşı. Stok sorunlarına çift tıklayınca kart açılır. Tarama yalnız okur, hiçbir kaydı değiştirmez.
+- "SON YEDEĞİ SINA": son yedek paketi açılır, ZIP/SHA256 doğrulanır, içindeki veritabanı geçici klasörde açılıp bütünlüğü ve kayıt sayıları denetlenir. Canlı veriye dokunulmaz.
+- Yetki raporu (alt çubuk "🔐 Yetki Raporu"): kullanıcı bazında görebildiği ekranlar, kritik işlem yapabildiği ekranlar ve göremedikleri; ayrıca Ekran × Rol tablosu.
+- Yardım (F12 ya da "❓ Yardım"): açık olan ekranın kısa kullanımı ve tüm kısayolların listesi. (F1 satış ekranında Nakit için kullanıldığından yardım F12'dedir.)
+- Fişten gider (Gider/Masraf Merkezi > "📷 FİŞTEN GİDER"): fiş fotoğrafı seçilir, Windows'un kendi okuma motoruyla tarih/tutar/işyeri okunur, siz kontrol edip düzeltince normal gider olarak kaydedilir. Fotoğraf veri klasöründe "fis_gorselleri" içine saklanır. Okuma yapılamazsa alanlar elle doldurulur.
+- DÜZELTME: Gider / Masraf Merkezi açılırken "Tarihleri GG.AA.YYYY biçiminde giriniz" uyarısı verip listeyi yüklemiyordu; tarih çözümleyicisi iki biçimi de kabul edecek şekilde düzeltildi.
+
+155) v1.2.291.415 - POS TAKİP (kart satışı komisyonu ve bankaya geçiş takibi)
+- Banka Merkezi'nde yeni "POS TAKİP" düğmesi. Hızlı Satış, Cari Satış, sipariş ve iadelerdeki kart tutarları her POS için GÜNLÜK gruplanır; her gün için brüt tutar, komisyon, net tutar ve beklenen bankaya geçiş günü (satış günü + valör günü, hafta sonuna denk gelirse pazartesi) hesaplanır.
+- "POS KOMİSYON / VALÖR AYARI": her POS için komisyon oranı ve valör günü girilir (varsayılan 1 gün).
+- "HESABA GEÇTİ": bankaya yatan gerçek tutarı ve banka hesabını yazarsınız (birden fazla günü seçip tek toplu tutarla da işlenir). POS hesabından net tutar düşer, banka hesabına eklenir (Banka Merkezi'nde "POS Hesaba Geçiş" olarak görünür); brüt ile yatan arasındaki fark "POS Komisyonu" gideri olarak kaydedilir. Tek işlemdir, hata olursa hiçbir şey yazılmaz.
+- "GERİ AL": yanlış işlenen yatışı ters kayıtlarla iptal eder (komisyon gideri ve banka hareketi dahil), satır yeniden "Bekliyor" olur. Bu işlem Banka Merkezi'ndeki İŞLEM İPTALİ ile yapılamaz (uyarı verir).
+- Banka Merkezi üstündeki "Bekleyen POS" kutusu artık gerçek bekleyen net tutarı gösterir (kesimler Banka Merkezi açılırken kart satışlarından otomatik güncellenir).
+- Günlük Özet'e "POS: bankaya geçmesi beklenen" bölümü eklendi (yatış günü gelmiş satırlar).
+- Yatmış satırlar sonradan değişmez; nakit satışlar hesaba katılmaz.
+
+156) v1.2.291.416 - POS Takip: komisyonsuz / uzun valörlü çalışma + aylık POS ücreti
+- POS ayarına "Aylık ücret" eklendi. Komisyon 0 bırakılırsa komisyon hesaplanmaz; valör günü (örn. 15) girilebilir, para brüt tutarıyla bekleyen olarak izlenir.
+- "AYLIK POS ÜCRETİ" düğmesi: bankanın aylık POS kullanım ücreti seçilen banka hesabından düşülür, "POS Ücreti" gideri olarak kaydedilir. Aynı POS için aynı ay ikinci kez işlenemez; yanlış kayıt nedenli iptal edilir (iptalden sonra yeniden işlenebilir).
+- POS Takip üstündeki üçüncü kutu artık "BU AY POS ÜCRETİ": işlenmediyse turuncu uyarı (POS adı ve tutarı), işlendiyse yeşil.
+
+157) v1.2.291.417 - Havale / IBAN ödeme türü (programın geneli)
+- Hızlı Satış ödeme ekranında "F3 - HAVALE / IBAN" düğmesi; parçalı ödemede Nakit + Kart + Havale/IBAN birlikte girilebilir. Hangi banka hesabına geldiği ve açıklama sorulur; para Kasa/POS'a değil seçilen BANKA hesabına işlenir.
+- "Parayı bankada gördüm" onayı: işaretlenmezse tahsilat "kontrol bekliyor" kalır. Banka Merkezi > IBAN KONTROL ekranından sonradan onaylanır; Günlük Özet bekleyenleri hatırlatır.
+- Cari Satış (tek ve parçalı), Sipariş > Satışa dönüştür ve İade (elle/otomatik) Havale/IBAN'ı destekler. İadede para aynı banka hesabından çıkış olarak işlenir.
+- Satış listesinde "Havale/IBAN" filtresi ve ayrı toplam kutusu eklendi.
+- Raporlar: Perakende Satışlar, Satış Detayı, Ödeme Dağılımı, Gün Sonu (Z) Özeti ve Günlük Satış & Kâr raporlarında Havale/IBAN artık "Diğer" içine karışmaz; ayrı "Havale/IBAN" sütunu olarak gösterilir.
+
+158) v1.2.291.418 - Rapor çıktılarında ön izleme = PDF = Excel doğrulaması
+- Gruplu raporda grup başlığı sayfanın son satırında tek başına kalıyordu (kayıtları sonraki sayfada başlıyordu); artık başlık kayıtlarıyla birlikte yeni sayfaya geçer. Ön izleme, yazdırma ve PDF aynı HTML'den çıktığı için üçünde de düzelir.
+- Doğrulama: aynı rapor ön izleme HTML'i, PDF ve Excel olarak üretilip sütun seçimi/sırası, başlık adları, kayıt sayısı, ara toplam, genel toplam ve "Sayfa X / Y" numaraları karşılaştırıldı; A4/A5, dikey/yatay, gruplu/gruplu değil ve 700 satırlı uzun raporlarda sayfa sayıları birebir tuttu.
+
+159) v1.2.291.419 - Özel Rapor Oluşturucu
+- Rapor Merkezi > "ÖZEL RAPOR OLUŞTUR": Satış, Stok, Cari ve Finans veri alanlarından kendi raporunuzu kurun. Alanları seçin, sıralayın, "Özetle" ile gruplayın (ör. ürün grubuna göre ciro/kâr).
+- Dönem (Bugün, Bu Hafta, Bu Ay, Geçen Ay, Bu Yıl, Özel Tarih) ve kategori filtreleri (ürün grubu, marka, müşteri, kullanıcı, hesap ...).
+- Hesaplanan alanlar: formül yazılır (ör. kar / ciro * 100). Toplam satırı oranları satır ortalamasından değil genel toplamlardan yeniden hesaplar.
+- Karşılaştırma: önceki dönem veya geçen yıl aynı dönem; her sayısal alan için "(Önceki)" ve "Değişim %" sütunları.
+- Satışta iadeler varsayılan olarak net satıştan düşülür ("İadeler hariç" seçilebilir); iptal edilen fişler hiç sayılmaz.
+- Rapor tanımı adıyla kaydedilir. Ön izleme, A4 baskı, PDF, Excel ve Tasarımı Düzenle mevcut tek rapor altyapısını kullanır. Mevcut raporlar ve kayıtlar değiştirilmez.
+
+160) v1.2.291.420 — AI Asistan: Bilgi + Analiz + İşlem asistanı (karar destek aracı)
+- BİLGİ ASİSTANI: "Hızlı satış nasıl yapılır?", "Havale ile ödeme nasıl alınır?", "Yedek nerede alınır?" gibi sorular ~50 konuluk yerleşik bilgi tabanından (gerçek ekran ve düğme adlarıyla) adım adım yanıtlanır; "… ekranını aç" düğmesi ilgili bölüme götürür (yetkiniz yoksa uyarır). Ek, soru kalıbı ve yazım hatalarına dayanıklıdır; anlaşılmayan soruda en yakın konular ve örnek sorular tıklanabilir öneri olarak çıkar.
+- ANALİZ ASİSTANI (yalnız okur): Kasa/banka durumu, cari bakiye ("Ahmet Yılmaz borcu ne kadar?"), giderler, ödeme türü dağılımı (Nakit/Kart/Havale-IBAN), bankada doğrulanmamış havaleler, bekleyen POS yatışları, "bugün dikkat edilecekler" ve Özel Rapor motoruyla serbest rapor ("bu ay ürün grubuna göre ciro ve kâr", "kâr marjı marka bazında", "aylık satışlar", "stok değerim", geçen aya göre karşılaştırma). Rapor "Özel Rapor ekranında aç" düğmesiyle PDF/Excel/yazdırmaya devredilir.
+- İŞLEM ASİSTANI: Gider kaydı ("5.000 TL kira gideri ekle"), hatırlatma ("3 gün sonra saat 14:30 çek vadesini hatırlat"), havale onayı ("hepsini bankada gördüm onayla") ve sipariş taslağı HAZIRLANIR. Hiçbir işlem kendiliğinden yapılmaz: düzenlenebilir onay formu açılır, "ONAYLA VE KAYDET" denmeden kayıt oluşmaz; yetkiniz yoksa (Finans/Duyuru/Banka bölümü Ekle-Düzenle) işlem hazırlanmaz; her işlem denetim kaydına yazılır.
+- Yapay zekâ (Claude) kipi açıksa yeni araçlar da kullanılır; asistan yine kayıt yazamaz, yalnızca onay formu hazırlatır.
+- Günlük Özet kartlarındaki yazılar kesilmez, kart genişliğine göre alt satıra sarılır.
+- Günlük Özet (ve Sağlık/Yetki/Yardım pencereleri) açılışta ekranın ortasında görünür.
+- Eski analizler aynen çalışır; v2 katmanı yüklenemezse eski asistan devam eder.
+
+161) v1.2.291.421 — Akıllı Uyarı & İş Takip Merkezi yenilendi (yeni modül: ALFABE_UYARI.py)
+- HATA DÜZELTMELERİ: (1) Satış iptali uyarısı hiç çalışmıyordu (kod 'CANCELLED/İptal' arıyordu, programda durum 'CANCEL'); (2) bugünkü satış hesapları kısmi iadeli (PARTIAL_RETURN) fişleri dışarıda bırakıyordu, "satış düşüşü/yüksek iskonto" yanlış tetiklenebiliyordu; (3) tahsil edilmiş (Tahsil/İptal) çek/senetler "vadesi geçmiş" uyarısı vermeye devam ediyordu; (4) minimum stoğu 0 olan ve stoğu 0 olan ürünler "kritik stok" sayılıyordu.
+- "Tarih / Vade" sütunu dolu: en eski vade ve gecikme ("15.10.2026 (10 gün gecikti)"). "Gecikenler / Bugün / 7 gün" zaman filtreleri artık otomatik uyarılarda da çalışır.
+- Satıra çift tıklayınca uyarıya konu olan KAYITLAR listelenir (ürün, taksit/cari, çek, sipariş, havale, POS...), Excel'e aktarılır, "… bölümüne git" düğmesiyle ilgili ekran açılır. Ana ekranda "BÖLÜME GİT" düğmesi.
+- Yeni uyarılar: bankada doğrulanmamış havale (Havale/IBAN), vadesi gelmiş POS yatışı, uzun süredir ödeme yapmayan borçlu cari.
+- Uyarı Kuralları: tüm uyarılar kural olarak listelenir; her kural için eşik (gün/%/tutar/adet), seviye (KRİTİK/ÖNEMLİ/NORMAL) ve aktif/pasif ayarlanır. Pasif kural uyarıyı hiç üretmez (eskiden pasif yapınca varsayılan eşikle çalışmaya devam ediyordu). Ölü stok günü, bekleyen sipariş günü, yaklaşan vade günü, yedek yaşı artık ayarlıdır.
+- Tek kaynak: Uyarılar ekranı, AI Asistan "bugün dikkat edilecekler" ve Günlük Özet aynı koşulları kullanır (stok, vade, havale, POS sayıları test ile eşitlendi).
+- Hızlı filtreler: Yalnız kritik / Bugün ve gecikenler / Benim görevlerim. GEÇMİŞ düğmesi: tamamlanan ve ertelenen görevlerin tarih-kullanıcı kaydı.
+
+162) v1.2.291.422 — Ana sayfa özet kartları renkli çerçeveli: her kartın çerçevesi ve başlığı kendi renginde (mavi, yeşil, kırmızı, mor, turuncu, turkuaz), zemin açık tonlu. Rakamlar ve hesaplar değişmedi.
+
+163) v1.2.291.423 — Günlük Özet: karta tıklayınca (ya da listedeki satıra çift tıklayınca / "SEÇİLİ BÖLÜME GİT") özet penceresi kapanır ve ilgili bölüm (Stok Merkezi, Finans Merkezi, Banka Merkezi, Cari Merkezi, Ayarlar) açılır. Eskiden bölüm pencerenin arkasında açıldığı için tıklama etkisiz görünüyordu.
+
+164) v1.2.291.424 — PROGRAM KURALI: açılan bütün alt pencereler (Kitap Hızlı Giriş, Yeni Stok Kartı, raporlar, formlar, soru kutuları ...) ana programın tam ortasında açılır. Tek yerden uygulanır (yeni modül ALFABE_PENCERE.py), bundan sonra eklenecek pencereler de otomatik uyar. İstisnalar: kodu açıkça konum veren pencereler, tam ekran/büyütülmüş pencereler, başlıksız menü/ipucu pencereleri ve ikinci ekrana sürüklenen Müşteri Ekranı.
+
+165) v425 KITAP_API - Kitap Hızlı Giriş: ISBN ile otomatik bilgi + Şablon Kart
+   - ISBN/barkod okutulunca (kitap kayıtlı değilse) kitap adı, yazar, yayınevi ve basım yılı internetten getirilir; yalnız BOŞ alanlar doldurulur,
+     ardından imleç ADET'e gelir. Fiyat da doluysa (şablon vb.) ADET'te Enter ile kayıt olur. Kaynaklar: Google Books, Open Library;
+     isteğe bağlı Koha SRU adresi (ayar anahtarı: kitap_sru_url). Yalnız ISBN dışarı gönderilir. Bulunan kayıt yerelde saklanır (ikinci kez internetsiz gelir).
+     İnternet yoksa sessizce vazgeçilir. Pencerede "İnternetten kitap bilgisi getir" onay kutusu vardır.
+   - Kültür Bakanlığı ISBN Ajansı / Koha Z39.50 doğrudan bağlı DEĞİL (Z39.50 ikili protokol; SRU adresi girilirse denenir). Ücretsiz kaynaklarda Türkçe kitap kapsaması eksik olabilir.
+   - Yeni "BASKI YILI" alanı (stock_book_info.year).
+   - ŞABLON KART: yayınevi, yazar, KDV, raf, grup, alış/satış fiyatı adıyla kaydedilir; seçilince alanlar dolar, her kayıttan sonra yeniden uygulanır (seri giriş).
+     "ÖNCEKİ KİTAPTAN KOPYALA (F2)" son kaydedilen kitabın sabit bilgilerini getirir.
+
+166) v426 KITAP_API2 - Kitap Hızlı Giriş düzeltmesi: BASKI YILI alanı onay kutusunun altında kalıyordu (düzeltildi, onay kutusu en alta alındı).
+   İnternet bilgisi bulunamayınca mesaj artık "kaynaklara ulaşılamadı (bağlantı)" ile "ISBN kaynaklarda kayıtlı değil" durumlarını ayırır.
+
+167) v427 KITAP_TR - Kitap Hızlı Giriş: isteğe bağlı Türkçe kitap kaynağı (topluluk API'si kitapi, varsayılan KAPALI; ISBN HTTP ile gönderilir). Google Books/Open Library'de bulunmayan Türkçe ISBN'ler için. Sunucu kişisel olduğundan süreklilik garantisi yoktur.
+
+168) v428 KITAP_TANI - ISBN aramada zaman aşımı 10 sn; hata mesajı her kaynağı ayrı gösterir (Google / OpenLibrary / kitapi: HTTP kodu veya zaman aşımı).
+
+169) v429 KITAP_KAYNAK - Otomatik gelen kitap adı/yazar/yayınevi BÜYÜK HARF (Türkçe İ/I kurallı). "KİTAP KAYNAKLARI…": kullanıcı kendi arama adreslerini kaydeder
+   (SRU / JSON {isbn} / SAYFA). SRU ve JSON kaynaklar otomatik sorgulanır; SAYFA kaynağı "KATALOGDA ARA" ile tarayıcıda açılır. Ayar anahtarı: kitap_kaynaklar.
+
+170) v430 ISKONTO_SECILI - Hızlı Satış > İskonto penceresi: "Yalnız seçili ürüne / Tüm sepete" seçimi eklendi. Sepette satır seçiliyse varsayılan YALNIZ SEÇİLİ ÜRÜN; seçili değilse tüm sepet. % / tutar / hedef toplam seçeneklerinin hepsi seçime göre çalışır; seçilmeyen satırların iskontosuna dokunulmaz.
+
+171) v431 ISKONTO_TEK - Hızlı Satış: satır düğmeleri arasındaki mükerrer "% İskonto" düğmesi kaldırıldı; iskonto yalnız F8 İSKONTO düğmesinden açılır (seçili ürüne/tüm sepete seçenekli pencere).
+
+172) v432 KITAP_RAPOR - Yeni "KİTAP RAPORLARI" (Raporlar ekranı ve Kitap Hızlı Giriş'ten): Satış özeti (gün/ay), Yayınevine göre (satış, kâr, kalan stok), En çok satan kitaplar, En çok satan yazarlar,
+   Azalan stok, Sipariş önerisi (yayınevine göre), Satmayan kitaplar (90 gün). Kitap = grubu KİTAP veya kitap bilgisi kayıtlı kartlar. İptal sayılmaz, iade düşer. CSV (Excel) aktarımı.
+
+173) v433 KESIK_ONAR - Kesilen ekran içeriği genel onarım (ALFABE_PENCERE): (1) Açılan her pencere, içeriği (düğme/alan) pencereden büyükse içeriğe göre otomatik büyür (ekranı aşmaz) ve ana programın ortasında durur;
+   (2) Ana ekranlarda yan yana dizili ve genişliğe sığmayan düğme sıraları (ör. Stok Merkezi araç satırı) kesilmez, alt satıra geçer; ekran genişleyince tek satıra döner.
+
+174) v434 POS_HESAP - POS Hesapları ekranı yenilendi: POS adı, banka, üye işyeri/terminal no, komisyon %, "kaç gün sonra hesaba geçer" (valör; hazır 1/2/7/15/30 gün düğmeleri), hafta sonu ertelemesi seçeneği, aylık ücret, not.
+   Canlı örnek hesaplama (tutar → komisyon → net → yatış günü). Listede bekleyen net, en yakın yatış tarihi ve son 30 gün kart satışı. Kayıtta bekleyen yatışların komisyon/tarihi yeni ayara göre yenilenir.
+   Kullanılmış POS silinemez (pasife alınır). Kayıtlar mevcut pos_terminals tablosunu kullanır (yeni sütunlar: merchant_no, note, skip_weekend).
+
+175) v435 DUYURU_YENI - Duyuru & Hatırlatma Merkezi yenilendi (ALFABE_DUYURU): tarih GG.AA.YYYY + takvim seçici + Bugün/Yarın düğmeleri; saat listesi;
+   TEKRARLAYAN hatırlatma tamamlanınca bir sonraki otomatik oluşur (Aylık ayın son gününe uyar); ERTELE (5 dk / 1 saat / yarın 09:00 / 1 hafta);
+   durumlar Gecikmiş/Bugün/Yaklaşan/Bekliyor/Ertelendi/Tamamlandı (duyuru: Yayında/Okundu/Süresi doldu); renkli liste, özet düğmeleri (tıklayınca süzer),
+   süzgeçler (tür, durum, öncelik, kimin, tarih, arama), ayrıntı paneli, Enter/Del/çift tık; atanan kişi kullanıcı listesinden; silme/tamamlama/erteleme işlem geçmişine yazılır.
+   Zamanı gelen hatırlatma ve duyurular açılışta ve dakikada bir küçük pencerede gösterilir (tamamla/ertele/okundu). Akıllı Uyarı Merkezi'nde tamamlama da tekrarı üretir; saatli erteleme desteklenir.
+
+176) v436 TURKCE_KURAL - KURAL: programda görünen her yazı Türkçe olacak. Uyarı Kuralları penceresindeki İngilizce iç kod sütunu ("Kod": profit_pct, no_sale_days ...) kaldırıldı;
+   eşik değeri olmayan kurallarda "—" gösterilir. Tüm ana ekranlar ve yeni pencereler otomatik denetimden geçirildi (iç kod / İngilizce sözcük taraması): başka sızıntı bulunmadı.
+   Ayrıca: yeni kurulumda (alış kaydı yokken) Muhasebe & Beyan ekranının "purchase_line_tax" tablosu yok hatası vermesi giderildi.
+
+177) v437 DUYURU_TEK_SEFER - Zamanı gelen duyuru penceresi kapatılınca dakikada bir tekrar çıkmaz; her duyuru program oturumunda bir kez gösterilir (okundu yapılmadıysa sonraki açılışta yine gösterilir).
+
+178) v438 DUYURU_ONDE - Zamanı gelen hatırlatma/duyuru penceresi artık ana pencereye bağlı değil: program küçültülmüş olsa da öne gelir.
+
+179) v439 UYARI_SES_BIRLIK - (1) Zamanı gelen hatırlatma/duyuruda uyarı sesi (Windows sistem sesi) ve görev çubuğu yanıp sönmesi; ekrandaki "Uyarı sesi çal" kutusuyla kapatılır (ayar: duyuru_ses).
+   (2) "Akıllı Uyarılar" ve "Duyuru & Hatırlatma" ekranlarının üstüne ortak geçiş çubuğu + hangisinin ne olduğunu anlatan açıklama.
+   (3) "1 DK SONRAYA DENEME" düğmesi: hatırlatma sisteminin (pencere, ses) kendi bilgisayarınızda çalıştığını anında denemek için.
+
+180) v440 VERI_AKTARIM - Veri Aktarım Merkezi yenilendi (diğer satış / ön muhasebe programlarının aktarım ekranlarındaki iyi uygulamalar uyarlandı).
+   (1) "EXCEL / CSV AKTAR" tek sihirbaz oldu: Stok kartları, Fiyat güncelleme, Cari kartları. Dosya türleri: .xlsx, .xls (Excel / HTML / XML tabanlı .xls dahil; ikili .xls için Excel veya LibreOffice gerekir), .csv, .tsv, .txt. Karakter kodlaması (UTF-8 / Windows-1254) ve ayırıcı otomatik; birden çok sayfa varsa sayfa seçilir.
+   (2) Sütun eşleme: başlıklar otomatik tanınır (diğer satış / ön muhasebe programları ve pazaryerlerinin dışa aktarımlarında sık görülen başlık adları da eş anlamlı olarak tanımlıdır; gerçek dışa aktarım dosyalarıyla denenmedi); elle değiştirilebilir, aynı başlık düzenindeki sonraki dosyalar için hatırlanır; örnek değerler gösterilir.
+   (3) Önizleme: satır satır YENİ / GÜNCELLE / ATLA / HATA + uyarılar, filtre ve arama, satıra çift tıklayınca dosyadaki değerler; hata / atlanan raporu CSV olarak kaydedilir. "İlk 20 satırı dene (pilot)" seçeneği.
+   (4) Güvence: aktarımdan önce doğrulanmış TAM YEDEK, tek işlem (hata = hiçbir kayıt değişmez), denetim kaydı, aktarım sonrası ÖNCE / SONRA kontrol raporu (kart sayısı, stok miktarı ve değeri, cari borç / alacak / net bakiye) ve aktarım geçmişi (satıra çift tıkla = rapor).
+   (5) Cari aktarımı: Cari Kodu / Vergi No / Ünvan ile eşleşme, VKN-TCKN doğrulama (resmi algoritma; Excel'in sildiği baştaki 0 tamamlanır), telefon ve e-posta düzeltme, otomatik cari kodu, cari türü, açılış bakiyesi (Borç/Alacak yönü, "1.250,00 B" gibi ekler veya Borç / Alacak sütunları, açılış tarihi) -> cari hareketine "Açılış Bakiyesi" olarak yazılır.
+   (6) Stok aktarımı düzeltmeleri: eski CSV aktarımı mevcut kartların miktarını stok hareketi oluşturmadan değiştiriyor ve yeni stokta açılış hareketi yazmıyordu; artık stok kartıyla aynı kurallar uygulanır (açılış hareketi, sayım farkı hareketi, fiyat geçmişi, önceki satış fiyatı). Otomatik üretilen stok / cari kodu, dosyada sonradan gelen açık kodlarla çakışmaz. KDV 0,18 yazımı %18 sayılır; AD / KGM / MTR gibi birim adları ADET / KG / MT olur; metin dosyalarında 1.250 binlik ayırıcı sayılır.
+   (7) "ŞABLON OLUŞTUR" (stok / fiyat / cari; .xlsx veya .csv) ve "EXCEL'E DIŞA AKTAR" (stok ve bakiyeli cari listesi; düzenlenip geri yüklenebilir). "Son kontrol raporu" artık tüm aktarım türlerini gösterir.
+   Not: Windows'ta GUI elle denenmedi; motor ve ekran Linux üzerinde sanal ekranla (Tk) otomatik sınandı.
+181) v441 SISTEM_MERKEZI - BAKIM & ONARIM gerçek bakıma dönüştü (güvenlik yedeği, tam bütünlük, yabancı anahtar, tüm tabloların okunması, tutarlılık taraması, REINDEX, ANALYZE, WAL, VACUUM, son doğrulama, temizlik; adım adım ilerleme ve kaydedilebilir rapor; kayıt silinmez). Yedekleme: 2. kopya atomik+SHA256 doğrulamalı, disk alanı denetimi, en az 5 yedek koruyan saklama, 'tek yedek' ayarı uygulanıyor. Sistem Merkezi: durum renkleri, depolama kartı, uyarı şeridi, yedek tatbikatı (SON YEDEĞİ SINA), 2. KOPYA KLASÖRÜ SEÇ, geçmişte boyut/dosya durumu.
+182) v442 ACILIS_BAKIM - Açılış ekranı: 'Dönem Dosyaları BAKIMI' penceresine 'Derin Bakım & Rapor' eklendi (11 adımlı gerçek bakım, kaydedilebilir rapor). Açılıştan Yedek Al / Bakım artık seçili dönemin veritabanında çalışır. Derin bakım penceresi gizli ana pencere altında da kapanmadan tamamlanır. Yedekten Yükle (tam, DB yokken, yanlış firma, bozuk paket) senaryoları test edildi.
+183) v443 YEDEK_TEMIZLIK - Sistem Merkezi'ne 'ESKİ YEDEKLERİ TEMİZLE' düğmesi eklendi (saklama günü ayardan; en yeni 5 yedek ve son yedek korunur; yedek geçmişi/olay tabloları sınırlı tutulur).
+184) v444 TURKCE_HIZA - Tablolarda BAŞLIK hizası artık sütunla aynı (yazı sütunları ve başlıkları solda, rakam/tarih sütunları ve başlıkları ortada; Ayarlar > Tablo Görünüm Ayarları > Başlık Hizalama: 'Sütunla Aynı' varsayılan). Yazdırma/rapor çıktılarında rakam sütunları ortalandı. Veritabanında İngilizce tutulan tür/kaynak kodları (CARI_SALE, SUPPLIER_INVOICE_PAYMENT, GOODS_RECEIPT, MANUAL, SALE_RETURN, PERIOD_OPEN vb.) tablolarda ve etiketlerde Türkçe gösterilir; kayıtlı veri değişmez. 'Paket / Bundle' -> 'Paket (Set)'.
+185) v445 EK_RAPORLAR - Rapor Merkezi'ne 13 yeni rapor (ALFABE_RAPOR_EK.py, yalnız okur): Cari Hesap Ekstresi (devirli, yürüyen bakiye), Cari Yaşlandırma (Alacak/Borç, FIFO, 0-30/31-60/61-90/91-180/181+), Cari Bazında Satış ve Kâr, Stok Hareket Dökümü, Stok Hareket Özeti (açılış/giriş/çıkış/kapanış), Stok Değer Raporu, Aylık Satış Özeti, Satış Fişi Bazında Kâr, Hesaplanan KDV Özeti (iade düşülmüş), Alış İadeleri, Kasa / Banka Özeti, Gelir - Gider Dağılımı.
+186) v446 KATALOG_RAPORLAR - Kırtasiye rapor kataloğuna göre 28 rapor daha (toplam 41 yeni): X Raporu, İade Edilen Ürünler, İade Nedenleri, Kasiyer Tahsilat / İşlem Hızı, Aylık Ciro Karşılaştırma (geçen yıl), Barkodlu/Barkodsuz Oranı, Tükenen Ürünler, Tedarikçi Bazlı Satış, Alt Grup Satış, Grup Stok Değeri, Yeni Ürünler, Hatalı/Mükerrer Barkod, Stok Çıkış/Zayi, Sezonluk Talep Tahmini, Hizmet Gelir Özeti, Günlük Giderler, Aylık Kâr/Zarar (gider dahil), Nakit Akış Takvimi, POS Komisyon, Alacak/Borç Denge, Yüksek Kârlı Ürünler, Dönem Sonu Özet, Kapanmış Cariler, Şüpheli Alacaklar, Avans Alınan Cariler, Cari İletişim Listesi, Veresiye Ciro Oranı.
+187) v447 TEMIZLIK - Ana dosya adı ALFABE_SATIS_PRO.py oldu (BASLAT_ALFABE.bat, spec, hazirla.py, 1_EXE_OLUSTUR.bat güncellendi; exe adı değişmedi). Kullanılmayan 7 denetim betiği, eski sürüm notu ve kullanılmayan logo ARSIV klasörüne taşındı. Hiç çağrılmayan 15 fonksiyon/sınıf (~450 satır) ve çift _ALIGN_MAP kaldırıldı. 'Hata olursa sessizce geç' denen 403 yer artık çökmeden devam eder ama her farklı hata bir kez veri klasöründeki sessiz_hatalar.log dosyasına yazılır (1 MB'de döner).
+188) v448 GUVENLIK - Kullanıcı & Güvenlik yeniden yazıldı (ALFABE_GUVENLIK.py). GÜVENLİK DÜZELTMELERİ: 'ERDAL + 1234' ile her zaman giriş yapılabilen eski geçiş kodu kaldırıldı; şifre değiştirilse bile eski dönem dosyalarındaki eski şifrenin kabul edilip yeni şifrenin üzerine yazılması engellendi; eski SHA-256/düz metin şifreler ilk girişte PBKDF2'ye yükseltilir. YENİ: hatalı girişte hesap kilidi, giriş geçmişi, şifre kuralı/süresi, 'ilk girişte şifre değiştir', son yöneticiyi koruma, kullanıcı bazlı iskonto limiti, rol kopyalama/şablon/yeni rol, tıklayarak yetki verme, yetkili onayı (iade, iskonto limiti, geri yükleme, açılışta dönem silme/devri), boşta ekran kilidi (Oturum Zaman Aşımı) ve Ctrl+L. Roller ve yetkiler firma kullanıcı DB'sine taşındı (dönemden bağımsız; dönem DB'sine aynalanır). Ayarlar'daki İade Onayı / Yüksek İskonto Onayı / Kritik İşlemde Şifre / Oturum Zaman Aşımı artık gerçekten uygulanıyor.
+189) v449 YETKI_DUGMELERI - Rol tablosundaki Ekle / Değiştir / Pasife Al / Yazdır yetkileri artık ekranlardaki düğmelere bağlı (85 düğmenin 82'si; ortak düğme fonksiyonu + ekran açılışında doğrudan düğme taraması). Yetkisi olmayan kullanıcı yetkili onayı alır; onay 5 dk geçerli. Yönetici ve 'açılışta şifre sorma' kapalıyken davranış değişmez. Satış İptal Onayı ayarı uygulanıyor: kaydedilmemiş satışta satır silme ve fişi bırakıp çıkma yetkili onayı ister; her iptal sale_cancels tablosuna yazılır. Yeni raporlar: İptal Edilen Fişler (Kaydedilmeden), İptal Edilen Ürünler.
+190) v450 YETKI_KISAYOL - Yetki kontrolü işlem düzeyine indirildi: düğme, klavye kısayolu ve çift tıklama aynı kapıdan geçer. Stok kartı ekleme/düzenleme (YENİ, DÜZENLE, çift tıklama, Ana Sayfa Stok Ekle, F4, Hızlı Satış'ta bulunamayan ürünü kart açma), Fiyat Yönetimi fiyat değiştirme (çift tıklama dahil), Etiket önizleme/yazdırma (F9), Kampanya ve Cihaz düzenleme. Hızlı Satış ve Cari Satış'ta F7 ile elle fiyat düşürmek iskonto sayılır; kullanıcının iskonto limitini aşarsa yetkili onayı gerekir (fiyat artırma serbest).
+191) v451 ACILIS_TESHIS - Açılış izi: her açılış adımı %TEMP%\ALFABE_ACILIS_IZI.log dosyasına saatiyle yazılır; açılış 40 sn'de bitmezse programın beklediği yer otomatik eklenir. Açılış ekranı başlığı pencere oluşur oluşmaz konur. ACILIS_TESHISI.bat: programı açıp konsol çıktısını ve açılış izini program klasörüne kaydeder.

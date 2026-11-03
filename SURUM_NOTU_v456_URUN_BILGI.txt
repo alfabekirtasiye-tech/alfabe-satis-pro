@@ -1,0 +1,43 @@
+ALFABE SATIŞ PRO  v1.2.291.456  —  SATIŞ EKRANINDA ÜRÜN BİLGİSİ
+================================================================
+HIZLI SATIŞ SEPET TABLOSU
+- Seçili satırda yalnızca "Ürün Adı" hücresi mavi görünür; satırın geri kalanı açık renk kalır.
+- Ürün satırına SAĞ TIK (veya Ctrl+I): Ürün Bilgi penceresi açılır.
+  * Stok durumu: mevcut stok, kritik/negatif uyarısı, sepetteki miktar, satış sonrası kalan, tahmini yetme süresi
+  * Fiyatlar: perakende, toptan, özel, önceki fiyat, KDV, son fiyat değişim tarihi
+  * Maliyet/kâr: son alış, ortalama maliyet, birim kâr, kâr oranı, son alış tarihi ve tedarikçi
+  * Satış özeti: bugün / 7 / 30 / 90 / 365 gün / toplam adet ve ciro, ilk ve son satış
+  * Sekmeler: Son Satışlar, Stok Hareketleri, Fiyat Geçmişi
+  * FİYAT DEĞİŞTİR: perakende / toptan / özel fiyat; yetki kontrolü, maliyet altı uyarısı,
+    fiyat geçmişine ve denetim kaydına yazılır; isteğe bağlı sepetteki satıra da uygulanır.
+- Sütun başlığına sağ tık eskisi gibi tablo menüsünü açar.
+
+ÜRÜN ARAMA (canlı arama ve "Ürün Seç" penceresi)
+- GRUP sütunu eklendi; arama artık grup adını da kapsar.
+- Başlığa tıklayınca o sütuna göre sıralama (Grup dahil; tekrar tıklayınca ters). GRUP2, GRUP11'den önce gelir.
+- Arama her tuşta tüm stoğu yeniden okumuyor: bellekte tutulur, veritabanı değişince yenilenir
+  (büyük stokta yazarken gecikme biter).
+
+v1.2.291.457 — ÜRÜN ARAMA PENCERESİ YENİLENDİ
+- Canlı arama listesi büyütüldü: büyük yazı, geniş satırlar, zebra renkleri, kaydırma çubuğu, 60 sonuca kadar.
+  Stok rengi: negatif = kırmızı, stokta yok = turuncu. Başlık çubuğunda sonuç sayısı ve ipuçları.
+- BÜYÜK EKRAN (Ctrl+B): ekranın %90'ında arama; Grup süzgeci, Sırala seçimi (Ürün Adı, Grup, Fiyat, Stok,
+  Barkod, Stok Kodu, Marka) + Ters; 600 sonuca kadar; Enter / çift tık ile sepete ekler.
+
+v1.2.291.458 — ARAMA EKRANLARINDA DA ÜRÜN BİLGİSİ
+- Canlı arama listesi ve BÜYÜK EKRAN'da ürüne SAĞ TIK: aynı Ürün Bilgi penceresi (stok, fiyatlar, satış özeti,
+  hareketler, fiyat geçmişi ve FİYAT DEĞİŞTİR). Fiyat kaydedilince büyük ekran listesi yenilenir.
+- Bu listelerde de seçili satırda yalnız Ürün Adı hücresi mavidir.
+
+v1.2.291.459 — TABLO YERLEŞİMİ KALICI HALE GETİRİLDİ
+Sorun: "Tablo Yerleşimini Kaydet" / fareyle sütun genişletme sonrası program yeniden açılınca tablo eski haline dönüyordu.
+Nedenler ve düzeltmeler:
+- Fareyle sütun genişliği değiştirilince kayıt, ekran kapanırken yapılmaya çalışılıyordu; bu kayıt hiç çalışmıyordu
+  (kapanış anında tablo nesnesi artık yok). Artık fareyi bıraktığınız anda kaydedilir.
+- Menüden "Tablo Yerleşimini Kaydet" artık "Sütun düzenini hatırla" ayarından bağımsız kaydeder, kaydın başarılı
+  olduğunu (veya olmadığını ve nedenini) mesajla bildirir. Ayar kapalı olsa bile açıkça kaydedilen düzen uygulanır.
+- Rapor Merkezi gibi sütunları sonradan değişen tablolarda kayıtlı düzen, sütunlar yeniden tanımlanınca tekrar uygulanır;
+  her rapor kendi düzenini ayrı saklar.
+- Düzen anahtarı artık ekran (modül) adını da içerir; aynı sütun adlarına sahip farklı ekranlar birbirinin düzenini ezmez.
+  "Toplu Stok Sayımı - SY-001" gibi belge numaralı pencere başlıkları her açılışta farklı kayıt oluşturmaz.
+- Eski kayıtlar korunur ve okunmaya devam eder.

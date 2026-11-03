@@ -1,0 +1,57 @@
+ALFABE SATIŞ PRO - AĞ ÜZERİNDE ÇOK BİLGİSAYARDA KULLANIM REHBERİ
+=================================================================
+
+NASIL ÇALIŞIR
+  Veriler tek bir ortak klasörde (SUNUCU bilgisayarda) durur. Her kasa bilgisayarına program kurulur ve o ortak klasörü kullanır.
+  Program SQLite veritabanı kullanır; ortak klasör üzerinden birden çok bilgisayarın aynı anda çalışması için aşağıdaki kurallara uyun.
+  (Eski programınız da dosya tabanlıydı; mantık benzerdir, ama bu yapı küçük/orta ölçek içindir: önerilen en fazla 5-8 bilgisayar.)
+
+1) SUNUCU BİLGİSAYAR (verilerin durduğu PC)
+   - Tercihen sabit, her zaman açık, KABLOLU ağ bağlantılı bir bilgisayar. Uyku/hazırda bekletme KAPALI. Mümkünse UPS (kesintisiz güç).
+   - Verileri koyacağınız klasörü açın (örn. D:\ALFABE_VERI) -> sağ tık > Özellikler > Paylaşım > "ALFABE_VERI" adıyla paylaşın;
+     program kullanacak herkese (veya "Authenticated Users") "Okuma/Yazma" izni verin. (Güvenlik sekmesinde de Değiştirme izni.)
+   - Antivirüste bu klasörü TARAMA DIŞI bırakın (veritabanı dosyası taranırken kilitlenebilir).
+   - Sunucuya sabit bir ad/IP verin (router'da IP ayırın). Windows saatini internetten otomatik ayarlı tutun.
+   - Sunucuda da programı kurun; kurulumda "Ortak veri klasörü" olarak YEREL yolu (D:\ALFABE_VERI) yazın.
+   - İsteğe bağlı güvenlik: sunucuda SMB "oplock/lease" kapatmak veritabanı dosyaları için önerilir (ağ uzmanınıza danışın).
+
+2) KASA BİLGİSAYARLARI
+   - Kablolu ağ önerilir (Wi-Fi kopmaları veritabanı için risklidir). Dizüstüde güç tasarrufu/uyku kapalı olsun.
+   - Programı kurarken "Ortak veri klasörü" sorusuna  \\SUNUCU\ALFABE_VERI  yazın (veya kurulumdan sonra giriş ekranındaki
+     "Ağ / Veri Ayarı" kutusundan seçin). "Bağlantıyı Sına" 5 kontrol yapar: erişim, yazma hızı, günlük modu, DOSYA KİLİTLEME, mevcut veri.
+     Kilitleme testi BAŞARISIZ ise o klasörü ortak veri için KULLANMAYIN.
+   - Ortak klasör ulaşılamazsa program sessizce yerel veriye geçmez; "Yeniden Dene / İptal" sorar (veri ikiye bölünmesin diye).
+   - Her bilgisayarın Windows saati doğru olmalı. Fark 2 dakikadan büyükse program uyarır.
+
+3) PROGRAMIN ÇOK BİLGİSAYAR İÇİN YAPTIKLARI
+   - Giriş ekranı altında: "Veri: Ağ | KASA1 | Ağda açık: N bilgisayar".
+   - Tehlikeli işlemler (Yedekten Geri Yükleme, Firma Silme, Dönem Silme, Dönem Devri, Bozuk Dosya Onarımı) yalnız DİĞER bilgisayarlarda
+     program KAPALIYKEN yapılır; açık olan bilgisayar adları söylenir. (Oturum bilgisi 30 sn'de bir yenilenir; çöken PC ~90 sn sonra düşer.)
+   - Kapanış yedeği: son 60 dakikada başka bir kasa yedek aldıysa tekrar alınmaz (aynı anda çok tam yedek yük bindirmesin).
+   - Firma/dönem kayıtlarındaki yollar her bilgisayarın kendi görünümüne (UNC / yerel) göre otomatik çevrilir.
+   - Veritabanı ağda yazma kilidini erken alır (satış kaydı sırasında diğerleri kısa süre bekler; bekleme süresi 30 sn).
+   - "İş İstasyonu" etiketi artık bilgisayar adını gösterir.
+
+4) GÜNLÜK DÜZEN (önerilir)
+   - Her gün kapanışta bir bilgisayardan "Yedek Al"; yedekler ortak klasördeki  firmalar\...\yedekler  içinde SUNUCUDA durur.
+     Yedeklerin bir kopyasını harici diske/buluta alın (sunucu diski bozulursa tüm veri gider).
+   - Sunucu kapanmadan önce kasalarda program kapatılmalı.
+
+5) ÇOK BİLGİSAYARLI TEST LİSTESİ (kurulumdan sonra mutlaka yapın)
+   [ ] 2 kasadan aynı anda farklı ürün satışı yapın: ikisi de kaydolmalı, fiş numaraları farklı olmalı
+   [ ] 2 kasadan AYNI ürünü aynı saniyede satın: stok iki adet düşmeli
+   [ ] Bir kasada fiyat değiştirin; diğer kasada ürünü yeniden aratın/seçin (yeni fiyatı görmeli; açık sepetteki eski fiyat değişmez)
+   [ ] Bir kasada firma/dönem seçili iken diğerinde "Yedekten Yükle" deneyin: engellenmeli
+   [ ] Ağ kablosunu 10 sn çekip takın: program hata mesajı verebilir ama veri bozulmamalı; "Dönem Dosyaları Bakımı > Kontrol Et" temiz çıkmalı
+   [ ] Sunucuyu kapatıp kasadan programı açın: "ulaşılamıyor - Yeniden Dene/İptal" çıkmalı
+   [ ] Teklif/Sipariş numaralarının iki kasada çakışmadığını kontrol edin
+
+6) SINIRLAR (dürüst not)
+   - SQLite ağ klasöründe çalışır ama bir istemci-sunucu veritabanı (SQL Server/PostgreSQL) kadar dayanıklı değildir. Wi-Fi, uyku modu,
+     elektrik kesintisi ve antivirüs veritabanı dosyasını bozma riskini artırır. Bu yüzden: kablolu ağ + UPS + günlük yedek + test listesi.
+   - Çok sayıda kasa (8+) veya yoğun eşzamanlı satış gerekirse bir sonraki adım gerçek "sunucu servisi" mimarisidir (veritabanını
+     yalnızca sunucu açar, kasalar ağdan ona bağlanır). Bu büyük bir geliştirmedir; ihtiyaç doğarsa ayrıca planlanmalıdır.
+   - Program açık olan başka bir ekrandaki listeler otomatik canlı yenilenmez; başka kasanın değişikliğini görmek için ekranı yenileyin
+     (aramayı tekrar çalıştırın / sayfayı yeniden açın).
+   - Ayar tablosundaki bazı "yerel" ayarlar (yazıcı/ekran) hâlâ ortak veritabanındadır; her kasaya özel yazıcı için Windows
+     varsayılan yazıcısını kullanın.

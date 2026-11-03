@@ -1,0 +1,71 @@
+name: ALFABE SATIS PRO Setup Uret
+
+# Elle calistirilir: GitHub > Actions > "ALFABE SATIS PRO Setup Uret" > Run workflow.
+# Bitince sayfanin altindaki "Artifacts" bolumunden ALFABE_SATIS_PRO_Kurulum zip'ini indirin (icinde setup .exe vardir).
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: tkinter ve Python kontrolu
+        run: |
+          python --version
+          python -c "import tkinter; print('tkinter tamam, Tk', tkinter.TkVersion)"
+
+      - name: PyInstaller kur
+        run: python -m pip install --upgrade pyinstaller
+
+      - name: Surum bilgisi
+        working-directory: KURULUM_HAZIRLIK
+        run: python hazirla.py ALFABE_SATIS_PRO.py
+
+      - name: EXE paketi olustur (PyInstaller)
+        working-directory: KURULUM_HAZIRLIK
+        env:
+          ALFABE_GIRIS: ALFABE_SATIS_PRO.py
+        run: python -m PyInstaller --noconfirm --clean --distpath ..\dist --workpath ..\build ALFABE_SATIS_PRO.spec
+
+      - name: Pakette veri dosyasi olmadigini denetle
+        shell: pwsh
+        run: |
+          if (-not (Test-Path dist\ALFABE_SATIS_PRO\ALFABE_SATIS_PRO.exe)) { throw 'ALFABE_SATIS_PRO.exe olusmadi' }
+          $veri = Get-ChildItem dist\ALFABE_SATIS_PRO -Recurse -Include *.db,*.sqlite,firma_kayitlari.json,ag_ayari.json
+          if ($veri) { $veri | ForEach-Object { Write-Host $_.FullName }; throw 'Pakette veri dosyasi var (olmamali)' }
+          Write-Host 'Paket temiz, veri dosyasi yok.'
+
+      - name: Inno Setup hazirla
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+          if (-not (Test-Path $iscc)) { throw 'Inno Setup bulunamadi' }
+
+      - name: Setup olustur (Inno Setup)
+        working-directory: KURULUM_HAZIRLIK
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" alfabe_setup.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Setup olusturulamadi' }
+
+      - name: Setup dosyasini yukle
+        uses: actions/upload-artifact@v4
+        with:
+          name: ALFABE_SATIS_PRO_Kurulum
+          path: KURULUM_CIKTI/*.exe
+          if-no-files-found: error
+
+      - name: Denemelik EXE klasorunu da yukle (kurmadan denemek icin)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ALFABE_SATIS_PRO_exe_klasoru
+          path: dist/ALFABE_SATIS_PRO
+          retention-days: 7

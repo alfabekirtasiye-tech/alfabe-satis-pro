@@ -1,0 +1,36 @@
+ALFABE SATIŞ PRO - RAPOR DÜZENLEYİCİ REHBERİ
+============================================
+Nereden açılır: herhangi bir raporun önizleme/yazdırma ekranındaki "Tasarım" (Rapor Tasarımcısı) düğmesi.
+Liste raporları (satış, stok, cari, kasa ...) yeni Rapor Düzenleyici ile açılır. (ESKİ NOT: artık bu belgeler de yeni düzenleyiciyle açılır; eski görsel
+tasarımcı ile düzenlenmeye devam eder. Yeni düzenleyici bir hata verirse program otomatik olarak eski tasarımcıyı açar.
+
+Ekran: SOL = sütunlar, ORTA = canlı sayfa önizlemesi (raporun gerçek yerleşimi), SAĞ = genel ayarlar.
+
+SÜTUNLAR
+  ☑/☐ işaretine tıklayın (veya Boşluk / "Göster-Gizle") : sütun görünür/gizli.   ▲ ▼ : sütun sırası.
+  Başlık      : rapordaki sütun başlığı.
+  Hizalama    : Otomatik (sayı sağa, tarih ortaya, metin sola) / Sola / Ortaya / Sağa.
+  Biçim       : Otomatik, Tam sayı, Para (2 hane), Tarih, Tarih + Saat.
+  Genişlik    : yalnız "Sütun genişliği = Elle" iken kullanılır (30-500 göreli değer). Otomatik modda içeriğe göre ayarlanır.
+
+GENEL AYARLAR
+  Rapor başlığı, Alt başlık, Üst not (başlığın altında ek satır), Alt bilgi metni (her sayfanın altı).
+  Kağıt (A4/A5; 58/80 mm fişte düzen otomatik sade tablodur), Yön, Kenar boşluğu, Yazı boyutu, Başlık boyutu.
+  Renk teması: 8 hazır renk veya "Özel renk seç...". Seçenekler: genel toplam, sayfa numarası, özet kutuları, zebra satırlar, logo.
+
+DÜĞMELER
+  KAYDET VE UYGULA : tasarımı kaydeder (kayıt başarısız olursa önceki tasarım korunur) ve raporu yeniler.
+  Tarayıcıda Önizle : KAYDETMEDEN, şu anki ayarlarla gerçek raporu tarayıcıda açar.
+  Varsayılana Dön : ayarları ekranda varsayılana alır (kaydedene kadar kalıcı değildir).
+
+NOT: Kaydedilmiş eski "görsel nesne" tasarımları liste raporlarında kullanılmaz (yeni rapor motoru tek düzen kullanır); silinmez.
+
+--- v1.2.291.243 EKLERI ---
+Alttaki turuncu "YAZILAR / NESNELER / GELISMIS" dugmesi:
+ 1) Yazilar ve Nesneler: + Yazi / + Kutu / + Cizgi / + Elips / + Resim. Konumlar kagidin sol-ust kosesinden mm. ◀▶▲▼ ile 1 mm kaydirin.
+    Yazi icine alan koyabilirsiniz: "Toplam: {TOPLAM:Tutar}  Sayfa {SAYFA}/{SAYFA_SAYISI}".
+    "Hangi sayfalarda": tum / ilk / son / ilk haric. Katman: on veya arka (arka = yazinin altinda, filigran gibi).
+    Nesne tablonun ustune binmesin diye "Sayfa / Tablo" sekmesinde "Baslik alti ek bosluk" verin.
+ 2) Sayfa / Tablo: gruplama sutunu (ara toplamli), kenar bosluklari (ust/alt/sol/sag), yazi tipi, cizgi stili, hucre ic boslugu, satir yuksekligi.
+ 3) Ust-Alt Bilgi: alt bilgi sol/orta/sag, sag ust bilgi, filigran, imza kutulari (Hazirlayan;Onaylayan).
+Onizleme: ortadaki alan artik yazdirilanin aynisidir. ◀ ▶ ile sayfalar arasinda gezin. "Tarayicida Onizle" tum sayfalari acar.
