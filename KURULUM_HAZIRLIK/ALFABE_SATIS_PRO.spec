@@ -11,4 +11,4 @@ a=Analysis([str(KOK/GIRIS)],pathex=[str(KOK)],binaries=[],
 pyz=PYZ(a.pure)
 exe=EXE(pyz,a.scripts,[],exclude_binaries=True,name='ALFABE_SATIS_PRO',debug=False,strip=False,upx=False,
   console=False,icon=str(KOK/'alfabe.ico'),version=str(Path(SPECPATH)/'version_info.txt'))
-coll=COLL(exe,a.binaries,a.datas,strip=False,upx=False,name='ALFABE_SATIS_PRO')
+coll=COLLECT(exe,a.binaries,a.datas,strip=False,upx=False,name='ALFABE_SATIS_PRO')
