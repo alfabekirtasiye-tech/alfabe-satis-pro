@@ -1,0 +1,12 @@
+# Setup icin gerekmeyen / yuklenmemesi gereken klasorler
+tests/
+ARSIV/
+__pycache__/
+*.pyc
+dist/
+build/
+KURULUM_CIKTI/
+KURULUM_HAZIRLIK/surum.iss
+KURULUM_HAZIRLIK/version_info.txt
+*.db
+*.sqlite
